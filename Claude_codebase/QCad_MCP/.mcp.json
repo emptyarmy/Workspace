@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "qcad": {
+      "command": "node",
+      "args": ["/Users/miku/Documents/Workspace/Claude_codebase/QCad_MCP/dist/index.js"]
+    }
+  }
+}
