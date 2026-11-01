@@ -1,0 +1,27 @@
+info:
+  name: P16 Doppelte Posten hinzufügen
+  type: http
+  seq: 16
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "[{{testwert01}}, {{testwert01}}]"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

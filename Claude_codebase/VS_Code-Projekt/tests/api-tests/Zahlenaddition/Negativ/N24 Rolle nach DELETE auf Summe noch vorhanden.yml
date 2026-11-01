@@ -1,0 +1,22 @@
+info:
+  name: N24 Rolle nach DELETE auf Summe noch vorhanden
+  type: http
+  seq: 24
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200, Rolle wurde nicht gelöscht", () => expect(res.status).to.equal(200));
+        test("Richtige Rolle", () => expect(res.body.id).to.equal(bru.getVar("negTapeId")));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

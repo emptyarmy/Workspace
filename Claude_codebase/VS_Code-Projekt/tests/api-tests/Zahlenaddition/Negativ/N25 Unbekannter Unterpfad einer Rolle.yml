@@ -1,0 +1,22 @@
+info:
+  name: N25 Unbekannter Unterpfad einer Rolle
+  type: http
+  seq: 25
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/xyz"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 404", () => expect(res.status).to.equal(404));
+        test("Fehler 'Not found'", () => expect(res.body.error).to.equal("Not found"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

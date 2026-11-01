@@ -1,0 +1,22 @@
+info:
+  name: N11 Nicht vorhandenen Posten löschen
+  type: http
+  seq: 11
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries/{{testwert10}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 404", () => expect(res.status).to.equal(404));
+        test("Fehler 'Entry not found'", () => expect(res.body.error).to.equal("Entry not found"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

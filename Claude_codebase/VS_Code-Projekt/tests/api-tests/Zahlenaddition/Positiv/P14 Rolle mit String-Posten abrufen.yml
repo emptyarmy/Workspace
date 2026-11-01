@@ -1,0 +1,26 @@
+info:
+  name: P14 Rolle mit String-Posten abrufen
+  type: http
+  seq: 14
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Strings werden unverändert gespeichert", () => expect(res.body.entries).to.deep.equal(["12.50", "-3"]));
+        test("Summe und Durchschnitt werden numerisch berechnet", () => {
+          expect(res.body.sum).to.equal(9.5);
+          expect(res.body.average).to.equal(4.75);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

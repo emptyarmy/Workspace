@@ -1,0 +1,28 @@
+info:
+  name: P13 Posten als numerische Strings hinzufügen
+  type: http
+  seq: 13
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "[\"12.50\", \"-3\"]"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Meldung 'Entries added'", () => expect(res.body.message).to.equal("Entries added"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

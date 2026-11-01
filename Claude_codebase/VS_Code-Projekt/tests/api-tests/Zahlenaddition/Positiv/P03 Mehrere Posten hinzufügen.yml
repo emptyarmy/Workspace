@@ -1,0 +1,28 @@
+info:
+  name: P03 Mehrere Posten hinzufügen
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{tapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "[{{testwert02}}, {{testwert03}}, {{testwert04}}, {{testwert05}}, {{testwert06}}, {{testwert07}}, {{testwert08}}, {{testwert09}}, {{testwert10}}]"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Meldung 'Entries added'", () => expect(res.body.message).to.equal("Entries added"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

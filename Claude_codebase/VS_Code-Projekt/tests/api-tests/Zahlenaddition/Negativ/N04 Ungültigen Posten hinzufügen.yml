@@ -1,0 +1,31 @@
+info:
+  name: N04 Ungültigen Posten hinzufügen
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "\"{{ungueltigerWert}}\""
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 400", () => expect(res.status).to.equal(400));
+        test("Fehler invalid_number mit Wert", () => {
+          expect(res.body.error).to.equal("invalid_number");
+          expect(res.body.value).to.equal(bru.getCollectionVar("ungueltigerWert"));
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

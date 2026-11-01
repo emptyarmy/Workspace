@@ -1,0 +1,22 @@
+info:
+  name: P15 String-Posten mit exaktem Wert löschen
+  type: http
+  seq: 15
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}/entries/12.50"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Meldung 'Entry deleted'", () => expect(res.body.message).to.equal("Entry deleted"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

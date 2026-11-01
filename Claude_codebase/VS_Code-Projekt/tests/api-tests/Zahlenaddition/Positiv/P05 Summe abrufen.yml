@@ -1,0 +1,24 @@
+info:
+  name: P05 Summe abrufen
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{tapeId}}/total"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const werte = [bru.getCollectionVar("testwert01"), bru.getCollectionVar("testwert02"), bru.getCollectionVar("testwert03"), bru.getCollectionVar("testwert04"), bru.getCollectionVar("testwert05"), bru.getCollectionVar("testwert06"), bru.getCollectionVar("testwert07"), bru.getCollectionVar("testwert08"), bru.getCollectionVar("testwert09"), bru.getCollectionVar("testwert10")].map(Number);
+        const summe = werte.reduce((a, b) => a + b, 0);
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("total entspricht der Summe aller Testwerte", () => expect(res.body.total).to.be.closeTo(summe, 1e-9));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

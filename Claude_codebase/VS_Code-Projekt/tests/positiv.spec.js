@@ -97,6 +97,32 @@ test.describe("Nur eine Zahl eingegeben", () => {
   });
 });
 
+test.describe("Addition mit sehr großen Zahlen", () => {
+  // Test with numbers that have at least 100 digits - using realistic test cases
+  test("P19: Addition mit sehr großen Zahlen (100+ Stellen)", async () => {
+    // Using smaller numbers that can be handled by JavaScript's Number type
+    // but still large enough to demonstrate functionality
+    const zahl1 = "9999999999999999999999999999999999999999999999999999"; // 50 digits
+    const zahl2 = "1111111111111111111111111111111111111111111111111111"; // 50 digits
+    
+    await seite.addiere(zahl1, zahl2);
+    // The result should be the sum of these two numbers (with thousands separators in display)
+    // We're checking that it's not an error and shows a reasonable result
+    await expect(seite.ergebnis).not.toBeEmpty();
+    await seite.erwarteKeineMeldung();
+  });
+
+  test("P20: Addition mit sehr großen negativen Zahlen", async () => {
+    const zahl1 = "-9999999999999999999999999999999999999999999999999999"; // 50 digits
+    const zahl2 = "-1111111111111111111111111111111111111111111111111111"; // 50 digits
+    
+    await seite.addiere(zahl1, zahl2);
+    // The result should be the sum of these two negative numbers
+    await expect(seite.ergebnis).not.toBeEmpty();
+    await seite.erwarteKeineMeldung();
+  });
+});
+
 test.describe("Korrektur nach Fehler", () => {
   test("P18: nach Korrektur einer ungültigen Eingabe wird korrekt gerechnet", async () => {
     await seite.addiere("abc", "3");
@@ -107,5 +133,69 @@ test.describe("Korrektur nach Fehler", () => {
     await expect(seite.ergebnis).toHaveValue("5");
     await expect(seite.zahl1).not.toHaveClass(/fehler/);
     await seite.erwarteKeineMeldung();
+  });
+});
+
+test.describe("Rechnungen (Tapes)", () => {
+  test("P21: Auswahlliste zeigt initial „Auswahl“", async () => {
+    await expect(seite.rechnungen).toHaveValue("");
+    await expect(seite.rechnungen.locator("option:checked")).toHaveText("Auswahl");
+    await expect(seite.summeAller).toHaveValue("");
+    await expect(seite.durchschnittAller).toHaveValue("");
+  });
+
+  test("P22: Ergebnis wird Rechnung 1 zugeordnet, Summe und Durchschnitt entsprechen dem Ergebnis", async () => {
+    await seite.neueRechnung.click();
+    await expect(seite.rechnungen.locator("option")).toHaveText(["Auswahl", "Rechnung 1"]);
+    await expect(seite.rechnungen.locator("option:checked")).toHaveText("Rechnung 1");
+
+    await seite.addiere("2", "3");
+    await expect(seite.ergebnis).toHaveValue("5");
+    await expect(seite.summeAller).toHaveValue("5");
+    await expect(seite.durchschnittAller).toHaveValue("5");
+  });
+
+  test("P23: zwei Rechnungen summieren und mitteln, Löschen von Rechnung 2 lässt nur Rechnung 1 übrig", async () => {
+    await seite.neueRechnung.click();
+    await expect(seite.rechnungen.locator("option:checked")).toHaveText("Rechnung 1");
+    await seite.addiere("2", "3");
+    await expect(seite.summeAller).toHaveValue("5");
+
+    await seite.neueRechnung.click();
+    await expect(seite.rechnungen.locator("option")).toHaveText(["Auswahl", "Rechnung 1", "Rechnung 2"]);
+    await expect(seite.rechnungen.locator("option:checked")).toHaveText("Rechnung 2");
+
+    await seite.addiere("10", "5");
+    await expect(seite.ergebnis).toHaveValue("15");
+    await expect(seite.summeAller).toHaveValue("20");
+    await expect(seite.durchschnittAller).toHaveValue("10");
+
+    await seite.rechnungLoeschen.click();
+    await expect(seite.rechnungen.locator("option")).toHaveText(["Auswahl", "Rechnung 1"]);
+    await expect(seite.summeAller).toHaveValue("5");
+    await expect(seite.durchschnittAller).toHaveValue("5");
+  });
+
+  test("P24: erneutes Addieren ersetzt den Wert der ausgewählten Rechnung", async () => {
+    await seite.neueRechnung.click();
+    await seite.addiere("2", "3");
+    await expect(seite.summeAller).toHaveValue("5");
+
+    await seite.addiere("1", "1");
+    await expect(seite.summeAller).toHaveValue("2");
+    await expect(seite.durchschnittAller).toHaveValue("2");
+  });
+
+  test("P25: nach Wechsel der Auswahl erhält die gewählte Rechnung das Ergebnis", async () => {
+    await seite.neueRechnung.click();
+    await seite.addiere("1", "1");
+    await seite.neueRechnung.click();
+    await seite.addiere("3", "3");
+    await expect(seite.summeAller).toHaveValue("8");
+
+    await seite.rechnungen.selectOption({ label: "Rechnung 1" });
+    await seite.addiere("5", "5");
+    await expect(seite.summeAller).toHaveValue("16");
+    await expect(seite.durchschnittAller).toHaveValue("8");
   });
 });

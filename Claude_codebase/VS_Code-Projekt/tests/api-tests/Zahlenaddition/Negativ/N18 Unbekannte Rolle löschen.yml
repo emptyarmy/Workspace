@@ -1,0 +1,22 @@
+info:
+  name: N18 Unbekannte Rolle löschen
+  type: http
+  seq: 18
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{unbekannteTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 404", () => expect(res.status).to.equal(404));
+        test("Fehler 'Tape not found'", () => expect(res.body.error).to.equal("Tape not found"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

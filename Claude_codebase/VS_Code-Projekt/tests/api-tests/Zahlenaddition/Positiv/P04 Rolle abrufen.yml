@@ -1,0 +1,27 @@
+info:
+  name: P04 Rolle abrufen
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{tapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const werte = [bru.getCollectionVar("testwert01"), bru.getCollectionVar("testwert02"), bru.getCollectionVar("testwert03"), bru.getCollectionVar("testwert04"), bru.getCollectionVar("testwert05"), bru.getCollectionVar("testwert06"), bru.getCollectionVar("testwert07"), bru.getCollectionVar("testwert08"), bru.getCollectionVar("testwert09"), bru.getCollectionVar("testwert10")].map(Number);
+        const summe = werte.reduce((a, b) => a + b, 0);
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Rolle enthält alle 10 Testwerte", () => expect(res.body.entries).to.have.lengthOf(10));
+        test("Anzahl ist 10", () => expect(res.body.count).to.equal(10));
+        test("Summe stimmt", () => expect(res.body.sum).to.be.closeTo(summe, 1e-9));
+        test("Durchschnitt stimmt", () => expect(res.body.average).to.be.closeTo(summe / 10, 1e-9));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

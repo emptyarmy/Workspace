@@ -1,0 +1,22 @@
+info:
+  name: N20 Alle Rollen abrufen nicht erlaubt
+  type: http
+  seq: 20
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 405", () => expect(res.status).to.equal(405));
+        test("Fehler 'Method not allowed'", () => expect(res.body.error).to.equal("Method not allowed"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

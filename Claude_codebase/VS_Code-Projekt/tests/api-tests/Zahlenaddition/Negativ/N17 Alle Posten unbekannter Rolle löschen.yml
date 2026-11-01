@@ -1,0 +1,22 @@
+info:
+  name: N17 Alle Posten unbekannter Rolle löschen
+  type: http
+  seq: 17
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{unbekannteTapeId}}/entries"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 404", () => expect(res.status).to.equal(404));
+        test("Fehler 'Tape not found'", () => expect(res.body.error).to.equal("Tape not found"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

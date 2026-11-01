@@ -1,0 +1,290 @@
+openapi: 3.0.3
+info:
+  title: Zahlenaddition API
+  version: 1.0.0
+  description: |
+    REST-API des Zahlen-Addierers. Eine Rolle ("Tape") sammelt Posten (Zahlen);
+    die API liefert Summe, Anzahl und Durchschnitt. Daten liegen nur im Speicher
+    des Servers und gehen beim Neustart verloren. Keine Authentifizierung.
+
+    Nicht dokumentierte Methoden auf den Pfaden unten (z. B. `DELETE /v1/tapes/{tapeId}/total`)
+    liefern `405 { "error": "Method not allowed" }`. Unbekannte Unterpfade unter `/v1/tapes/{tapeId}`
+    (z. B. `/v1/tapes/1/xyz`) liefern `404 { "error": "Not found" }`.
+    Alle API-Antworten tragen CORS-Header (`Access-Control-Allow-Origin: *`).
+servers:
+  - url: http://localhost:3000
+    description: Lokaler Entwicklungsserver (npm start)
+tags:
+  - name: Rollen
+    description: Rollen anlegen, abrufen und löschen
+  - name: Posten
+    description: Posten einer Rolle hinzufügen und löschen
+paths:
+  /v1/tapes:
+    post:
+      tags: [Rollen]
+      summary: Neue Rolle anlegen
+      operationId: rolleAnlegen
+      requestBody:
+        required: false
+        description: Inhalt wird ignoriert, muss aber gültiges JSON sein, wenn er gesendet wird.
+        content:
+          application/json:
+            schema:
+              type: object
+            example: {}
+      responses:
+        "201":
+          description: Rolle angelegt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolleId"
+        "400":
+          $ref: "#/components/responses/UngueltigerBody"
+    options:
+      tags: [Rollen]
+      summary: CORS-Preflight
+      operationId: corsPreflight
+      responses:
+        "200":
+          description: CORS-Header gesetzt, leerer Body
+          headers:
+            Access-Control-Allow-Origin:
+              schema: { type: string, example: "*" }
+            Access-Control-Allow-Methods:
+              schema: { type: string, example: "GET, POST, PUT, DELETE, OPTIONS" }
+            Access-Control-Allow-Headers:
+              schema: { type: string, example: Content-Type }
+  /v1/tapes/{tapeId}:
+    parameters:
+      - $ref: "#/components/parameters/TapeId"
+    get:
+      tags: [Rollen]
+      summary: Rolle mit Posten, Summe, Anzahl und Durchschnitt abrufen
+      operationId: rolleAbrufen
+      responses:
+        "200":
+          description: Rolle gefunden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rolle"
+        "404":
+          $ref: "#/components/responses/RolleNichtGefunden"
+        "405":
+          $ref: "#/components/responses/MethodeNichtErlaubt"
+    delete:
+      tags: [Rollen]
+      summary: Rolle löschen
+      operationId: rolleLoeschen
+      responses:
+        "200":
+          description: Rolle gelöscht
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meldung"
+              example: { message: Tape deleted }
+        "404":
+          $ref: "#/components/responses/RolleNichtGefunden"
+        "405":
+          $ref: "#/components/responses/MethodeNichtErlaubt"
+  /v1/tapes/{tapeId}/total:
+    parameters:
+      - $ref: "#/components/parameters/TapeId"
+    get:
+      tags: [Rollen]
+      summary: Nur die Summe einer Rolle abrufen
+      operationId: summeAbrufen
+      responses:
+        "200":
+          description: Summe der Posten
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [total]
+                properties:
+                  total: { type: number, example: 1000198 }
+        "404":
+          $ref: "#/components/responses/RolleNichtGefunden"
+        "405":
+          $ref: "#/components/responses/MethodeNichtErlaubt"
+  /v1/tapes/{tapeId}/entries:
+    parameters:
+      - $ref: "#/components/parameters/TapeId"
+    post:
+      tags: [Posten]
+      summary: Einen oder mehrere Posten hinzufügen
+      description: |
+        Akzeptiert eine einzelne Zahl oder ein Array (ein leeres Array ist erlaubt und ändert nichts).
+        Posten werden unverändert als String gespeichert, z. B. `"12.50"` bleibt `"12.50"`.
+        Ein fehlender Body wird wie `{}` behandelt und mit `invalid_number` abgelehnt.
+      operationId: postenHinzufuegen
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/Posten"
+                - type: array
+                  items:
+                    $ref: "#/components/schemas/Posten"
+            examples:
+              einzeln:
+                value: 10
+              mehrere:
+                value: [20, 30, -5, 2.5]
+              alsString:
+                value: ["12.50", "-3"]
+      responses:
+        "200":
+          description: Posten hinzugefügt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meldung"
+              example: { message: Entries added }
+        "400":
+          description: Ungültige Zahl oder ungültiges JSON
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/UngueltigeZahl"
+                  - $ref: "#/components/schemas/Fehler"
+              examples:
+                ungueltigeZahl:
+                  value: { error: invalid_number, value: abc }
+                leererBody:
+                  value: { error: invalid_number, value: {} }
+                ungueltigesJson:
+                  value: { error: Invalid request body }
+        "404":
+          $ref: "#/components/responses/RolleNichtGefunden"
+    delete:
+      tags: [Posten]
+      summary: Alle Posten einer Rolle löschen
+      operationId: allePostenLoeschen
+      responses:
+        "200":
+          description: Alle Posten gelöscht
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meldung"
+              example: { message: All entries deleted }
+        "404":
+          $ref: "#/components/responses/RolleNichtGefunden"
+  /v1/tapes/{tapeId}/entries/{entryId}:
+    parameters:
+      - $ref: "#/components/parameters/TapeId"
+      - name: entryId
+        in: path
+        required: true
+        description: |
+          Gespeicherter Wert des zu löschenden Postens; das erste Vorkommen wird entfernt.
+          Der Vergleich ist ein exakter String-Vergleich: `"12.50"` wird nur über `12.50` gefunden, nicht über `12.5`.
+        schema: { type: string, example: "10" }
+    delete:
+      tags: [Posten]
+      summary: Einzelnen Posten löschen
+      operationId: postenLoeschen
+      responses:
+        "200":
+          description: Posten gelöscht
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meldung"
+              example: { message: Entry deleted }
+        "404":
+          description: Rolle oder Posten nicht gefunden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Fehler"
+              example: { error: Entry not found }
+components:
+  parameters:
+    TapeId:
+      name: tapeId
+      in: path
+      required: true
+      description: |
+        Numerische ID aus `POST /v1/tapes`. Eine nicht numerische ID liefert bei
+        `/v1/tapes/{tapeId}` und `/v1/tapes/{tapeId}/total` 405, bei `/v1/tapes/{tapeId}/entries...` 404.
+      schema: { type: integer, minimum: 1, example: 1 }
+  schemas:
+    RolleId:
+      type: object
+      required: [id]
+      properties:
+        id: { type: integer, example: 1 }
+    Posten:
+      description: |
+        Zahl oder String, den JavaScripts `Number()` als Zahl liest. Erlaubt sind damit auch
+        `"1e3"`, `" 7 "` und `""` (zählt als 0). Abgelehnt werden z. B. `"abc"`, `true`, `null` und Objekte.
+      oneOf:
+        - type: number
+        - type: string
+    Rolle:
+      type: object
+      required: [id, entries, sum, count, average]
+      properties:
+        id: { type: integer, example: 1 }
+        entries:
+          type: array
+          description: Posten werden als String gespeichert
+          items: { type: string }
+          example: ["10", "20", "30"]
+        sum: { type: number, example: 60 }
+        count: { type: integer, example: 3 }
+        average: { type: number, example: 20 }
+    Meldung:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string }
+    Fehler:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
+    UngueltigeZahl:
+      type: object
+      required: [error, value]
+      properties:
+        error: { type: string, enum: [invalid_number] }
+        value: { description: Der abgelehnte Wert }
+  responses:
+    PfadNichtGefunden:
+      description: Unbekannter Unterpfad unter /v1/tapes/{tapeId}
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fehler"
+          example: { error: Not found }
+    RolleNichtGefunden:
+      description: Rolle nicht gefunden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fehler"
+          example: { error: Tape not found }
+    MethodeNichtErlaubt:
+      description: Methode bzw. Pfad nicht unterstützt (auch bei nicht numerischer tapeId)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fehler"
+          example: { error: Method not allowed }
+    UngueltigerBody:
+      description: Body ist kein gültiges JSON
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fehler"
+          example: { error: Invalid request body }

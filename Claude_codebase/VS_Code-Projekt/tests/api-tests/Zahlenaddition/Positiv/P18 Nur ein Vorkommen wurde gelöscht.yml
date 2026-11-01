@@ -1,0 +1,27 @@
+info:
+  name: P18 Nur ein Vorkommen wurde gelöscht
+  type: http
+  seq: 18
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const wert = bru.getCollectionVar("testwert01");
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Ein Vorkommen ist noch vorhanden", () => expect(res.body.entries).to.deep.equal(["-3", wert]));
+        test("Summe und Anzahl stimmen", () => {
+          expect(res.body.count).to.equal(2);
+          expect(res.body.sum).to.equal(Number(wert) - 3);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

@@ -1,0 +1,22 @@
+info:
+  name: P08 Alle Posten löschen
+  type: http
+  seq: 8
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{tapeId}}/entries"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Meldung 'All entries deleted'", () => expect(res.body.message).to.equal("All entries deleted"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

@@ -1,0 +1,21 @@
+info:
+  name: P19 Rolle mit String-Posten löschen
+  type: http
+  seq: 19
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{stringTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

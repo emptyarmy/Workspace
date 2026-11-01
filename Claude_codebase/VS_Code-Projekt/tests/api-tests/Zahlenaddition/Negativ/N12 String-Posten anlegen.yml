@@ -1,0 +1,27 @@
+info:
+  name: N12 String-Posten anlegen
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "[\"12.50\"]"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

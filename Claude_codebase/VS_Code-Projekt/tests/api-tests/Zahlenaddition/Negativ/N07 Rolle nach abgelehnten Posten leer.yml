@@ -1,0 +1,25 @@
+info:
+  name: N07 Rolle nach abgelehnten Posten leer
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Kein abgelehnter Posten wurde übernommen", () => {
+          expect(res.body.entries).to.deep.equal([]);
+          expect(res.body.count).to.equal(0);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

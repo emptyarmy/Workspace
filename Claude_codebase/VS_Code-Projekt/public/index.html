@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zahlen-Addierer</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <main class="card">
-      <h1>Willkommen beim Zahlen-Addierer!</h1>
-      <p class="intro">
-        Geben Sie zwei Zahlen ein und klicken Sie auf „Addiere“, um die Summe zu berechnen.
-      </p>
 
-      <form id="calc-form" novalidate>
-        <div class="field">
-          <label for="zahl1">Erste Zahl</label>
-          <input id="zahl1" type="text" inputmode="decimal" autocomplete="off" placeholder="z. B. 12,5" />
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zahlen-Addierer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-        <div class="field">
-          <label for="zahl2">Zweite Zahl</label>
-          <input id="zahl2" type="text" inputmode="decimal" autocomplete="off" placeholder="z. B. 7" />
-        </div>
+<body>
+  <main class="card">
+    <h1>Willkommen beim Zahlen-Addierer!</h1>
+    <p class="intro">
+      Geben Sie zwei Zahlen ein und klicken Sie auf „Addiere“, um die Summe zu berechnen.
+    </p>
 
-        <button type="submit" id="addiere">Addiere</button>
+    <form id="calc-form" novalidate>
+      <div class="field">
+        <label for="zahl1">Erste Zahl</label>
+        <input id="zahl1" type="text" inputmode="decimal" autocomplete="off" placeholder="z. B. 12,5" />
+      </div>
 
-        <div class="field">
-          <label for="ergebnis">Ergebnis</label>
-          <input id="ergebnis" type="text" readonly tabindex="-1" />
-        </div>
-      </form>
+      <div class="field">
+        <label for="zahl2">Zweite Zahl</label>
+        <input id="zahl2" type="text" inputmode="decimal" autocomplete="off" placeholder="z. B. 7" />
+      </div>
 
-      <p id="meldung" class="meldung" role="alert" aria-live="polite" hidden></p>
-    </main>
+      <button type="submit" id="addiere">Addiere</button>
 
-    <script src="app.js"></script>
-  </body>
+      <div class="field">
+        <label for="ergebnis">Ergebnis</label>
+        <input id="ergebnis" type="text" readonly tabindex="-1" />
+      </div>
+    </form>
+
+    <div id="tape-controls" class="tape-controls">
+      <h2 id="tape-ueberschrift">Rechnungen (Tapes)</h2>
+      <button type="button" id="create-tape">Neue Rechnung erstellen</button>
+      <select id="tape-list" aria-labelledby="tape-ueberschrift">
+        <option value="">Auswahl</option>
+      </select>
+      <button type="button" id="delete-tape">Rechnung löschen</button>
+      <div class="field">
+        <label for="tape-total">Summe aller Einträge</label>
+        <input id="tape-total" type="text" readonly />
+      </div>
+      <div class="field">
+        <label for="tape-average">Durchschnitt aller Einträge</label>
+        <input id="tape-average" type="text" readonly />
+      </div>
+    </div>
+
+    <p id="meldung" class="meldung" role="alert" aria-live="polite" hidden></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
 </html>

@@ -1,0 +1,22 @@
+info:
+  name: N26 Unbekannter Unterpfad eines Postens
+  type: http
+  seq: 26
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries/{{testwert01}}/xyz"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 404", () => expect(res.status).to.equal(404));
+        test("Fehler 'Not found'", () => expect(res.body.error).to.equal("Not found"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

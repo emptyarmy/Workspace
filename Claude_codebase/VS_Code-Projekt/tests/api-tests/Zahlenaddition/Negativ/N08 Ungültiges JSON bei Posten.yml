@@ -1,0 +1,28 @@
+info:
+  name: N08 Ungültiges JSON bei Posten
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: text/plain
+  body:
+    type: text
+    data: "[1, 2"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 400", () => expect(res.status).to.equal(400));
+        test("Fehler 'Invalid request body'", () => expect(res.body.error).to.equal("Invalid request body"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

@@ -1,0 +1,28 @@
+info:
+  name: N21 PUT auf Rolle nicht erlaubt
+  type: http
+  seq: 21
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 405", () => expect(res.status).to.equal(405));
+        test("Fehler 'Method not allowed'", () => expect(res.body.error).to.equal("Method not allowed"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

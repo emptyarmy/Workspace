@@ -1,0 +1,27 @@
+info:
+  name: P09 Leere Rolle abrufen
+  type: http
+  seq: 9
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/tapes/{{tapeId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("Keine Posten mehr", () => expect(res.body.entries).to.be.an("array").that.is.empty);
+        test("Summe, Anzahl und Durchschnitt sind 0", () => {
+          expect(res.body.sum).to.equal(0);
+          expect(res.body.count).to.equal(0);
+          expect(res.body.average).to.equal(0);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

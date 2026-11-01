@@ -1,0 +1,29 @@
+info:
+  name: N02 Rolle für unbekannte ID anlegen
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: if (res.status === 201) bru.setVar("unbekannteTapeId", res.body.id);
+    - type: tests
+      code: |-
+        test("Status 201", () => expect(res.status).to.equal(201));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

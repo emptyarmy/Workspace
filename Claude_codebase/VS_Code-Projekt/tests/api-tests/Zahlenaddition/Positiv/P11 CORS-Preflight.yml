@@ -1,0 +1,24 @@
+info:
+  name: P11 CORS-Preflight
+  type: http
+  seq: 11
+
+http:
+  method: OPTIONS
+  url: "{{baseUrl}}/v1/tapes"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", () => expect(res.status).to.equal(200));
+        test("CORS erlaubt alle Origins", () => expect(res.headers["access-control-allow-origin"]).to.equal("*"));
+        test("CORS erlaubt GET, POST, PUT, DELETE, OPTIONS", () => expect(res.headers["access-control-allow-methods"]).to.equal("GET, POST, PUT, DELETE, OPTIONS"));
+        test("CORS erlaubt den Header Content-Type", () => expect(res.headers["access-control-allow-headers"]).to.equal("Content-Type"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

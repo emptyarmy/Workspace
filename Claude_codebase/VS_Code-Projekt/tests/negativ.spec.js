@@ -94,3 +94,40 @@ test.describe("Schreibschutz des Ergebnisfelds", () => {
     await expect(seite.ergebnis).toHaveValue("3");
   });
 });
+
+test.describe("Rechnungen (Tapes)", () => {
+  test("N18: „Rechnung löschen“ ohne Auswahl → Fehlermeldung", async () => {
+    await seite.rechnungLoeschen.click();
+    await seite.erwarteFehler("Bitte wählen Sie eine Rechnung zum Löschen aus.");
+  });
+
+  test("N19: Addieren ohne ausgewählte Rechnung ändert Summe und Durchschnitt nicht", async () => {
+    await seite.neueRechnung.click();
+    await seite.addiere("2", "3");
+    await expect(seite.summeAller).toHaveValue("5");
+
+    await seite.rechnungen.selectOption({ label: "Auswahl" });
+    await seite.addiere("10", "10");
+    await expect(seite.ergebnis).toHaveValue("20");
+    await expect(seite.summeAller).toHaveValue("5");
+    await expect(seite.durchschnittAller).toHaveValue("5");
+  });
+
+  test("N20: ungültige Eingabe ändert den Wert der ausgewählten Rechnung nicht", async () => {
+    await seite.neueRechnung.click();
+    await seite.addiere("2", "3");
+
+    await seite.addiere("abc", "3");
+    await seite.erwarteFehler("Bitte korrigieren Sie Ihre Eingabe");
+    await expect(seite.summeAller).toHaveValue("5");
+  });
+
+  test("N21: Rechnung ohne Wert zählt nicht zum Durchschnitt", async () => {
+    await seite.neueRechnung.click();
+    await seite.addiere("4", "4");
+    await seite.neueRechnung.click();
+
+    await expect(seite.summeAller).toHaveValue("8");
+    await expect(seite.durchschnittAller).toHaveValue("8");
+  });
+});

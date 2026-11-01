@@ -1,0 +1,28 @@
+info:
+  name: N06 Objekt als Posten
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{baseUrl}}/v1/tapes/{{negTapeId}}/entries"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "[{{testwert02}}, {\"wert\": 1}]"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 400", () => expect(res.status).to.equal(400));
+        test("Fehler invalid_number", () => expect(res.body.error).to.equal("invalid_number"));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

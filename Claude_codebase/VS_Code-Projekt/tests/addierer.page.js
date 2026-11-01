@@ -11,6 +11,13 @@ export class AddiererSeite {
     this.button = page.getByRole("button", { name: "Addiere" });
     this.ergebnis = page.getByLabel("Ergebnis");
     this.meldung = page.locator("#meldung");
+
+    // Rechnungen (Tapes)
+    this.neueRechnung = page.getByRole("button", { name: "Neue Rechnung erstellen" });
+    this.rechnungLoeschen = page.getByRole("button", { name: "Rechnung löschen" });
+    this.rechnungen = page.getByRole("combobox", { name: "Rechnungen (Tapes)" });
+    this.summeAller = page.getByLabel("Summe aller Einträge");
+    this.durchschnittAller = page.getByLabel("Durchschnitt aller Einträge");
   }
 
   async oeffnen() {
