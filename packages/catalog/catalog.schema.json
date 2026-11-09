@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-tpi.local/schemas/catalog.schema.json",
+  "title": "AI_TPI Fragenkatalog",
+  "description": "Schema für den zweisprachigen Reifegrad-Fragenkatalog (TPI NEXT + Agile TPI + KI-Erweiterung).",
+  "type": "object",
+  "required": ["catalogVersion", "status", "languages", "levels", "answerValues", "efforts", "views", "keyAreas"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "catalogVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-z0-9.]+)?$" },
+    "status": { "enum": ["draft", "review", "released"] },
+    "createdAt": { "type": "string", "format": "date" },
+    "model": { "type": "object" },
+    "languages": { "type": "array", "items": { "enum": ["de", "en"] }, "minItems": 2, "uniqueItems": true },
+    "levels": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "object", "required": ["id", "order", "name"], "additionalProperties": false,
+        "properties": {
+          "id": { "enum": ["initial", "controlled", "efficient", "optimizing"] },
+          "order": { "type": "integer", "minimum": 0, "maximum": 3 },
+          "name": { "$ref": "#/$defs/i18n" }
+        }
+      }
+    },
+    "answerValues": {
+      "type": "array", "minItems": 5,
+      "items": {
+        "type": "object", "required": ["id", "name", "score"], "additionalProperties": false,
+        "properties": {
+          "id": { "enum": ["yes", "partial", "no", "na", "open"] },
+          "name": { "$ref": "#/$defs/i18n" },
+          "score": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "efforts": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "horizon", "name"], "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/effort" },
+          "horizon": { "enum": ["short", "long"] },
+          "name": { "$ref": "#/$defs/i18n" }
+        }
+      }
+    },
+    "views": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "name"], "additionalProperties": false,
+        "properties": { "id": { "$ref": "#/$defs/view" }, "name": { "$ref": "#/$defs/i18n" } }
+      }
+    },
+    "keyAreas": {
+      "type": "array", "minItems": 19, "maxItems": 19,
+      "items": { "$ref": "#/$defs/keyArea" }
+    }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 3, "pattern": "\\S" },
+    "i18n": {
+      "type": "object", "required": ["de", "en"], "additionalProperties": false,
+      "properties": { "de": { "$ref": "#/$defs/text" }, "en": { "$ref": "#/$defs/text" } }
+    },
+    "effort": { "enum": ["S", "M", "L"] },
+    "view": { "enum": ["P", "T", "O"] },
+    "keyArea": {
+      "type": "object",
+      "required": ["id", "order", "name", "description", "levels", "isAiArea", "checkpoints"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^KB(0[1-9]|1[0-9])$" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 19 },
+        "name": { "$ref": "#/$defs/i18n" },
+        "description": { "$ref": "#/$defs/i18n" },
+        "isAiArea": { "type": "boolean" },
+        "levels": {
+          "type": "object", "required": ["controlled", "efficient", "optimizing"], "additionalProperties": false,
+          "properties": {
+            "controlled": { "$ref": "#/$defs/i18n" },
+            "efficient": { "$ref": "#/$defs/i18n" },
+            "optimizing": { "$ref": "#/$defs/i18n" }
+          }
+        },
+        "checkpoints": { "type": "array", "minItems": 3, "items": { "$ref": "#/$defs/checkpoint" } }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "required": ["id", "keyArea", "level", "effort", "text", "recommendation", "source", "tags"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^KB(0[1-9]|1[0-9])\\.((K|E|O)\\.(\\d{2}|AI\\d)|AG\\.[1-3]\\d)$"
+        },
+        "keyArea": { "type": "string", "pattern": "^KB(0[1-9]|1[0-9])$" },
+        "level": { "enum": ["controlled", "efficient", "optimizing"] },
+        "effort": { "$ref": "#/$defs/effort" },
+        "text": { "$ref": "#/$defs/i18n" },
+        "recommendation": { "$ref": "#/$defs/i18n" },
+        "source": { "enum": ["TPI_NEXT_DE", "TPI_NEXT_RECON", "AGILE_TPI_EN", "AI_EXT"] },
+        "tags": { "type": "array", "uniqueItems": true, "items": { "enum": ["agile", "AI", "reconstructed"] } },
+        "agileRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^\\d{1,2}\\.[1-3]\\.\\d$" } },
+        "view": { "$ref": "#/$defs/view" },
+        "cluster": { "enum": ["A", "B", "C", "D", "E", "F", "G"] },
+        "hint": { "$ref": "#/$defs/i18n" },
+        "dependsOn": { "type": "array", "items": { "type": "string" } }
+      },
+      "dependentRequired": { "agileRefs": ["view", "cluster"] }
+    }
+  }
+}

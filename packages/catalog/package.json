@@ -1,0 +1,19 @@
+{
+  "name": "@ai-tpi/catalog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fragenkatalog (19 Kernbereiche, DE/EN) als JSON mit Schema und TypeScript-Typen",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalog.v1.json": "./catalog.v1.json",
+    "./catalog.schema.json": "./catalog.schema.json"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0"
+  }
+}

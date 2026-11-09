@@ -1,0 +1,44 @@
+{
+  "folders": [
+    { "name": "AI_TPI", "path": "." }
+  ],
+  "settings": {
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[markdown]": { "editor.wordWrap": "on" },
+    "markdown.validate.enabled": true,
+    "cSpell.language": "de,en",
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "i18n-ally.localesPaths": ["apps/web/src/i18n"],
+    "i18n-ally.sourceLanguage": "de",
+    "i18n-ally.keystyle": "nested",
+    "playwright.reuseBrowser": true,
+    "search.exclude": {
+      "docs/_quellen": true,
+      "node_modules": true,
+      "playwright-report": true,
+      "test-results": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-playwright.playwright",
+      "astro-build.astro-vscode",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "davidanson.vscode-markdownlint",
+      "yzhang.markdown-all-in-one",
+      "bierner.markdown-mermaid",
+      "streetsidesoftware.code-spell-checker",
+      "streetsidesoftware.code-spell-checker-german",
+      "lokalise.i18n-ally",
+      "Vue.volar",
+      "bradlc.vscode-tailwindcss",
+      "Prisma.prisma",
+      "ms-azuretools.vscode-docker"
+    ]
+  }
+}

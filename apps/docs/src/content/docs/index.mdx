@@ -1,0 +1,53 @@
+---
+title: AI_TPI – Testprozess kontinuierlich verbessern
+description: Dokumentation der Webanwendung zur Reifegradbewertung des Testprozesses nach TPI NEXT, Agile TPI und KI-Ergänzungen.
+template: splash
+hero:
+  tagline: Reifegrad des Testprozesses in 19 Kernbereichen erfassen, auswerten und mit KI-gestützten Empfehlungen verbessern – mehrsprachig, mandantenfähig und auf allen Geräten.
+  actions:
+    - text: Schnellstart
+      link: /einstieg/schnellstart/
+      icon: right-arrow
+    - text: Handbuch
+      link: /handbuch/rollen-und-rechte/
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Was finden Sie hier?
+
+<CardGrid stagger>
+  <Card title="Einstieg" icon="rocket">
+    Worum es in AI_TPI geht, welche Bausteine es gibt und wie Sie die Anwendung lokal in wenigen Minuten starten.
+  </Card>
+  <Card title="Handbuch" icon="open-book">
+    Für Admins und Fachanwender: Ersteinrichtung, Anmeldung, Benutzer, Abteilungen, Firmen, E-Mail, KI und Audit-Log.
+  </Card>
+  <Card title="Entwicklung" icon="laptop">
+    Projektstruktur, lokale Umgebung, Datenbank, Tests mit Vitest und Playwright sowie verbindliche Konventionen.
+  </Card>
+  <Card title="Referenz" icon="list-format">
+    Alle Einstellungen in `.env`, die REST-Schnittstelle, Fehlercodes und npm-Skripte auf einen Blick.
+  </Card>
+</CardGrid>
+
+## Häufig gesucht
+
+<CardGrid>
+  <LinkCard title="Ersteinrichtung" description="Den allerersten Admin und die eigene Firma anlegen." href="/handbuch/ersteinrichtung/" />
+  <LinkCard title="Fehlerbehebung" description="Typische Probleme beim Starten und Testen – mit Lösung." href="/handbuch/fehlerbehebung/" />
+  <LinkCard title="API-Referenz" description="Alle Endpunkte mit Rollen und Antwortcodes." href="/referenz/api/" />
+  <LinkCard title="Projektdokumentation" description="Anforderungen, Architektur, Testfallkatalog und Entscheidungen (ADR)." href="/projekt/ueberblick/vision-und-ziele/" />
+</CardGrid>
+
+## Projektstand
+
+| Phase | Inhalt | Stand |
+|---|---|---|
+| 0–1 | Analyse, Planung, Klärung der offenen Fragen | abgeschlossen |
+| 2 | Fragenkatalog v1.0 (19 Kernbereiche, 223 Kontrollpunkte) | Entwurf fertig, fachliche Prüfung ausstehend |
+| 3 | Grundgerüst (Vue 3, Fastify, PostgreSQL, Tests) | abgeschlossen |
+| 4a | Anmeldung, Einladung, Einmal-Link, Admin-Bereich der eigenen Firma | abgeschlossen |
+| 4b | Firmenübergreifende Administration, Abteilungen, Branchen, E-Mail und KI je Firma, Audit-Log | abgeschlossen |
+| 5 ff. | Assessments, Fragebogen, Zusammenführung, Bericht, Empfehlungen, Benchmark | geplant |

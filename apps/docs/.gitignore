@@ -1,0 +1,4 @@
+# Erzeugt von scripts/sync-docs.mjs aus dem Ordner docs/ des Repos – nicht von Hand bearbeiten.
+src/content/docs/projekt/
+.astro/
+dist/

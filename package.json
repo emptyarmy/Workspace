@@ -1,0 +1,47 @@
+{
+  "name": "ai-tpi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kontinuierliche Testprozessverbesserung (TPI NEXT + Agile TPI + KI) – Reifegradbewertung mit Bericht und KI-Empfehlungen",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c blue,green \"npm:dev -w @ai-tpi/server\" \"npm:dev -w @ai-tpi/web\"",
+    "build": "npm run build -w @ai-tpi/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "db:generate": "npm run db:generate -w @ai-tpi/server",
+    "db:migrate": "npm run db:migrate -w @ai-tpi/server",
+    "catalog:validate": "python3 tools/catalog/validate.py",
+    "docs:dev": "npm run dev -w @ai-tpi/docs",
+    "docs:build": "npm run build -w @ai-tpi/docs",
+    "docs:preview": "npm run preview -w @ai-tpi/docs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "1.65.0",
+    "@types/node": "^22.19.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.39.0",
+    "eslint-plugin-vue": "^10.2.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^7.3.1",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "drizzle-kit": "^0.31.11"
+  }
+}

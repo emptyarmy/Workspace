@@ -1,0 +1,20 @@
+{
+  "name": "@ai-tpi/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Gemeinsame Regeln für Client und Server: Passwortrichtlinie, Passwortstärke, Rollen, E-Mail-Domains",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@zxcvbn-ts/core": "^3.0.4",
+    "@zxcvbn-ts/language-common": "^3.0.4",
+    "@zxcvbn-ts/language-de": "^3.0.2",
+    "@zxcvbn-ts/language-en": "^3.0.2",
+    "zod": "^4.1.0"
+  }
+}

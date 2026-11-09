@@ -1,0 +1,24 @@
+/* Farben passend zur Anwendung (apps/web/src/styles/main.css). */
+:root {
+  --sl-color-accent-low: #dbe6f3;
+  --sl-color-accent: #1f3a5f;
+  --sl-color-accent-high: #12253d;
+}
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #1a2a40;
+  --sl-color-accent: #7fa7d9;
+  --sl-color-accent-high: #dbe6f3;
+}
+pre.mermaid {
+  background: var(--sl-color-gray-7, #f6f7f9);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  text-align: center;
+}
+/* Breite Tabellen der Projektdokumentation horizontal scrollbar statt abgeschnitten. */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+}

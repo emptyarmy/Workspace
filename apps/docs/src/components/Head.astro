@@ -1,0 +1,28 @@
+---
+/**
+ * Erweiterter <head> von Starlight: lädt Mermaid nur auf Seiten mit Diagrammen und
+ * passt das Diagramm-Thema an den Hell-/Dunkelmodus an.
+ */
+import Default from '@astrojs/starlight/components/Head.astro';
+---
+
+<Default><slot /></Default>
+
+<script>
+  const blocks = document.querySelectorAll<HTMLElement>('pre.mermaid');
+  if (blocks.length) {
+    blocks.forEach((b) => (b.dataset.source = b.textContent ?? ''));
+    const { default: mermaid } = await import('mermaid');
+    const render = async () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'neutral', securityLevel: 'strict' });
+      blocks.forEach((b) => {
+        b.removeAttribute('data-processed');
+        b.textContent = b.dataset.source ?? '';
+      });
+      await mermaid.run({ nodes: [...blocks] });
+    };
+    await render();
+    new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+</script>
