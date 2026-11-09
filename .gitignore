@@ -1,0 +1,21 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.pgdata/
+tests/e2e/.auth/
+
+# Originaldokumente (möglicherweise urheberrechtlich geschützt) – nur lokal, nicht im Repository
+docs/_quellen/
+specs/
+packages/catalog/sources/
+
+# Astro (Dokumentationsseite)
+.astro/

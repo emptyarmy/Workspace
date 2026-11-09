@@ -1,0 +1,19 @@
+{
+  "name": "@ai-tpi/docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Dokumentationsseite (Astro + Starlight) für AI_TPI",
+  "scripts": {
+    "sync": "node scripts/sync-docs.mjs",
+    "dev": "npm run sync && astro dev",
+    "build": "npm run sync && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.6",
+    "@astrojs/starlight": "^0.42.10",
+    "astro": "^7.4.7",
+    "mermaid": "^12.3.0"
+  }
+}
