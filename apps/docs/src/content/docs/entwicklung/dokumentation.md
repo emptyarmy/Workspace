@@ -7,11 +7,43 @@ sidebar:
 
 Diese Seite ist mit **[Astro](https://astro.build)** und dem Dokumentations-Theme **[Starlight](https://starlight.astro.build)** gebaut und liegt in `apps/docs`.
 
+## Dokumentation im Browser lesen
+
+Die Dokumentation läuft unabhängig von der Anwendung. Am besten in einem **zweiten Terminal** im Projektordner starten, damit `npm run dev` im ersten weiterläuft.
+
+### Variante A: Entwicklungsserver (zum Schreiben)
+
 ```bash
-npm run docs:dev       # Entwicklungsserver mit Neuladen: http://localhost:4321
-npm run docs:build     # statische Seite nach apps/docs/dist
-npm run docs:preview   # gebaute Seite ansehen
+npm run docs:dev
 ```
+
+Dann **http://localhost:4321** öffnen. Änderungen an `.md`-Dateien erscheinen sofort, auch Änderungen in `docs/`. Die Volltextsuche funktioniert hier nicht.
+
+### Variante B: gebaute Fassung (zum Lesen, mit Suche)
+
+```bash
+npm run docs:build     # statische Seite nach apps/docs/dist bauen
+npm run docs:preview   # gebaute Seite ausliefern: http://localhost:4321
+```
+
+`docs:build` erzeugt alle Seiten und den Suchindex einmalig. `docs:preview` startet nur einen schlanken Server, der diese fertigen Dateien ausliefert; es wird nichts neu übersetzt. Nach Änderungen an den Inhalten `docs:build` erneut ausführen.
+
+:::caution[Nicht per Doppelklick öffnen]
+`apps/docs/dist/index.html` direkt im Browser (`file://…`) zu öffnen funktioniert nicht richtig: Links, Styles und Suche verwenden absolute Pfade wie `/handbuch/…` und brauchen einen Webserver. Statt `docs:preview` geht auch jeder andere statische Server, z. B. `npx serve apps/docs/dist`.
+:::
+
+### Anderen Port verwenden
+
+Ist Port 4321 belegt, den Port beim Start mitgeben. `DOCS_PORT` wird aus der Umgebung gelesen, **nicht** aus der `.env`:
+
+```bash
+DOCS_PORT=4322 npm run docs:dev
+DOCS_PORT=4322 npm run docs:preview
+```
+
+### Beenden
+
+Im Terminal `Ctrl+C`.
 
 ## Aufbau
 
@@ -71,4 +103,4 @@ apps/docs/
 - **Komponenten** (nur in `.mdx`): `Card`, `CardGrid`, `LinkCard`, `Tabs`, `Steps` aus `@astrojs/starlight/components`
 - **Interne Links** als absolute Pfade ohne Dateiendung, z. B. `/handbuch/ersteinrichtung/`
 
-Die Volltextsuche (Pagefind) wird beim Bauen erzeugt und funktioniert in `docs:build` / `docs:preview`.
+Die Volltextsuche (Pagefind) wird beim Bauen erzeugt und funktioniert nur in der gebauten Fassung (Variante B oben).
