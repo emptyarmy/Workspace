@@ -88,6 +88,48 @@ async function update(u: AdminUser, patch: Record<string, unknown>) {
   await load();
 }
 
+/** Name und E-Mail bearbeiten (TC-USR-003/004). */
+const editing = reactive<{ id: string | null; name: string; email: string; error?: string }>({
+  id: null,
+  name: '',
+  email: '',
+});
+function startEdit(u: AdminUser) {
+  Object.assign(editing, { id: u.id, name: u.name, email: u.email, error: undefined });
+}
+async function saveEdit(u: AdminUser) {
+  editing.error =
+    editing.name.trim().length < 2
+      ? t('common.required')
+      : !emailSchema.safeParse(editing.email).success
+        ? t('login.errors.emailInvalid')
+        : undefined;
+  if (editing.error) return;
+  const patch: Record<string, unknown> = {};
+  if (editing.name.trim() !== u.name) patch.name = editing.name.trim();
+  if (editing.email.trim().toLowerCase() !== u.email.toLowerCase()) patch.email = editing.email.trim();
+  if (Object.keys(patch).length) {
+    const res = await apiPatch<AdminUser>(`/api/admin/users/${u.id}`, patch);
+    if (!res.ok) return show('error', errorText(res.error));
+    show('info', t('admin.users.updated'));
+  }
+  editing.id = null;
+  await load();
+}
+
+/** Notfallweg (TC-ADM-017): Anmeldelink der Firma anzeigen und kopieren, falls die Einladungs-Mail nicht ankommt. */
+const loginLink = computed(() => `${window.location.origin}/login/${auth.user?.companySlug ?? ''}`);
+async function copyLink() {
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(loginLink.value);
+    copied = true;
+  } catch {
+    copied = false;
+  }
+  show('info', t(copied ? 'admin.users.linkCopied' : 'admin.users.linkShown', { link: loginLink.value }));
+}
+
 async function resendInvite(u: AdminUser) {
   const res = await apiPost(`/api/admin/users/${u.id}/invitation`);
   show(res.ok ? 'info' : 'error', res.ok ? t('admin.users.inviteSent') : errorText(res.error));
@@ -178,11 +220,41 @@ async function confirmed() {
       <li v-if="others.length === 0" class="empty">{{ t('admin.users.empty') }}</li>
       <li v-for="u in others" :key="u.id" class="user-row" :data-testid="`user-row-${u.email}`">
         <div class="who">
-          <strong>{{ u.name }}</strong>
+          <template v-if="editing.id === u.id">
+            <label class="sr-only" :for="`edit-name-${u.id}`">{{ t('admin.users.name') }}</label>
+            <input
+              :id="`edit-name-${u.id}`"
+              v-model="editing.name"
+              type="text"
+              data-testid="user-edit-name"
+            />
+            <label class="sr-only" :for="`edit-email-${u.id}`">{{ t('admin.users.email') }}</label>
+            <input
+              :id="`edit-email-${u.id}`"
+              v-model.trim="editing.email"
+              type="email"
+              data-testid="user-edit-email"
+            />
+            <p v-if="editing.error" class="error-text" data-testid="user-edit-error">{{ editing.error }}</p>
+            <span class="edit-buttons">
+              <button
+                type="button"
+                class="btn btn-primary-inline"
+                data-testid="user-edit-save"
+                @click="saveEdit(u)"
+              >
+                {{ t('common.save') }}
+              </button>
+              <button type="button" class="btn btn-ghost" @click="editing.id = null">
+                {{ t('common.cancel') }}
+              </button>
+            </span>
+          </template>
+          <strong v-else>{{ u.name }}</strong>
           <span v-if="u.isExternal" class="pill ext" data-testid="badge-external">{{
             t('common.external')
           }}</span>
-          <span class="mail">{{ u.email }}</span>
+          <span v-if="editing.id !== u.id" class="mail">{{ u.email }}</span>
           <span class="meta">
             <span :class="['pill', 'st-' + u.status]" data-testid="user-status">{{
               t(`status.${u.status}`)
@@ -224,6 +296,24 @@ async function confirmed() {
             @click="update(u, { active: u.status === 'inactive' })"
           >
             {{ u.status === 'inactive' ? t('admin.users.activate') : t('admin.users.deactivate') }}
+          </button>
+          <button
+            v-if="editing.id !== u.id"
+            type="button"
+            class="btn btn-ghost"
+            data-testid="user-edit"
+            @click="startEdit(u)"
+          >
+            {{ t('admin.users.edit') }}
+          </button>
+          <button
+            v-if="u.status === 'invited'"
+            type="button"
+            class="btn btn-ghost"
+            data-testid="user-copy-link"
+            @click="copyLink"
+          >
+            {{ t('admin.users.copyLink') }}
           </button>
           <button
             v-if="u.status === 'invited'"
@@ -382,5 +472,10 @@ h2 {
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
+}
+.edit-buttons {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
 }
 </style>

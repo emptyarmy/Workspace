@@ -21,6 +21,7 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:planned": "python3 tools/tests/generate_planned.py",
     "db:generate": "npm run db:generate -w @ai-tpi/server",
     "db:migrate": "npm run db:migrate -w @ai-tpi/server",
     "catalog:validate": "python3 tools/catalog/validate.py",
@@ -29,6 +30,7 @@
     "docs:preview": "npm run preview -w @ai-tpi/docs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.39.0",
     "@playwright/test": "1.65.0",
     "@types/node": "^22.19.0",
@@ -38,7 +40,7 @@
     "globals": "^16.5.0",
     "prettier": "^3.7.0",
     "typescript": "^5.9.0",
-    "typescript-eslint": "^7.3.1",
+    "typescript-eslint": "^8.48.0",
     "vitest": "^5.1.0"
   },
   "dependencies": {

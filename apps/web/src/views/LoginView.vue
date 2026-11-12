@@ -17,7 +17,11 @@ const branding = useBranding(slug);
 const form = reactive({ email: '', password: '' });
 const errors = reactive<{ email?: string; password?: string }>({});
 const message = ref<{ kind: 'info' | 'error'; text: string } | null>(
-  route.query.passwordSet ? { kind: 'info', text: t('login.passwordSet') } : null,
+  route.query.passwordSet
+    ? { kind: 'info', text: t('login.passwordSet') }
+    : route.query.expired
+      ? { kind: 'info', text: t('login.sessionExpired') }
+      : null,
 );
 const busy = ref(false);
 

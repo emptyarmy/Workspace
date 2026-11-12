@@ -93,6 +93,8 @@ Aktiv nur mit `NODE_ENV=test` **und** `TEST_ENDPOINTS=true`:
 | Methode | Pfad | Zweck |
 |---|---|---|
 | GET | `/api/test/outbox?to=` | versendete Mails (`MAIL_TRANSPORT=memory`), inkl. `via` (genutzter Mailserver) |
+| POST | `/api/test/expire-sessions` | `{ email }` – Sitzungen als 61 Minuten unbenutzt markieren |
+| POST | `/api/test/expire-tokens` | `{ email }` – Einmal-Links ablaufen lassen |
 | GET | `/api/test/fake-ollama/api/tags` | nachgebildeter Ollama-Endpunkt für den KI-Verbindungstest |
 
 ## Beispiel

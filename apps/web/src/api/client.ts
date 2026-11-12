@@ -5,6 +5,15 @@ export interface ApiResult<T> {
   error?: string;
 }
 
+/**
+ * Wird aufgerufen, wenn ein Aufruf mit 401 endet (Sitzung abgelaufen, TC-AUTH-008).
+ * Anmelde-Endpunkte sind ausgenommen, dort ist 401 eine normale Antwort.
+ */
+let onUnauthorized: (() => void) | null = null;
+export function setUnauthorizedHandler(handler: () => void) {
+  onUnauthorized = handler;
+}
+
 /** CSRF-Schutz: Der Server verlangt diesen Header bei zustandsändernden Aufrufen. */
 const CSRF = { 'X-Requested-With': 'ai-tpi' };
 
@@ -32,6 +41,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
       !res.ok && data && typeof data === 'object' && 'error' in data
         ? String((data as { error: unknown }).error)
         : undefined;
+    if (res.status === 401 && !path.startsWith('/api/auth/')) onUnauthorized?.();
     return { ok: res.ok, status: res.status, data: res.ok ? (data as T) : (data as T), error };
   } catch {
     return { ok: false, status: 0, data: null, error: 'network' };

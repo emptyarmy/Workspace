@@ -63,7 +63,9 @@ function project(
     delete use.defaultBrowserType;
     if (executablePath) use.launchOptions = { executablePath };
   }
-  return { name, use, dependencies: ['setup'], testIgnore: /.*\.setup\.ts/ };
+  // Platzhalter geplanter Funktionen (tests/e2e/geplant) nur einmal auflisten, nicht je Geräteprofil.
+  const testIgnore = name === 'desktop-chrome' ? [/.*\.setup\.ts/] : [/.*\.setup\.ts/, /[\\/]geplant[\\/]/];
+  return { name, use, dependencies: ['setup'], testIgnore };
 }
 
 const setupProject = project('setup', devices['Desktop Chrome']);

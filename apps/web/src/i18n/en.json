@@ -26,7 +26,8 @@
       "invalidCredentials": "Email address or password is incorrect.",
       "locked": "The account is temporarily locked after several failed attempts. Please try again in 15 minutes."
     },
-    "passwordSet": "Your password has been saved. You can now sign in."
+    "passwordSet": "Your password has been saved. You can now sign in.",
+    "sessionExpired": "Your session has expired. Please sign in again."
   },
   "password": {
     "headingSet": "Set password",
@@ -62,7 +63,7 @@
   },
   "home": {
     "heading": "Welcome",
-    "text": "The application skeleton is set up. Questionnaire, report and admin area follow in the next phases.",
+    "text": "Sign-in and the admin area are set up. Questionnaire, report and recommendations follow in the next phases.",
     "catalogInfo": "Catalog: {areas} key areas, {checkpoints} checkpoints (version {version}).",
     "greeting": "Hello {name}",
     "roleInfo": "You are signed in as {role} at {company}.",
@@ -172,7 +173,11 @@
         "invalid_input": "Please check your input."
       },
       "department": "Department",
-      "noDepartment": "– none –"
+      "noDepartment": "– none –",
+      "edit": "Edit",
+      "copyLink": "Copy sign-in link",
+      "linkCopied": "Sign-in link copied: {link} – with “Forgot password?” the person can set their first password.",
+      "linkShown": "Sign-in link: {link} – please pass it on manually; with “Forgot password?” the person sets their first password."
     },
     "confirm": {
       "deleteTitle": "Delete user?",

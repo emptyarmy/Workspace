@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import LanguageSwitcher from './components/LanguageSwitcher.vue';
@@ -7,6 +8,13 @@ import { useAuthStore } from './stores/auth';
 const { t } = useI18n();
 const auth = useAuthStore();
 const router = useRouter();
+
+/** Logo der eigenen Firma in der Kopfzeile (TC-AUTH-013); nicht ladbar → ausblenden. */
+const logoFailed = ref(false);
+watch(
+  () => auth.user?.companyLogoUrl,
+  () => (logoFailed.value = false),
+);
 
 async function logout() {
   const slug = auth.user?.companySlug;
@@ -19,6 +27,14 @@ async function logout() {
   <a href="#main" class="skip-link">{{ t('app.skipToContent') }}</a>
   <header class="topbar" data-testid="topbar">
     <RouterLink to="/start" class="brand">AI_TPI</RouterLink>
+    <img
+      v-if="auth.user?.companyLogoUrl && !logoFailed"
+      :src="auth.user.companyLogoUrl"
+      :alt="auth.user.companyLogoAlt || auth.user.companyName"
+      class="hdr-logo"
+      data-testid="header-logo"
+      @error="logoFailed = true"
+    />
     <span class="subtitle">{{ auth.user ? auth.user.companyName : t('app.title') }}</span>
     <nav v-if="auth.user" class="usernav" :aria-label="t('nav.userMenu')">
       <RouterLink v-if="auth.isAdmin" :to="{ name: 'admin' }" class="navlink" data-testid="nav-admin">{{
@@ -50,6 +66,14 @@ async function logout() {
   padding: 0.5rem 1rem;
   padding-top: max(0.5rem, env(safe-area-inset-top));
   min-height: 56px;
+}
+.hdr-logo {
+  height: 32px;
+  max-width: 120px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px 6px;
 }
 .brand {
   font-weight: 800;
