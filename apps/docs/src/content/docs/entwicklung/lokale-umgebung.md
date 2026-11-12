@@ -11,7 +11,7 @@ sidebar:
 |---|---|---|
 | Weboberfläche (Vite) | 5173 | `WEB_PORT` |
 | API-Server | 3000 | `SERVER_PORT` |
-| PostgreSQL (Docker) | 5432 | `docker-compose.yml` + `DATABASE_URL` |
+| PostgreSQL (Docker) | 5433 | `docker-compose.yml` + `DATABASE_URL` |
 | Mailpit SMTP / Weboberfläche | 1025 / 8025 | `SMTP_PORT` |
 | Dokumentation (Astro) | 4321 | `DOCS_PORT` |
 | Playwright: API / Web | 3100 / 5180 | `E2E_SERVER_PORT` / `E2E_WEB_PORT` |
