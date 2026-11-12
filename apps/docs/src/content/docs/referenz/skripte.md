@@ -20,7 +20,7 @@ Alle Befehle im **Projektordner** ausführen.
 | `npm run test:e2e:ui` | Playwright im UI-Modus |
 | `npm run test:planned` | Platzhalter-Tests für noch nicht automatisierte Katalogfälle neu erzeugen (`tests/e2e/geplant/`) |
 | `npm run db:generate` | Migration aus `schema.ts` erzeugen |
-| `npm run db:migrate` | Migrationen ausführen + Stammdaten |
+| `npm run db:migrate` | Migrationen ausführen + Stammdaten (löscht keine Daten; zum Zurücksetzen siehe [Anwendung zurücksetzen](/entwicklung/zuruecksetzen/)) |
 | `npm run catalog:validate` | Fragenkatalog gegen das Schema prüfen (Python) |
 | `npm run docs:dev` | Dokumentation mit Neuladen (Port 4321) |
 | `npm run docs:build` | Dokumentation als statische Seite (`apps/docs/dist`) |
