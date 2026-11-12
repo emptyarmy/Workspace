@@ -40,6 +40,9 @@ export function createMailer(config: AppConfig): Mailer {
     return {
       outbox,
       async send(msg, smtp) {
+        // Wie ein echter Versand: Hosts unter der reservierten TLD .invalid sind nie erreichbar (TC-ADM-016).
+        if (smtp?.host.toLowerCase().endsWith('.invalid'))
+          throw new Error(`getaddrinfo ENOTFOUND ${smtp.host}`);
         outbox.push({
           ...msg,
           sentAt: new Date().toISOString(),

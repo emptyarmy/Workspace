@@ -5,6 +5,7 @@ import CompanyLogo from '../../components/CompanyLogo.vue';
 import NoticeBar from '../../components/NoticeBar.vue';
 import { apiDelete, apiGet, apiPatch, apiPost } from '../../api/client';
 import { useNotice } from '../../composables/useNotice';
+import { useAuthStore } from '../../stores/auth';
 
 interface Company {
   name: string;
@@ -72,7 +73,11 @@ async function save() {
   notice.value = res.ok
     ? { kind: 'info', text: t('common.saved') }
     : { kind: 'error', text: t('common.error') };
-  if (res.ok) await load();
+  if (res.ok) {
+    await load();
+    // Logo und Name in der Kopfzeile aktualisieren
+    await useAuthStore().refresh();
+  }
 }
 
 async function addDomain() {

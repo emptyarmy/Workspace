@@ -18,6 +18,7 @@ Alle Befehle im **Projektordner** ausführen.
 | `npm run test:unit` | Vitest (Unit, API; Datenbanktests mit `TEST_DATABASE_URL`) |
 | `npm run test:e2e` | Playwright auf allen Geräteprofilen |
 | `npm run test:e2e:ui` | Playwright im UI-Modus |
+| `npm run test:planned` | Platzhalter-Tests für noch nicht automatisierte Katalogfälle neu erzeugen (`tests/e2e/geplant/`) |
 | `npm run db:generate` | Migration aus `schema.ts` erzeugen |
 | `npm run db:migrate` | Migrationen ausführen + Stammdaten |
 | `npm run catalog:validate` | Fragenkatalog gegen das Schema prüfen (Python) |

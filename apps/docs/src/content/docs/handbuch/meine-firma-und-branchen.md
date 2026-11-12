@@ -18,7 +18,7 @@ Admin-Bereich → Reiter **Meine Firma** (`/admin?tab=company`).
 | Alternativtext | für Screenreader |
 | Benchmark-Teilnahme | Ergebnisse fließen nur anonym und aggregiert in Branchenvergleiche ein; abschaltbar |
 
-Das Logo erscheint auf der Anmeldeseite Ihrer Firma.
+Das Logo erscheint auf der Anmeldeseite Ihrer Firma und nach der Anmeldung in der Kopfzeile.
 
 ### E-Mail-Domains
 

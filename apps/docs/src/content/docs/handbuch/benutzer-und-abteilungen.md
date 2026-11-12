@@ -25,11 +25,13 @@ Prüfungen beim Anlegen:
 
 | Aktion | Wirkung |
 |---|---|
+| **Bearbeiten** | Name und E-Mail-Adresse ändern; die neue Adresse muss zur Firma gehören und frei sein. Bei geänderter Adresse werden laufende Sitzungen beendet, die Anmeldung erfolgt mit der neuen Adresse und dem bisherigen Passwort. |
 | **Rolle** ändern | wirkt sofort |
 | **Abteilung** ändern | wirkt sofort; nur aktive Abteilungen werden angeboten |
 | **Deaktivieren** | Anmeldung nicht mehr möglich, laufende Sitzungen werden beendet; Daten bleiben erhalten |
 | **Aktivieren** | Anmeldung wieder möglich (oder Status „eingeladen“, falls noch kein Passwort gesetzt wurde) |
 | **Einladung erneut senden** | nur bei Status „eingeladen“ |
+| **Anmeldelink kopieren** | Notfallweg, wenn die Einladungs-Mail nicht ankommt: kopiert die Anmeldeadresse der Firma und zeigt sie an. Mit „Passwort vergessen?“ legt die Person dort ihr erstes Passwort fest. |
 | **Passwort zurücksetzen** | nach Bestätigung: altes Passwort sofort ungültig, neuer Einmal-Link |
 | **Löschen** | nach Bestätigung im Dialog (Fokus liegt auf „Abbrechen“, Esc bricht ab) |
 

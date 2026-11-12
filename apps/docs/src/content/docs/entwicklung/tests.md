@@ -62,8 +62,51 @@ So läuft ein Testlauf ab:
 | `PW_CHROMIUM_PATH` | eigener Chromium-Pfad |
 | `E2E_SERVER_PORT`, `E2E_WEB_PORT` | abweichende Testports |
 
+### Testdateien
+
+| Datei | Inhalt |
+|---|---|
+| `setup.setup.ts` | Ersteinrichtung über die Oberfläche, speichert die Admin-Sitzung |
+| `login.spec.ts` | Anmeldung, Firmenlogo, Passwort vergessen, 404, Ersteinrichtung gesperrt/Server-Fehler |
+| `password.spec.ts` | Passwortregeln, Stärkeanzeige, Einmal-Link |
+| `admin-flow.spec.ts` | Einladung bis Login, Benutzer verwalten, Rollen und Rechte, Sperre, Meine Firma |
+| `admin-4b.spec.ts` | Abteilungen, andere Firmen, Reset-Limit, Domains, E-Mail, KI-Module, Audit-Log, alle Reiter auf allen Geräten |
+| `industries.spec.ts` | Branchenliste pflegen |
+| `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
+| `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
+| `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |
+| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für Funktionen späterer Phasen – siehe unten |
+
+### Barrierefreiheit
+
+`barrierefreiheit.spec.ts` prüft mit [axe-core](https://github.com/dequelabs/axe-core) (`@axe-core/playwright`) jede vorhandene Seite gegen WCAG 2.1 A/AA. Es dürfen **keine** Verstöße der Stufen *critical* und *serious* auftreten. Gefundene Verstöße hängt der Test als JSON an den Playwright-Bericht an.
+
+### Platzhalter für geplante Funktionen
+
+Für jeden Fall des [Testfallkatalogs](/projekt/test/testfallkatalog/), den noch kein echter Test abdeckt, gibt es einen Platzhalter mit `test.fixme`. Titel ist die Testfall-ID mit Beschreibung; „Gerät“ und „Erwartet“ stehen als Anmerkungen im Bericht. Platzhalter laufen nicht, sie werden als übersprungen gezählt und nur im Profil `desktop-chrome` aufgeführt.
+
+```bash
+npm run test:planned     # tests/e2e/geplant/ aus dem Katalog neu erzeugen
+```
+
+Ablauf für eine neue Funktion: echte Tests mit der Katalog-ID im Titel schreiben, dann `npm run test:planned` ausführen. Damit verschwinden die abgedeckten Platzhalter. Die Dateien in `geplant/` nie von Hand bearbeiten.
+
+### Testschnittstellen
+
+Nur mit `NODE_ENV=test` und `TEST_ENDPOINTS=true` (Playwright-Testserver):
+
+| Schnittstelle | Zweck |
+|---|---|
+| `GET /api/test/outbox?to=` | versendete Mails inkl. genutztem Mailserver (`via`) |
+| `POST /api/test/expire-sessions` | Sitzungen einer Person 61 Minuten „altern“ lassen (Leerlauf-Timeout) |
+| `POST /api/test/expire-tokens` | Einmal-Links einer Person ablaufen lassen |
+| `GET /api/test/fake-ollama/api/tags` | nachgebildeter Ollama-Server für den KI-Verbindungstest |
+
+Mailserver mit einem Namen unter der reservierten Endung `.invalid` (z. B. `smtp.kaputt.invalid`) schlagen im Testbetrieb wie ein nicht erreichbarer Server fehl.
+
 ## Regeln für neue Tests
 
 - Selektoren nur über `data-testid` oder ARIA-Rollen, nie über CSS-Klassen.
+- Anmeldeversuche anderer Personen nie über den API-Kontext des Admins (`ada`) ausführen; das überschreibt dessen Sitzung. Stattdessen einen frischen Kontext verwenden (`loggedInContext`).
 - Jede neue Route bekommt einen Negativtest für **fremde Firmen** (404) und für **falsche Rollen** (403).
 - Neue Oberflächentexte in `de.json` **und** `en.json`; ein Test prüft die Vollständigkeit und die Platzhalter.

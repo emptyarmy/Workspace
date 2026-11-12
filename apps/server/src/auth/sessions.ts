@@ -16,6 +16,9 @@ export interface SessionUser {
   companyId: string;
   companySlug: string;
   companyName: string;
+  /** Logo der eigenen Firma für die Kopfzeile (TC-AUTH-013). */
+  companyLogoUrl: string | null;
+  companyLogoAlt: string | null;
   isExternal: boolean;
   mustChangePassword: boolean;
 }
@@ -48,6 +51,8 @@ export async function resolveSession(db: Db, token: string, now = new Date()): P
       },
       companySlug: companies.slug,
       companyName: companies.name,
+      companyLogoUrl: companies.logoUrl,
+      companyLogoAlt: companies.logoAlt,
     })
     .from(sessions)
     .innerJoin(users, eq(users.id, sessions.userId))
@@ -61,7 +66,13 @@ export async function resolveSession(db: Db, token: string, now = new Date()): P
   }
   await db.update(sessions).set({ lastSeenAt: now }).where(eq(sessions.id, row.sessionId));
   const { status: _status, ...user } = row.user;
-  return { ...user, companySlug: row.companySlug, companyName: row.companyName };
+  return {
+    ...user,
+    companySlug: row.companySlug,
+    companyName: row.companyName,
+    companyLogoUrl: row.companyLogoUrl,
+    companyLogoAlt: row.companyLogoAlt,
+  };
 }
 
 export async function destroySession(db: Db, token: string): Promise<void> {

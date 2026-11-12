@@ -2,3 +2,5 @@ docs/
 packages/catalog/*.json
 packages/catalog/sources/
 apps/server/drizzle/
+# automatisch erzeugt (tools/tests/generate_planned.py)
+tests/e2e/geplant/

@@ -26,7 +26,8 @@
       "invalidCredentials": "E-Mail-Adresse oder Passwort ist falsch.",
       "locked": "Das Konto ist nach mehreren Fehlversuchen vorübergehend gesperrt. Bitte versuchen Sie es in 15 Minuten erneut."
     },
-    "passwordSet": "Ihr Passwort wurde gespeichert. Sie können sich jetzt anmelden."
+    "passwordSet": "Ihr Passwort wurde gespeichert. Sie können sich jetzt anmelden.",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
   },
   "password": {
     "headingSet": "Passwort festlegen",
@@ -62,7 +63,7 @@
   },
   "home": {
     "heading": "Willkommen",
-    "text": "Das Grundgerüst der Anwendung ist eingerichtet. Fragebogen, Bericht und Admin-Bereich folgen in den nächsten Phasen.",
+    "text": "Anmeldung und Admin-Bereich sind eingerichtet. Fragebogen, Bericht und Empfehlungen folgen in den nächsten Phasen.",
     "catalogInfo": "Fragenkatalog: {areas} Kernbereiche, {checkpoints} Kontrollpunkte (Version {version}).",
     "greeting": "Hallo {name}",
     "roleInfo": "Sie sind angemeldet als {role} bei {company}.",
@@ -172,7 +173,11 @@
         "invalid_input": "Bitte prüfen Sie Ihre Eingaben."
       },
       "department": "Abteilung",
-      "noDepartment": "– keine –"
+      "noDepartment": "– keine –",
+      "edit": "Bearbeiten",
+      "copyLink": "Anmeldelink kopieren",
+      "linkCopied": "Anmeldelink kopiert: {link} – zusammen mit „Passwort vergessen?“ kann die Person ihr erstes Passwort festlegen.",
+      "linkShown": "Anmeldelink: {link} – bitte manuell weitergeben; mit „Passwort vergessen?“ legt die Person ihr erstes Passwort fest."
     },
     "confirm": {
       "deleteTitle": "Benutzer löschen?",

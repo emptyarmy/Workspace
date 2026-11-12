@@ -106,6 +106,7 @@ Details: docs/04_architektur/01_architektur.md
 | Playwright ohne Browser-Download (nur Chromium) | `PW_CHROMIUM_ONLY=1 npm run test:e2e` |
 | Katalog prüfen | `npm run catalog:validate` |
 | Dokumentation ansehen / bauen | `npm run docs:dev` / `npm run docs:build` |
+| Platzhalter-Tests neu erzeugen (nach neuen echten Tests) | `npm run test:planned` |
 | Playwright E2E | `npm run test:e2e` |
 | Playwright UI-Modus | `npx playwright test --ui` |
 

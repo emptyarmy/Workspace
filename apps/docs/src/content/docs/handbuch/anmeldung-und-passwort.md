@@ -56,7 +56,7 @@ Für bekannte und unbekannte Adressen erscheint dieselbe Bestätigung, damit nie
 
 - **Falsches Passwort und unbekannte E-Mail** führen zur gleichen Meldung.
 - Nach **5 Fehlversuchen** ist das Konto **15 Minuten** gesperrt.
-- **Sitzung:** endet nach **60 Minuten** ohne Aktivität, spätestens nach **12 Stunden**.
+- **Sitzung:** endet nach **60 Minuten** ohne Aktivität, spätestens nach **12 Stunden**. Danach führt die nächste Aktion zur Anmeldeseite mit dem Hinweis *Ihre Sitzung ist abgelaufen*; nach der Anmeldung geht es zur vorherigen Seite zurück.
 - **Abmelden** (oben rechts) beendet die Sitzung sofort.
 - Wer eine geschützte Seite ohne Anmeldung aufruft, landet auf der Anmeldung und danach wieder auf der gewünschten Seite.
 

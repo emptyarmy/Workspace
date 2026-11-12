@@ -11,6 +11,8 @@ export interface CurrentUser {
   companyId: string;
   companySlug: string;
   companyName: string;
+  companyLogoUrl: string | null;
+  companyLogoAlt: string | null;
   isExternal: boolean;
 }
 
@@ -38,10 +40,15 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null;
   }
 
+  /** Sitzung serverseitig abgelaufen (401 bei einem Aufruf): lokalen Zustand verwerfen. */
+  function expire() {
+    user.value = null;
+  }
+
   /** Nach Ersteinrichtung/Login vom Server gesetzte Sitzung übernehmen. */
   async function refresh() {
     return load(true);
   }
 
-  return { user, loaded, isAdmin, load, login, logout, refresh };
+  return { user, loaded, isAdmin, load, login, logout, refresh, expire };
 });
