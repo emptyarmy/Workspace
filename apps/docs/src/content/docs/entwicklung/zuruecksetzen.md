@@ -109,7 +109,7 @@ docker compose up -d db mailpit
 | `service "db" is not running` | Schritt 2 ausführen. |
 | `role "ai_tpi" does not exist` bei `db:migrate` | `DATABASE_URL` zeigt auf ein anderes PostgreSQL (meist Port 5432). Auf den Docker-Port (5433) umstellen. |
 | `connect ECONNREFUSED …:5433` | Datenbank-Container läuft nicht → Schritt 2. |
-| `/einrichtung` meldet „nicht verfügbar“ | Es existiert noch ein Nutzer (Schritt 3 prüfen), die Seite wurde nicht über `localhost` aufgerufen, oder in der `.env` steht `SETUP_ENABLED=false`. |
+| `/einrichtung` meldet „nicht verfügbar“ | Es existiert noch ein Nutzer (Schritt 3 prüfen) oder die Seite wurde nicht über `localhost` aufgerufen. |
 | `EADDRINUSE` beim Start | Port belegt, z. B. durch eine andere App auf 3000. In der `.env` `SERVER_PORT=3001` setzen. |
 
 Weitere Hilfe unter [Fehlerbehebung](/handbuch/fehlerbehebung/).

@@ -99,6 +99,7 @@ Details: docs/04_architektur/01_architektur.md
 | Abhängigkeiten installieren | `npm install` |
 | Migration erzeugen / ausführen | `npm run db:generate` / `npm run db:migrate` |
 | Entwicklungsserver (Web + API) | `npm run dev` |
+| Lokale Installation zurücksetzen (alle Daten weg, `/einrichtung` wieder frei) | siehe `apps/docs/src/content/docs/entwicklung/zuruecksetzen.md` |
 | Typprüfung | `npm run typecheck` |
 | Produktionsbuild | `npm run build` |
 | Lint | `npm run lint` |
