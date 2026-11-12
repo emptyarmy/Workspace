@@ -62,3 +62,5 @@ Details unter [Tests](/entwicklung/tests/).
 ```bash
 npm run docs:dev      # http://localhost:4321
 ```
+
+Mit Suche und ohne Entwicklungsserver: `npm run docs:build` und danach `npm run docs:preview`. Details unter [Dokumentation pflegen](/entwicklung/dokumentation/#dokumentation-im-browser-lesen).

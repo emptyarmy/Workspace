@@ -46,7 +46,7 @@ Firmen können Mailserver und KI-Module zusätzlich im Admin-Bereich festlegen (
 
 | Variable | Standard | Bedeutung |
 |---|---|---|
-| `DOCS_PORT` | `4321` | Port von `npm run docs:dev` |
+| `DOCS_PORT` | `4321` | Port von `npm run docs:dev` und `docs:preview`. Nur als Umgebungsvariable beim Start (`DOCS_PORT=4322 npm run docs:dev`), nicht aus der `.env`. |
 
 ## Empfehlungen für den Produktivbetrieb
 
