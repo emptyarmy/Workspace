@@ -44,3 +44,4 @@ Läuft auf Ihrem Rechner bereits eine andere Anwendung auf Port 3000, landen die
 
 - Weitere Personen anlegen: [Benutzer und Abteilungen](/handbuch/benutzer-und-abteilungen/)
 - Logo, Branche und Domains: [Meine Firma und Branchen](/handbuch/meine-firma-und-branchen/)
+- Lokale Installation neu beginnen: [Anwendung zurücksetzen](/entwicklung/zuruecksetzen/)
