@@ -45,6 +45,16 @@ DOCS_PORT=4322 npm run docs:preview
 
 Im Terminal `Ctrl+C`.
 
+### „Another astro preview server is already running“
+
+Ein früher gestarteter `docs:preview` läuft noch, z. B. in einem anderen oder geschlossenen Terminal. Die Meldung nennt URL und PID.
+
+| Ziel | Befehl |
+|---|---|
+| Laufenden Server einfach nutzen | URL aus der Meldung öffnen. Er liefert den Stand von `apps/docs/dist` aus, nach `docs:build` also automatisch den neuen Stand. |
+| Laufenden Server beenden | `npm exec -w @ai-tpi/docs -- astro preview stop` |
+| Ersetzen und neu starten | `npm run preview -w @ai-tpi/docs -- --force` |
+
 ## Aufbau
 
 ```text
