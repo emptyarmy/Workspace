@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { unified } from '@astrojs/markdown-remark';
 import { remarkMermaid } from './src/plugins/remark-mermaid.mjs';
 
 /**
@@ -11,7 +12,8 @@ import { remarkMermaid } from './src/plugins/remark-mermaid.mjs';
  */
 export default defineConfig({
   server: { host: '127.0.0.1', port: Number(process.env.DOCS_PORT ?? 4321) },
-  markdown: { remarkPlugins: [remarkMermaid] },
+  // Astro 7: Remark-Plugins direkt am Markdown-Prozessor angeben (markdown.remarkPlugins ist veraltet).
+  markdown: { processor: unified({ remarkPlugins: [remarkMermaid] }) },
   // Mermaid wird nur auf Seiten mit Diagrammen nachgeladen; die Paketgröße ist daher unkritisch.
   vite: { build: { chunkSizeWarningLimit: 4000 } },
   integrations: [
