@@ -28,6 +28,8 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 | KI-Modul für Empfehlungen wählen | ✔ | ✔ | – | – |
 | Antworten der eigenen Abteilung erfassen | – | ✔ | ✔ | – |
 | Kommentieren | – | ✔ | ✔ | – |
+| Bericht ansehen (eigene Assessments; Admin: alle der Firma) | ✔ | ✔ | ✔¹ | ✔ |
+| Benchmark ansehen (nur Kennzahlen, anonym) | ✔ | ✔ | ✔ | ✔ |
 | Antworten zusammenführen, freigeben | – | ✔ | – | – |
 | Bericht und Empfehlungen der **eigenen** Firma lesen | ✔ | ✔ | ✔ | ✔ |
 | Ergebnisse **anderer** Firmen | – | – | – | – |
@@ -41,3 +43,5 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 - **Schutz vor Aussperren:** Niemand kann sich selbst löschen, deaktivieren oder herabstufen. Der **letzte aktive Admin** einer Firma bleibt immer erhalten.
 
 Details zur Erfassung: [Assessments und Fragebogen](/handbuch/assessments-und-fragebogen/). Fachliche Grundlage: [Admin-Bereich (Konzept)](/projekt/architektur/admin-bereich/).
+
+¹ Befragte sehen im Bericht keine Konsenslücken, weil dort Antworten anderer Abteilungen stehen.

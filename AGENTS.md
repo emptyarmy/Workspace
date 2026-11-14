@@ -18,7 +18,8 @@ Eine responsive, mandantenfähige Webanwendung (**Vue 3 + TypeScript**, Node.js/
 | 4b – firmenübergreifende Admin-Funktionen, Abteilungen, KI/Mail je Firma, Audit-Log | ☑ (09.11.2026) |
 | 5a – Assessment, Team/Zuweisung, Fragebogen, Kommentare, Quellen, Zusammenführung, Änderungshistorie | ☑ (13.11.2026) – Rechte in `apps/server/src/assessment/access.ts`, Regeln (Vorschlag, Begründungspflicht, Umfang) in `packages/shared/src/assessment.ts` |
 | 5b – Live-Updates (SSE, `apps/server/src/assessment/live.ts`), Präsenz, Duplizieren, JSON-Export/-Import (`assessment/transfer.ts`) | ☑ (13.11.2026) |
-| 6 – Auswertung (Scoring, Matrix, Radar, Bericht, Benchmark) | **als Nächstes** |
+| 6 – Auswertung: Scoring (`packages/shared/src/score.ts`), Bericht, Benchmark (`apps/server/src/routes/report.ts`) | ☑ (14.11.2026) |
+| 7 – Empfehlungen (Regel-Engine, KI-Adapter, Maßnahmenplan) | **als Nächstes** |
 | 2 – Fragenkatalog finalisieren | geplant |
 | 3 ff. – Umsetzung | geplant (`docs/06_umsetzung/01_roadmap.md`) |
 

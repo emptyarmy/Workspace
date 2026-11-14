@@ -86,7 +86,8 @@
     "logout": "Sign out",
     "userMenu": "User menu",
     "assessments": "Assessments",
-    "history": "Change history"
+    "history": "Change history",
+    "benchmark": "Benchmark"
   },
   "roles": {
     "admin": "Admin",
@@ -470,7 +471,9 @@
   "levels": {
     "controlled": "Controlled",
     "efficient": "Efficient",
-    "optimizing": "Optimizing"
+    "optimizing": "Optimizing",
+    "initial": "Initial",
+    "na": "n/a"
   },
   "assessment": {
     "listHeading": "Assessments",
@@ -535,7 +538,8 @@
     "actions": {
       "questionnaire": "Questionnaire",
       "consolidation": "Consolidation",
-      "history": "Change history"
+      "history": "Change history",
+      "report": "Report"
     },
     "statusChange": {
       "consolidating": "Start consolidation",
@@ -746,5 +750,91 @@
       "source_deactivated": "Source deactivated",
       "source_deleted": "Source deleted"
     }
+  },
+  "report": {
+    "heading": "Report",
+    "open": "Report",
+    "print": "Print / PDF",
+    "noData": "No data yet: there are no consolidated answers. The report fills up as soon as the assessor sets answers in the consolidation.",
+    "cover": {
+      "company": "Company",
+      "industry": "Industry",
+      "project": "Project",
+      "assessor": "Assessor",
+      "departments": "Departments involved",
+      "period": "Period",
+      "catalog": "Catalog version",
+      "status": "Status",
+      "method": "Process model",
+      "generated": "Created on {date}"
+    },
+    "summary": "Management summary",
+    "overallIndex": "Overall index",
+    "aiIndex": "AI index",
+    "minLevel": "Lowest level reached",
+    "medianLevel": "Median level reached",
+    "progress": "Assessment progress",
+    "strengths": "Strengths (highest fulfilment)",
+    "weaknesses": "Areas for action (lowest fulfilment)",
+    "notReleased": "Preliminary: the assessment has not been released yet.",
+    "tiles": "Key figures",
+    "matrix": "Maturity matrix",
+    "matrixHint": "One cell per checkpoint. Tap to see the text, rationale and comments.",
+    "area": "Key area",
+    "level": "Level reached",
+    "radar": "Fulfilment per key area",
+    "radarLabel": "Radar chart: fulfilment in percent per key area",
+    "bars": "Answers by level and view",
+    "barsLabel": "Bar chart of the answers",
+    "total": "Total",
+    "views": {
+      "P": "Professional (P)",
+      "T": "Team (T)",
+      "O": "Organization (O)"
+    },
+    "stairs": "Level reached per key area",
+    "ai": "AI maturity",
+    "aiNone": "This assessment does not rate any AI checkpoints.",
+    "aiRadarLabel": "Radar chart AI key areas",
+    "gaps": "Consensus gaps",
+    "gapsHint": "Checkpoints where the departments answered differently – a sign of different perspectives or communication gaps.",
+    "gapsNone": "No consensus gaps: all departments answered consistently.",
+    "appendix": "Appendix: all checkpoints",
+    "checkpoint": "Checkpoint",
+    "answer": "Answer",
+    "rationale": "Rationale",
+    "comments": "Comments",
+    "table": "Values as a table",
+    "fulfillment": "Fulfilment",
+    "na": "n/a",
+    "close": "Close",
+    "method": "Method: a level is reached when all applicable checkpoints of this and the lower levels are fulfilled. Fulfilment = (fulfilled + 0.5 × partially) / (checkpoints − not applicable). Based on the consolidated answers.",
+    "levelShort": "Level"
+  },
+  "benchmark": {
+    "heading": "Benchmark",
+    "nav": "Benchmark",
+    "hint": "Comparison with other companies – anonymous, median and quartiles only, from {min} companies per group.",
+    "optedOut": "Your company does not take part in the benchmark. An admin can enable it under Admin area → My company.",
+    "noOwn": "No released assessment of your company yet – there are no own values to compare.",
+    "own": "Your company",
+    "industry": "Industry",
+    "all": "All companies",
+    "tooFew": "Not enough comparison data ({n} of at least {min} companies).",
+    "sample": "Comparison based on n = {n} companies.",
+    "median": "Median",
+    "iqr": "Q1–Q3",
+    "delta": "Deviation",
+    "quartile": "Quartile",
+    "rank": {
+      "1": "Your company is in the bottom 25 % ({group}).",
+      "2": "Your company is in the second quarter ({group}).",
+      "3": "Your company is in the third quarter ({group}).",
+      "4": "Your company is in the top 25 % ({group})."
+    },
+    "radarLabel": "Radar chart: own company, industry median and median of all companies per key area",
+    "aiCompare": "AI index compared",
+    "basis": "Based on: {project}",
+    "draft": "(not yet released)"
   }
 }

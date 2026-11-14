@@ -143,6 +143,21 @@ test.describe('TC-A11Y-001 axe-Scan', () => {
       await visit(`assessment-${tab}`, `/assessments/${asm}?tab=${tab}`, `atab-${tab}`);
     await visit('zusammenfuehrung', `/assessments/${asm}/zusammenfuehrung`, 'consolidation');
     await visit('historie', `/admin?tab=history&assessmentId=${asm}`, 'history-panel');
+    for (const [cp, value] of [
+      ['KB01.K.01', 'yes'],
+      ['KB01.K.02', 'no'],
+      ['KB01.E.01', 'partial'],
+    ])
+      await ctx.request.put(`/api/assessments/${asm}/consolidation/${cp}`, {
+        headers: CSRF,
+        data: { value, version: 0, rationale: 'A11y' },
+      });
+    await visit('bericht', `/assessments/${asm}/bericht`, 'report-matrix');
+    await page.getByTestId('cell-KB01.K.01').click();
+    await expect(page.getByTestId('cell-detail')).toBeVisible();
+    await scan(page, info, 'bericht-detail');
+    await page.getByTestId('cell-detail-close').click();
+    await visit('benchmark', '/benchmark', 'benchmark');
 
     const r = await loggedInContext(browser, respondent.email, E2E.userPassword);
     const rp = await r.newPage();

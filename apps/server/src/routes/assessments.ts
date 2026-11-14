@@ -5,6 +5,7 @@ import { catalog } from '@ai-tpi/catalog';
 import { assessmentMasterSchema, ASSESSMENT_STATUS, type AssessmentStatus } from '@ai-tpi/shared';
 import { fail, me, parseBody } from '../admin/helpers';
 import { loadAccess, recordHistory, type Access } from '../assessment/access';
+import { removeSnapshot, saveSnapshot } from '../assessment/scoring';
 import {
   assessmentMembers,
   assessments,
@@ -237,6 +238,9 @@ export const assessmentRoutes: FastifyPluginAsync = async (app) => {
       })
       .where(eq(assessments.id, acc.assessment.id))
       .returning();
+    // Benchmark: freigegebene Assessments als Schnappschuss, sonst nicht mehr im Vergleich (TC-BM-004).
+    if (b.status === 'released') await saveSnapshot(db(), updated!);
+    else await removeSnapshot(db(), acc.assessment.id);
     await recordHistory(db(), acc, {
       entityType: 'assessment',
       action: 'assessment.status',

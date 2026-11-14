@@ -89,3 +89,11 @@ erDiagram
 | `change_history` | Änderungshistorie | ohne Fremdschlüssel auf `assessment` (überdauert das Löschen), Schnappschüsse von Name, Rolle, Abteilung und Assessment; Trigger `change_history_no_update_delete` weist `UPDATE`/`DELETE` ab |
 
 **Rechte (umgesetzt in `apps/server/src/assessment/access.ts`):** Fremde Firma → 404; eigene Firma ohne Mitgliedschaft → 403 (Admins: Lesezugriff); Antworten nur Befragte bzw. Assessoren mit Abteilung in zugewiesenen Kernbereichen; Zusammenführung nur Assessoren; Befragte sehen nur die Antworten der eigenen Abteilung.
+
+## Ergänzung Phase 6 (Migration `0004_scores`)
+
+| Tabelle | Zweck | Wichtige Felder |
+|---|---|---|
+| `assessment_score` | Benchmark-Schnappschuss eines freigegebenen Assessments | `assessment_id` (PK), `company_id`, `catalog_version`, `released_at`, `overall_index`, `ai_index`, `areas` (JSON: `keyAreaId`, `fulfillment`, `level`) – keine Antworten, Kommentare oder Namen |
+
+Der Benchmark nimmt je teilnehmender Firma (`company.benchmark_opt_in`) den jüngsten Schnappschuss mit gleicher Katalogversion.

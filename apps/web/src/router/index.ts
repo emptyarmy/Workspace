@@ -71,6 +71,19 @@ export const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/assessments/:id/bericht',
+      name: 'report',
+      component: () => import('../views/assessments/ReportView.vue'),
+      props: true,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/benchmark',
+      name: 'benchmark',
+      component: () => import('../views/BenchmarkView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/assessments/:id/zusammenfuehrung/:area?',
       name: 'consolidation',
       component: () => import('../views/assessments/ConsolidationView.vue'),

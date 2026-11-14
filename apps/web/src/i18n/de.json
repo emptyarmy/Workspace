@@ -86,7 +86,8 @@
     "logout": "Abmelden",
     "userMenu": "Benutzermenü",
     "assessments": "Assessments",
-    "history": "Änderungshistorie"
+    "history": "Änderungshistorie",
+    "benchmark": "Benchmark"
   },
   "roles": {
     "admin": "Admin",
@@ -470,7 +471,9 @@
   "levels": {
     "controlled": "Kontrolliert",
     "efficient": "Effizient",
-    "optimizing": "Optimierend"
+    "optimizing": "Optimierend",
+    "initial": "Initial",
+    "na": "n. a."
   },
   "assessment": {
     "listHeading": "Assessments",
@@ -535,7 +538,8 @@
     "actions": {
       "questionnaire": "Fragebogen",
       "consolidation": "Zusammenführung",
-      "history": "Änderungshistorie"
+      "history": "Änderungshistorie",
+      "report": "Bericht"
     },
     "statusChange": {
       "consolidating": "Zur Zusammenführung",
@@ -746,5 +750,91 @@
       "source_deactivated": "Quelle deaktiviert",
       "source_deleted": "Quelle gelöscht"
     }
+  },
+  "report": {
+    "heading": "Bericht",
+    "open": "Bericht",
+    "print": "Drucken / PDF",
+    "noData": "Noch keine Daten: Es gibt noch keine konsolidierten Antworten. Der Bericht füllt sich, sobald der Assessor in der Zusammenführung Antworten festlegt.",
+    "cover": {
+      "company": "Firma",
+      "industry": "Branche",
+      "project": "Projekt",
+      "assessor": "Assessor",
+      "departments": "Beteiligte Abteilungen",
+      "period": "Zeitraum",
+      "catalog": "Katalogversion",
+      "status": "Status",
+      "method": "Vorgehensmodell",
+      "generated": "Erstellt am {date}"
+    },
+    "summary": "Management Summary",
+    "overallIndex": "Gesamtindex",
+    "aiIndex": "KI-Index",
+    "minLevel": "Niedrigste erreichte Ebene",
+    "medianLevel": "Mittlere erreichte Ebene",
+    "progress": "Fortschritt der Bewertung",
+    "strengths": "Stärken (höchster Erfüllungsgrad)",
+    "weaknesses": "Handlungsfelder (niedrigster Erfüllungsgrad)",
+    "notReleased": "Vorläufig: Das Assessment ist noch nicht freigegeben.",
+    "tiles": "Kennzahlen",
+    "matrix": "Reifegradmatrix",
+    "matrixHint": "Je Kontrollpunkt ein Feld. Antippen zeigt Text, Begründung und Kommentare.",
+    "area": "Kernbereich",
+    "level": "Erreichte Ebene",
+    "radar": "Erfüllungsgrad je Kernbereich",
+    "radarLabel": "Netzdiagramm: Erfüllungsgrad in Prozent je Kernbereich",
+    "bars": "Antworten nach Ebene und Sicht",
+    "barsLabel": "Balkendiagramm der Antworten",
+    "total": "Gesamt",
+    "views": {
+      "P": "Professional (P)",
+      "T": "Team (T)",
+      "O": "Organization (O)"
+    },
+    "stairs": "Erreichte Ebene je Kernbereich",
+    "ai": "KI-Reifegrad",
+    "aiNone": "Dieses Assessment bewertet keine KI-Kontrollpunkte.",
+    "aiRadarLabel": "Netzdiagramm KI-Kernbereiche",
+    "gaps": "Konsenslücken",
+    "gapsHint": "Kontrollpunkte, bei denen die Abteilungen unterschiedlich geantwortet haben – ein Hinweis auf unterschiedliche Sichtweisen oder Kommunikationslücken.",
+    "gapsNone": "Keine Konsenslücken: Alle Abteilungen haben übereinstimmend geantwortet.",
+    "appendix": "Anhang: alle Kontrollpunkte",
+    "checkpoint": "Kontrollpunkt",
+    "answer": "Antwort",
+    "rationale": "Begründung",
+    "comments": "Kommentare",
+    "table": "Werte als Tabelle",
+    "fulfillment": "Erfüllungsgrad",
+    "na": "n. a.",
+    "close": "Schließen",
+    "method": "Methodik: Eine Ebene gilt als erreicht, wenn alle anwendbaren Kontrollpunkte dieser und der darunter liegenden Ebenen erfüllt sind. Erfüllungsgrad = (erfüllt + 0,5 × teilweise) / (Kontrollpunkte − nicht anwendbar). Grundlage sind die konsolidierten Antworten.",
+    "levelShort": "Ebene"
+  },
+  "benchmark": {
+    "heading": "Benchmark",
+    "nav": "Benchmark",
+    "hint": "Vergleich mit anderen Firmen – anonym, nur Median und Quartile, ab {min} Firmen je Vergleichsgruppe.",
+    "optedOut": "Ihre Firma nimmt nicht am Benchmark teil. Ein Admin kann die Teilnahme unter Admin-Bereich → Meine Firma einschalten.",
+    "noOwn": "Noch kein freigegebenes Assessment Ihrer Firma – es gibt keine eigenen Werte zum Vergleich.",
+    "own": "Ihre Firma",
+    "industry": "Branche",
+    "all": "Alle Firmen",
+    "tooFew": "Zu wenige Vergleichsdaten ({n} von mindestens {min} Firmen).",
+    "sample": "Vergleich basiert auf n = {n} Firmen.",
+    "median": "Median",
+    "iqr": "Q1–Q3",
+    "delta": "Abweichung",
+    "quartile": "Quartil",
+    "rank": {
+      "1": "Ihre Firma liegt im unteren 25 %-Bereich ({group}).",
+      "2": "Ihre Firma liegt im zweiten Viertel ({group}).",
+      "3": "Ihre Firma liegt im dritten Viertel ({group}).",
+      "4": "Ihre Firma liegt im oberen 25 %-Bereich ({group})."
+    },
+    "radarLabel": "Netzdiagramm: eigene Firma, Branchen-Median und Median aller Firmen je Kernbereich",
+    "aiCompare": "KI-Index im Vergleich",
+    "basis": "Grundlage: {project}",
+    "draft": "(noch nicht freigegeben)"
   }
 }

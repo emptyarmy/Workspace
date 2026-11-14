@@ -40,6 +40,9 @@ async function logout() {
       <RouterLink :to="{ name: 'assessments' }" class="navlink" data-testid="nav-assessments">{{
         t('nav.assessments')
       }}</RouterLink>
+      <RouterLink :to="{ name: 'benchmark' }" class="navlink" data-testid="nav-benchmark">{{
+        t('nav.benchmark')
+      }}</RouterLink>
       <RouterLink v-if="auth.isAdmin" :to="{ name: 'admin' }" class="navlink" data-testid="nav-admin">{{
         t('nav.admin')
       }}</RouterLink>
