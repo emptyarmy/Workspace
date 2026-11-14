@@ -67,11 +67,12 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ 5b: Assessment duplizieren (TC-ASM-005), JSON-Export/-Import mit Bericht über übersprungene Einträge (US-1.3, TC-IO-001…005)
 - ☑ 5b: Antworten je Kontrollpunkt nacheinander speichern (keine Scheinkonflikte bei schnellen Folgeklicks)
 
-## Phase 6 – Auswertung
-- ☐ Scoring Engine + Unit-Tests
-- ☐ Reifegradmatrix, Radar, Balken (Ebenen und P/T/O), KI-Index
-- ☐ Druck/PDF, JSON-Export
-- ☐ Benchmark: Snapshot bei Freigabe, Aggregation Branche/Gesamt, Mindestanzahl, Opt-out
+## Phase 6 – Auswertung (erledigt 14.11.2026)
+- ☑ Scoring Engine + Unit-Tests (`packages/shared/src/score.ts`): erreichte Ebene (TPI NEXT), Erfüllungsgrad (teilweise = 0,5), Ebenen, Sichten P/T/O, KI-Index, Gesamtindex (F-06: Mittelwert; zusätzlich niedrigste/mittlere Ebene), Fortschritt
+- ☑ Bericht: Deckblatt mit Logo, Summary, Kennzahlen, Reifegradmatrix mit Detail, Radar, Balken (Ebenen und P/T/O), Ebenen-Treppe, KI-Reifegrad, Konsenslücken, Anhang
+- ☑ Druck/PDF (Druck-Stylesheet A4 quer); JSON-Export aus Phase 5b
+- ☑ Benchmark: Snapshot bei Freigabe (`assessment_score`), Aggregation Branche/Gesamt mit Median und Quartilen, Mindestanzahl 5 (R-03), Opt-out (R-04), Benchmark-Seite für alle Rollen
+- ☐ Offen (Release 2): Vergleich mit dem Vorjahr (Delta je KB), Gewichte je Kernbereich konfigurierbar, Excel-Export
 
 ## Phase 7 – Empfehlungen
 - ☐ Regel-Engine (Ebene → Cluster → Abhängigkeit → Aufwand) + Unit-Tests

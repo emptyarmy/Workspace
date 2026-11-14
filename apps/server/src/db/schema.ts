@@ -408,3 +408,29 @@ export const changeHistory = pgTable(
     index('change_history_assessment_idx').on(t.assessmentId, t.checkpointId, t.createdAt),
   ],
 );
+
+// ─── Phase 6: Auswertung ───────────────────────────────────────────────────────
+
+/**
+ * Ergebnis-Schnappschuss eines **freigegebenen** Assessments für den Benchmark (08_mandanten-und-benchmark.md, 3.1).
+ * Entsteht bei der Freigabe und wird beim Zurücknehmen der Freigabe gelöscht. Enthält nur Kennzahlen je
+ * Kernbereich – keine Antworten, Kommentare oder Namen.
+ */
+export const assessmentScores = pgTable(
+  'assessment_score',
+  {
+    assessmentId: uuid('assessment_id')
+      .primaryKey()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    companyId: uuid('company_id')
+      .notNull()
+      .references(() => companies.id, { onDelete: 'cascade' }),
+    catalogVersion: text('catalog_version').notNull(),
+    releasedAt: timestamp('released_at', { withTimezone: true }).notNull(),
+    overallIndex: real('overall_index'),
+    aiIndex: real('ai_index'),
+    /** [{ keyAreaId, fulfillment, level }] */
+    areas: jsonb('areas').notNull(),
+  },
+  (t) => [index('assessment_score_company_idx').on(t.companyId, t.releasedAt)],
+);

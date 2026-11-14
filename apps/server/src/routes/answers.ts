@@ -10,6 +10,7 @@ import {
   type Answer,
 } from '@ai-tpi/shared';
 import { fail, parseBody } from '../admin/helpers';
+import { saveSnapshot } from '../assessment/scoring';
 import {
   assignedDepartments,
   findInScope,
@@ -543,6 +544,8 @@ export const answerRoutes: FastifyPluginAsync = async (app) => {
           rationale: b.rationale || null,
         });
       app.live.publish(acc.assessment.id, { type: 'consolidated', checkpointId: found.cp.id });
+      // Änderungen nach der Freigabe aktualisieren den Benchmark-Schnappschuss.
+      if (acc.assessment.status === 'released') await saveSnapshot(db(), acc.assessment);
       return { ...saved, suggestion, rationale: b.rationale || null };
     },
   );

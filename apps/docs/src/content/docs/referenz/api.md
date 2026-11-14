@@ -129,6 +129,15 @@ Alle Endpunkte brauchen eine Anmeldung. Fremde Firma oder unbekannte ID → **40
 
 Die Live-Ereignisse laufen über einen Serverprozess im Speicher. Für mehrere Serverinstanzen müsste ein gemeinsamer Kanal (z. B. PostgreSQL `LISTEN/NOTIFY`) ergänzt werden.
 
+## Auswertung (Phase 6)
+
+| Methode | Pfad | Wer | Zweck |
+|---|---|---|---|
+| GET | `/api/assessments/:id/report` | Team, Admin | Stammdaten, Firma (Logo, Branche), beteiligte Abteilungen, `scores` (je Kernbereich Zählwerte, `fulfillment`, `level`, `byLevel`; gesamt `index`, `minLevel`, `medianLevel`, `progress`; `byLevel`, `byView` P/T/O, `ai`, `hasData`), konsolidierte Antworten, Kommentare, `consensusGaps` (für Befragte `null`) |
+| GET | `/api/benchmark?assessmentId=` | alle | `optedOut`; `own` (gewähltes oder jüngstes freigegebenes Assessment); `groups.industry` und `groups.all` mit `n`, `enough`, `overall`/`ai`/`areas` als `{ q1, median, q3 }`, `position` (Quartil, Abweichung je Kernbereich), `overallQuartile`. Ab 5 Firmen, sonst `enough: false` ohne Werte |
+
+Die Berechnung steckt in `packages/shared/src/score.ts` (Client und Server gleich). Bei der Freigabe legt der Server einen Schnappschuss in `assessment_score` an (Migration `0004_scores`); beim Zurücknehmen der Freigabe wird er gelöscht, bei Änderungen der konsolidierten Antworten nach der Freigabe erneuert.
+
 ## Änderungshistorie
 
 Append-only: Es gibt keine Endpunkte zum Ändern oder Löschen; ein Datenbank-Trigger weist `UPDATE`/`DELETE` ab.
@@ -142,6 +151,9 @@ Append-only: Es gibt keine Endpunkte zum Ändern oder Löschen; ein Datenbank-Tr
 Sichtbar ist nur die eigene Firma; Nicht-Admins sehen nur Assessments, in deren Team sie sind.
 
 ## Nur für Tests
+
+`POST /api/test/benchmark-fixture` `{ industryCode, values: number[], optIn? }` legt je Wert eine anonyme Firma der (ggf. neuen) Branche mit freigegebenem Ergebnis an (alle Kernbereiche = Wert).
+
 
 Aktiv nur mit `NODE_ENV=test` **und** `TEST_ENDPOINTS=true`:
 

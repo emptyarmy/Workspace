@@ -18,6 +18,7 @@ import { catalogRoutes } from './routes/catalog';
 import { healthRoutes } from './routes/health';
 import { historyRoutes } from './routes/history';
 import { liveRoutes } from './routes/live';
+import { reportRoutes } from './routes/report';
 import { transferRoutes } from './routes/transfer';
 import { setupRoutes } from './routes/setup';
 import { testSupportRoutes } from './routes/test-support';
@@ -84,6 +85,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     await app.register(historyRoutes);
     await app.register(liveRoutes);
     await app.register(transferRoutes);
+    await app.register(reportRoutes);
   }
   if (deps.config.NODE_ENV === 'test' && deps.config.TEST_ENDPOINTS) await app.register(testSupportRoutes);
   return app;

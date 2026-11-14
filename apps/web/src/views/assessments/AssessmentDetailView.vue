@@ -214,6 +214,12 @@ const lang = computed(() => locale.value as 'de' | 'en');
           >{{ t('assessment.actions.consolidation') }}</RouterLink
         >
         <RouterLink
+          :to="{ name: 'report', params: { id: a.id } }"
+          class="btn btn-ghost linkbtn"
+          data-testid="to-report"
+          >{{ t('assessment.actions.report') }}</RouterLink
+        >
+        <RouterLink
           :to="{ name: 'admin', query: { tab: 'history', assessmentId: a.id } }"
           class="btn btn-ghost linkbtn"
           data-testid="to-history"
