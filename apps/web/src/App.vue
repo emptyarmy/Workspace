@@ -37,9 +37,19 @@ async function logout() {
     />
     <span class="subtitle">{{ auth.user ? auth.user.companyName : t('app.title') }}</span>
     <nav v-if="auth.user" class="usernav" :aria-label="t('nav.userMenu')">
+      <RouterLink :to="{ name: 'assessments' }" class="navlink" data-testid="nav-assessments">{{
+        t('nav.assessments')
+      }}</RouterLink>
       <RouterLink v-if="auth.isAdmin" :to="{ name: 'admin' }" class="navlink" data-testid="nav-admin">{{
         t('nav.admin')
       }}</RouterLink>
+      <RouterLink
+        v-else
+        :to="{ name: 'admin', query: { tab: 'history' } }"
+        class="navlink"
+        data-testid="nav-history"
+        >{{ t('nav.history') }}</RouterLink
+      >
       <span class="who" data-testid="current-user">{{ auth.user.name }}</span>
       <button type="button" class="btn btn-ghost navbtn" data-testid="logout" @click="logout">
         {{ t('nav.logout') }}
@@ -48,7 +58,10 @@ async function logout() {
     <LanguageSwitcher />
   </header>
   <main id="main" class="page">
-    <RouterView />
+    <!-- Neu aufbauen, wenn ein anderes Assessment geöffnet wird (z. B. Link zur Kopie); Reiter/Kernbereich wechseln nicht. -->
+    <RouterView v-slot="{ Component, route: r }">
+      <component :is="Component" :key="`${String(r.name)}:${String(r.params.id ?? '')}`" />
+    </RouterView>
   </main>
 </template>
 
@@ -91,8 +104,9 @@ async function logout() {
 }
 .usernav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem 0.5rem;
 }
 .navlink {
   color: inherit;
@@ -109,6 +123,12 @@ async function logout() {
   color: inherit;
   border-color: rgb(255 255 255 / 0.4);
   padding: 0.25rem 0.75rem;
+}
+/* Auf Smartphones bricht die Kopfzeile um; nicht fixieren, damit sie keinen Inhalt verdeckt. */
+@media (max-width: 599px) {
+  .topbar {
+    position: static;
+  }
 }
 @media (min-width: 768px) {
   .who {

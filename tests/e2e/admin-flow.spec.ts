@@ -210,13 +210,18 @@ test.describe('Benutzer verwalten', () => {
 });
 
 test.describe('Rollen und Rechte', () => {
-  test('TC-ADM-002 Befragter: kein Admin-Menü, /admin wird abgewiesen', async ({ page }, info) => {
+  test('TC-ADM-002/TC-HIST-002 Befragter: keine Verwaltungsfunktionen, im Admin-Bereich nur die Änderungshistorie', async ({
+    page,
+  }, info) => {
     const u = await createActiveUser(admin, info, 'respondent', 'befragt');
     await login(page, u.email, u.password);
     await expect(page).toHaveURL(/\/start$/);
     await expect(page.getByTestId('nav-admin')).toHaveCount(0);
-    await page.goto('/admin');
-    await expect(page.getByTestId('access-denied')).toBeVisible();
+    await page.goto('/admin?tab=users');
+    await expect(page.getByTestId('history-panel')).toBeVisible();
+    await expect(page.getByRole('tab')).toHaveCount(1);
+    await expect(page.getByTestId('admin-tab-history')).toBeVisible();
+    await expect(page.getByTestId('users-panel')).toHaveCount(0);
     expect((await page.request.get('/api/admin/users')).status()).toBe(403);
   });
 

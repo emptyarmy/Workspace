@@ -72,6 +72,8 @@ So läuft ein Testlauf ab:
 | `admin-flow.spec.ts` | Einladung bis Login, Benutzer verwalten, Rollen und Rechte, Sperre, Meine Firma |
 | `admin-4b.spec.ts` | Abteilungen, andere Firmen, Reset-Limit, Domains, E-Mail, KI-Module, Audit-Log, alle Reiter auf allen Geräten |
 | `industries.spec.ts` | Branchenliste pflegen |
+| `erfassung.spec.ts` | Phase 5: Assessment anlegen/löschen, Team und Zuweisung, Fragebogen (Fortschritt, Filter, Tastatur, Fehler beim Speichern, Konflikt zweier Nutzer), Abgabe, Quellen, Kommentare, Zusammenführung, Änderungshistorie. Jeder Test legt eine eigene Testfirma mit Team an (`erfassung-helpers.ts`, Zeitlimit 90 s), damit die Listen der E2E-Firma klein bleiben |
+| `erfassung-live.spec.ts` | Phase 5b: Live-Aktualisierung zweier Browser (≤ 2 s), Präsenzanzeige, Duplizieren, JSON-Export/-Import mit Fehlerfällen |
 | `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
 | `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |

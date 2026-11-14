@@ -25,6 +25,14 @@ const checkpoints = allCheckpoints().length;
       }}
     </p>
     <p>{{ t('home.text') }}</p>
+    <p>
+      <RouterLink
+        :to="{ name: 'assessments' }"
+        class="btn btn-primary-inline linkbtn"
+        data-testid="home-assessments"
+        >{{ t('home.toAssessments') }}</RouterLink
+      >
+    </p>
     <p data-testid="catalog-info">
       {{
         t('home.catalogInfo', {
@@ -45,6 +53,11 @@ const checkpoints = allCheckpoints().length;
 </template>
 
 <style scoped>
+.linkbtn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
 .areas {
   list-style: none;
   padding: 0;

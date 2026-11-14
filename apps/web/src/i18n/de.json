@@ -63,11 +63,12 @@
   },
   "home": {
     "heading": "Willkommen",
-    "text": "Anmeldung und Admin-Bereich sind eingerichtet. Fragebogen, Bericht und Empfehlungen folgen in den nächsten Phasen.",
+    "text": "Unter „Assessments“ legen Assessoren Bewertungen an, verteilen die Kernbereiche auf die Abteilungen und führen die Antworten zusammen.",
     "catalogInfo": "Fragenkatalog: {areas} Kernbereiche, {checkpoints} Kontrollpunkte (Version {version}).",
     "greeting": "Hallo {name}",
     "roleInfo": "Sie sind angemeldet als {role} bei {company}.",
-    "denied": "Für diesen Bereich fehlt Ihnen die Berechtigung."
+    "denied": "Für diesen Bereich fehlt Ihnen die Berechtigung.",
+    "toAssessments": "Zu den Assessments"
   },
   "notFound": {
     "heading": "Seite nicht gefunden",
@@ -83,7 +84,9 @@
     "home": "Start",
     "admin": "Admin-Bereich",
     "logout": "Abmelden",
-    "userMenu": "Benutzermenü"
+    "userMenu": "Benutzermenü",
+    "assessments": "Assessments",
+    "history": "Änderungshistorie"
   },
   "roles": {
     "admin": "Admin",
@@ -103,7 +106,14 @@
     "saved": "Gespeichert.",
     "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "external": "Extern",
-    "required": "Pflichtfeld"
+    "required": "Pflichtfeld",
+    "back": "Zurück",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "loading": "Wird geladen …",
+    "none": "–",
+    "retry": "Erneut versuchen"
   },
   "setup": {
     "heading": "Ersteinrichtung",
@@ -127,7 +137,9 @@
     },
     "serverDown": "Der Anwendungsserver ist nicht erreichbar.",
     "serverError": "Der Anwendungsserver meldet einen Fehler (HTTP {status}) – meist ist die Datenbank nicht erreichbar.",
-    "serverHint": "Bitte prüfen Sie, ob „npm run dev“ ohne Fehlermeldung läuft und ob die Datenbank gestartet ist (docker compose up -d db). Laden Sie die Seite danach neu."
+    "serverHint": "Bitte prüfen Sie, ob „npm run dev“ ohne Fehlermeldung läuft und ob die Datenbank gestartet ist (docker compose up -d db). Laden Sie die Seite danach neu.",
+    "foreignServer": "Unter /api antwortet nicht der AI_TPI-Server, sondern eine andere Anwendung.",
+    "foreignServerHint": "Meist ist der Port aus SERVER_PORT in der .env von einer anderen Anwendung belegt, und der AI_TPI-Server konnte nicht starten (EADDRINUSE in der Ausgabe von „npm run dev“). Tragen Sie einen freien Port ein, z. B. SERVER_PORT=3001, starten Sie „npm run dev“ neu und laden Sie die Seite neu."
   },
   "admin": {
     "heading": "Admin-Bereich",
@@ -139,7 +151,8 @@
       "mail": "E-Mail",
       "ai": "KI-Konfiguration",
       "audit": "Audit-Log",
-      "industries": "Branchen"
+      "industries": "Branchen",
+      "history": "Änderungshistorie"
     },
     "users": {
       "create": "Benutzer anlegen",
@@ -445,6 +458,293 @@
         "invalid_input": "Bitte prüfen Sie Ihre Eingaben.",
         "not_found": "Die Branche wurde nicht gefunden."
       }
+    }
+  },
+  "answers": {
+    "yes": "Erfüllt",
+    "partial": "Teilweise",
+    "no": "Nicht erfüllt",
+    "na": "Nicht anwendbar",
+    "open": "Offen"
+  },
+  "levels": {
+    "controlled": "Kontrolliert",
+    "efficient": "Effizient",
+    "optimizing": "Optimierend"
+  },
+  "assessment": {
+    "listHeading": "Assessments",
+    "create": "Neues Assessment",
+    "empty": "Noch keine Assessments. Assessoren legen hier neue Bewertungen an.",
+    "emptyMember": "Sie sind noch keinem Assessment zugeordnet. Ihr Assessor nimmt Sie in das Team auf.",
+    "createHeading": "Neues Assessment anlegen",
+    "created": "Assessment angelegt.",
+    "open": "Öffnen",
+    "status": {
+      "collecting": "Erfassung",
+      "consolidating": "Zusammenführung",
+      "released": "Freigegeben"
+    },
+    "method": {
+      "classic": "klassisch",
+      "agile": "agil"
+    },
+    "fields": {
+      "project": "Projekt",
+      "assessorName": "Assessor",
+      "domain": "Domäne",
+      "organizationUnit": "Organisationseinheit",
+      "mainStakeholder": "Hauptstakeholder",
+      "contact": "Kontakt",
+      "assessmentType": "Art des Assessments",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "interviewCount": "Anzahl Interviews",
+      "scope": "Umfang (Scope)",
+      "methodModel": "Vorgehensmodell",
+      "includeAi": "KI-Kernbereiche und KI-Kontrollpunkte einbeziehen"
+    },
+    "methodHint": "„Klassisch“ blendet die agilen Kontrollpunkte aus.",
+    "errors": {
+      "project": "Bitte einen Projektnamen mit mindestens 2 Zeichen angeben.",
+      "assessorName": "Bitte den Namen des Assessors angeben.",
+      "startDate": "Bitte ein Startdatum angeben.",
+      "endDate": "Das Enddatum darf nicht vor dem Startdatum liegen.",
+      "interviewCount": "Bitte eine ganze Zahl ab 0 angeben.",
+      "invalid_input": "Bitte prüfen Sie Ihre Eingaben.",
+      "forbidden": "Dafür fehlt Ihnen die Berechtigung.",
+      "not_found": "Nicht gefunden.",
+      "invalid_transition": "Dieser Statuswechsel ist nicht möglich.",
+      "self": "Sie können sich nicht selbst aus dem Team entfernen.",
+      "duplicate": "Diese Quelle gibt es bereits (gleicher Name und gleiche Rolle).",
+      "in_use": "Die Quelle wird in Kommentaren verwendet und kann nicht gelöscht werden. Sie können sie deaktivieren.",
+      "name": "Bitte einen Namen angeben.",
+      "invalid_format": "Die Datei ist keine gültige AI_TPI-Exportdatei.",
+      "unsupported_version": "Diese Version der Exportdatei wird nicht unterstützt.",
+      "not_json": "Die Datei enthält kein gültiges JSON."
+    },
+    "tabs": {
+      "overview": "Überblick",
+      "team": "Team und Zuweisung",
+      "sources": "Quellen"
+    },
+    "notFound": "Dieses Assessment gibt es nicht oder es gehört nicht zu Ihrer Firma.",
+    "forbidden": "Sie gehören nicht zum Team dieses Assessments.",
+    "toList": "Zur Übersicht",
+    "readOnly": "Sie haben Lesezugriff.",
+    "actions": {
+      "questionnaire": "Fragebogen",
+      "consolidation": "Zusammenführung",
+      "history": "Änderungshistorie"
+    },
+    "statusChange": {
+      "consolidating": "Zur Zusammenführung",
+      "collecting": "Erfassung wieder öffnen",
+      "released": "Freigeben"
+    },
+    "statusChanged": "Status geändert.",
+    "deleteTitle": "Assessment löschen?",
+    "deleteText": "„{name}“ wird mit allen Antworten und Kommentaren gelöscht. Die Änderungshistorie bleibt erhalten.",
+    "deleted": "Assessment gelöscht.",
+    "team": {
+      "heading": "Team",
+      "hint": "Nur Mitglieder sehen das Assessment. Befragte antworten für ihre Abteilung.",
+      "add": "Aufnehmen",
+      "choose": "Person auswählen",
+      "noCandidates": "Keine weiteren Personen verfügbar.",
+      "remove": "Entfernen",
+      "noDepartment": "ohne Abteilung",
+      "added": "Ins Team aufgenommen.",
+      "removed": "Aus dem Team entfernt."
+    },
+    "assign": {
+      "heading": "Kernbereiche zuweisen",
+      "hint": "Jeder Kernbereich kann einer oder mehreren Abteilungen zugewiesen werden. Mehrere Abteilungen antworten getrennt, der Assessor führt zusammen.",
+      "noDepartments": "Es gibt noch keine Abteilungen. Ein Admin legt sie im Admin-Bereich an.",
+      "none": "nicht zugewiesen",
+      "saved": "Zuweisung gespeichert."
+    },
+    "submissions": {
+      "heading": "Abgaben",
+      "submitted": "abgegeben",
+      "draft": "in Bearbeitung",
+      "reopen": "Wieder öffnen",
+      "reopened": "Abgabe wieder geöffnet."
+    },
+    "sources": {
+      "heading": "Quellen und Autoren",
+      "hint": "Quellen stehen beim Kommentieren zur Auswahl.",
+      "name": "Name",
+      "role": "Rolle",
+      "unit": "Einheit",
+      "type": "Art",
+      "types": {
+        "person": "Person",
+        "document": "Dokument",
+        "tool": "Werkzeug",
+        "other": "Sonstiges"
+      },
+      "add": "Quelle hinzufügen",
+      "empty": "Noch keine Quellen.",
+      "created": "Quelle angelegt.",
+      "deactivate": "Deaktivieren",
+      "activate": "Aktivieren",
+      "inactive": "inaktiv",
+      "deleted": "Quelle gelöscht."
+    },
+    "duplicate": "Duplizieren",
+    "duplicateHint": "Kopiert Stammdaten, Team, Zuweisungen, Quellen, Antworten, Kommentare und Zusammenführung in ein neues Assessment im Status „Erfassung“.",
+    "duplicateName": "Name der Kopie",
+    "duplicateDefault": "{name} (Kopie)",
+    "duplicated": "Kopie angelegt.",
+    "toCopy": "Zur Kopie",
+    "export": "Als JSON exportieren",
+    "exportHint": "Die Datei enthält Stammdaten, Zuweisungen, Quellen, Antworten, Kommentare und die Zusammenführung – zum Archivieren oder zum Import in einer anderen Installation.",
+    "import": "JSON importieren",
+    "importTitle": "Assessment importieren?",
+    "importText": "Aus der Datei wird ein neues Assessment „{name}“ angelegt. Bestehende Assessments bleiben unverändert.",
+    "importConfirm": "Importieren",
+    "imported": "Import abgeschlossen: „{name}“ mit {answers} Antworten und {comments} Kommentaren.",
+    "ignoredHeading": "Übersprungen:",
+    "ignored": {
+      "checkpoints": "unbekannte Kontrollpunkte: {list}",
+      "departments": "unbekannte Abteilungen: {list}",
+      "members": "unbekannte Personen: {list}",
+      "keyAreas": "unbekannte Kernbereiche: {list}"
+    }
+  },
+  "questionnaire": {
+    "heading": "Fragebogen",
+    "areas": "Kernbereiche",
+    "myAreas": "Meine Kernbereiche",
+    "allAreas": "Alle Kernbereiche",
+    "progress": "{done} von {total} beantwortet",
+    "filterOpen": "Nur offene",
+    "filterAll": "Alle",
+    "filter": {
+      "all": "Alle Kontrollpunkte",
+      "classic": "Nur klassische",
+      "agile": "Nur agile",
+      "ai": "Nur KI"
+    },
+    "department": "Abteilung",
+    "viewDepartment": "Antworten anzeigen von",
+    "noDepartment": "Ihnen ist keine Abteilung zugeordnet. Bitte wenden Sie sich an einen Admin.",
+    "notAssigned": "Dieser Kernbereich ist Ihrer Abteilung nicht zugewiesen – nur Lesen.",
+    "readOnly": "Nur Lesen",
+    "submitted": "Ihre Abteilung hat abgegeben. Änderungen sind erst nach Wiederöffnen durch den Assessor möglich.",
+    "notCollecting": "Die Erfassung ist abgeschlossen.",
+    "submit": "Abteilung abgeben",
+    "submitTitle": "Antworten abgeben?",
+    "submitText": "Danach kann Ihre Abteilung nichts mehr ändern, bis der Assessor die Abgabe wieder öffnet.",
+    "submittedOk": "Antworten abgegeben.",
+    "saved": "gespeichert",
+    "saving": "wird gespeichert …",
+    "notSaved": "Nicht gespeichert – bitte erneut versuchen.",
+    "conflict": "{name} hat diese Antwort inzwischen geändert (jetzt: {value}). Ihre Auswahl wurde nicht gespeichert.",
+    "conflictTake": "Meine Auswahl trotzdem speichern",
+    "conflictKeep": "Aktuellen Stand übernehmen",
+    "aiBadge": "KI",
+    "agileBadge": "agil",
+    "hint": "Hinweis",
+    "recommendation": "Empfehlung",
+    "prev": "Vorheriger Kernbereich",
+    "next": "Nächster Kernbereich",
+    "areaNotFound": "Diesen Kernbereich gibt es in diesem Assessment nicht.",
+    "empty": "Keine Kontrollpunkte für diesen Filter.",
+    "lastChange": "zuletzt {name}",
+    "history": "Verlauf anzeigen",
+    "level": "Ebene {level}",
+    "presenceOne": "{name} bearbeitet gerade {area}.",
+    "presenceMany": "{names} bearbeiten gerade {area}."
+  },
+  "comments": {
+    "heading": "Kommentare",
+    "count": "{n} Kommentare | {n} Kommentar | {n} Kommentare",
+    "add": "Kommentar hinzufügen",
+    "text": "Kommentar",
+    "source": "Quelle (optional)",
+    "noSource": "ohne Quelle",
+    "save": "Kommentar speichern",
+    "counter": "{n} / {max}",
+    "tooLong": "Höchstens {max} Zeichen.",
+    "empty": "Bitte einen Text eingeben.",
+    "edited": "bearbeitet",
+    "deleteTitle": "Kommentar löschen?",
+    "deleteText": "Der Kommentar wird entfernt. Die Änderungshistorie bleibt erhalten.",
+    "deleted": "Kommentar gelöscht.",
+    "none": "Noch keine Kommentare.",
+    "by": "{name}",
+    "errors": {
+      "forbidden": "Dafür fehlt Ihnen die Berechtigung.",
+      "invalid_input": "Bitte prüfen Sie Ihre Eingabe."
+    }
+  },
+  "consolidation": {
+    "heading": "Zusammenführung",
+    "hint": "Je Kontrollpunkt die Antworten der Abteilungen vergleichen und die konsolidierte Antwort festlegen. Bei Abweichung vom Vorschlag oder uneinigen Abteilungen ist eine Begründung Pflicht.",
+    "suggestion": "Vorschlag",
+    "consolidated": "Konsolidiert",
+    "rationale": "Begründung",
+    "rationaleRequired": "Begründung (Pflicht)",
+    "take": "Vorschlag übernehmen",
+    "save": "Festlegen",
+    "saved": "Konsolidierte Antwort gespeichert.",
+    "disagree": "uneinig",
+    "done": "festgelegt",
+    "open": "offen",
+    "filterDisagree": "Nur uneinige",
+    "filterOpen": "Nur nicht festgelegte",
+    "progress": "{done} von {total} festgelegt",
+    "noDepartments": "Diesem Kernbereich ist keine Abteilung zugewiesen.",
+    "errors": {
+      "rationale_required": "Bitte eine Begründung angeben (Abweichung vom Vorschlag oder uneinige Abteilungen).",
+      "forbidden": "Nur Assessoren führen zusammen.",
+      "version_conflict": "Die Antwort wurde inzwischen geändert. Die Ansicht wurde aktualisiert."
+    },
+    "forbidden": "Die Zusammenführung ist Assessoren vorbehalten.",
+    "answer": "Antwort"
+  },
+  "history": {
+    "heading": "Änderungshistorie",
+    "hint": "Alle Änderungen an Antworten, Kommentaren, Zuweisungen und Stammdaten. Einträge können nicht geändert oder gelöscht werden.",
+    "assessment": "Assessment",
+    "allAssessments": "Alle Assessments",
+    "keyArea": "Kernbereich",
+    "checkpoint": "Kontrollpunkt",
+    "user": "Person",
+    "allUsers": "Alle Personen",
+    "department": "Abteilung",
+    "allDepartments": "Alle Abteilungen",
+    "from": "Von",
+    "to": "Bis",
+    "apply": "Filtern",
+    "reset": "Zurücksetzen",
+    "export": "CSV exportieren",
+    "empty": "Keine Einträge.",
+    "more": "Weitere laden",
+    "total": "{n} Einträge",
+    "oldNew": "{old} → {new}",
+    "actions": {
+      "assessment_created": "Assessment angelegt",
+      "assessment_updated": "Stammdaten geändert",
+      "assessment_status": "Status geändert",
+      "assessment_deleted": "Assessment gelöscht",
+      "member_added": "Ins Team aufgenommen",
+      "member_removed": "Aus dem Team entfernt",
+      "assignment_changed": "Zuweisung geändert",
+      "answer_changed": "Antwort geändert",
+      "department_submitted": "Abteilung abgegeben",
+      "department_reopened": "Abgabe wieder geöffnet",
+      "comment_created": "Kommentar angelegt",
+      "comment_updated": "Kommentar geändert",
+      "comment_deleted": "Kommentar gelöscht",
+      "consolidated_changed": "Konsolidierte Antwort",
+      "source_created": "Quelle angelegt",
+      "source_updated": "Quelle geändert",
+      "source_activated": "Quelle aktiviert",
+      "source_deactivated": "Quelle deaktiviert",
+      "source_deleted": "Quelle gelöscht"
     }
   }
 }

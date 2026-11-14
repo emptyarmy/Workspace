@@ -63,11 +63,12 @@
   },
   "home": {
     "heading": "Welcome",
-    "text": "Sign-in and the admin area are set up. Questionnaire, report and recommendations follow in the next phases.",
+    "text": "Under “Assessments”, assessors create assessments, assign key areas to departments and consolidate the answers.",
     "catalogInfo": "Catalog: {areas} key areas, {checkpoints} checkpoints (version {version}).",
     "greeting": "Hello {name}",
     "roleInfo": "You are signed in as {role} at {company}.",
-    "denied": "You do not have permission for this area."
+    "denied": "You do not have permission for this area.",
+    "toAssessments": "Go to assessments"
   },
   "notFound": {
     "heading": "Page not found",
@@ -83,7 +84,9 @@
     "home": "Home",
     "admin": "Admin area",
     "logout": "Sign out",
-    "userMenu": "User menu"
+    "userMenu": "User menu",
+    "assessments": "Assessments",
+    "history": "Change history"
   },
   "roles": {
     "admin": "Admin",
@@ -103,7 +106,14 @@
     "saved": "Saved.",
     "error": "Something went wrong. Please try again.",
     "external": "External",
-    "required": "Required"
+    "required": "Required",
+    "back": "Back",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "loading": "Loading …",
+    "none": "–",
+    "retry": "Try again"
   },
   "setup": {
     "heading": "Initial setup",
@@ -127,7 +137,9 @@
     },
     "serverDown": "The application server cannot be reached.",
     "serverError": "The application server reports an error (HTTP {status}) – usually the database is not reachable.",
-    "serverHint": "Please check that “npm run dev” runs without errors and that the database is running (docker compose up -d db). Then reload the page."
+    "serverHint": "Please check that “npm run dev” runs without errors and that the database is running (docker compose up -d db). Then reload the page.",
+    "foreignServer": "The /api address is not answered by the AI_TPI server but by another application.",
+    "foreignServerHint": "Usually the port set in SERVER_PORT in .env is used by another application, so the AI_TPI server could not start (EADDRINUSE in the output of “npm run dev”). Set a free port, e.g. SERVER_PORT=3001, restart “npm run dev” and reload the page."
   },
   "admin": {
     "heading": "Admin area",
@@ -139,7 +151,8 @@
       "mail": "Email",
       "ai": "AI configuration",
       "audit": "Audit log",
-      "industries": "Industries"
+      "industries": "Industries",
+      "history": "Change history"
     },
     "users": {
       "create": "Create user",
@@ -445,6 +458,293 @@
         "invalid_input": "Please check your entries.",
         "not_found": "The industry was not found."
       }
+    }
+  },
+  "answers": {
+    "yes": "Fulfilled",
+    "partial": "Partially",
+    "no": "Not fulfilled",
+    "na": "Not applicable",
+    "open": "Open"
+  },
+  "levels": {
+    "controlled": "Controlled",
+    "efficient": "Efficient",
+    "optimizing": "Optimizing"
+  },
+  "assessment": {
+    "listHeading": "Assessments",
+    "create": "New assessment",
+    "empty": "No assessments yet. Assessors create new assessments here.",
+    "emptyMember": "You are not assigned to any assessment yet. Your assessor will add you to the team.",
+    "createHeading": "Create assessment",
+    "created": "Assessment created.",
+    "open": "Open",
+    "status": {
+      "collecting": "Collecting",
+      "consolidating": "Consolidating",
+      "released": "Released"
+    },
+    "method": {
+      "classic": "classic",
+      "agile": "agile"
+    },
+    "fields": {
+      "project": "Project",
+      "assessorName": "Assessor",
+      "domain": "Domain",
+      "organizationUnit": "Organizational unit",
+      "mainStakeholder": "Main stakeholder",
+      "contact": "Contact",
+      "assessmentType": "Type of assessment",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "interviewCount": "Number of interviews",
+      "scope": "Scope",
+      "methodModel": "Process model",
+      "includeAi": "Include AI key areas and AI checkpoints"
+    },
+    "methodHint": "“Classic” hides the agile checkpoints.",
+    "errors": {
+      "project": "Please enter a project name with at least 2 characters.",
+      "assessorName": "Please enter the assessor’s name.",
+      "startDate": "Please enter a start date.",
+      "endDate": "The end date must not be before the start date.",
+      "interviewCount": "Please enter a whole number of 0 or more.",
+      "invalid_input": "Please check your input.",
+      "forbidden": "You are not allowed to do this.",
+      "not_found": "Not found.",
+      "invalid_transition": "This status change is not possible.",
+      "self": "You cannot remove yourself from the team.",
+      "duplicate": "This source already exists (same name and role).",
+      "in_use": "The source is used in comments and cannot be deleted. You can deactivate it.",
+      "name": "Please enter a name.",
+      "invalid_format": "The file is not a valid AI_TPI export file.",
+      "unsupported_version": "This version of the export file is not supported.",
+      "not_json": "The file does not contain valid JSON."
+    },
+    "tabs": {
+      "overview": "Overview",
+      "team": "Team and assignment",
+      "sources": "Sources"
+    },
+    "notFound": "This assessment does not exist or does not belong to your company.",
+    "forbidden": "You are not part of this assessment’s team.",
+    "toList": "Back to overview",
+    "readOnly": "You have read access.",
+    "actions": {
+      "questionnaire": "Questionnaire",
+      "consolidation": "Consolidation",
+      "history": "Change history"
+    },
+    "statusChange": {
+      "consolidating": "Start consolidation",
+      "collecting": "Reopen collection",
+      "released": "Release"
+    },
+    "statusChanged": "Status changed.",
+    "deleteTitle": "Delete assessment?",
+    "deleteText": "“{name}” will be deleted with all answers and comments. The change history is kept.",
+    "deleted": "Assessment deleted.",
+    "team": {
+      "heading": "Team",
+      "hint": "Only members can see the assessment. Respondents answer for their department.",
+      "add": "Add",
+      "choose": "Choose a person",
+      "noCandidates": "No further people available.",
+      "remove": "Remove",
+      "noDepartment": "no department",
+      "added": "Added to the team.",
+      "removed": "Removed from the team."
+    },
+    "assign": {
+      "heading": "Assign key areas",
+      "hint": "Each key area can be assigned to one or more departments. Departments answer separately; the assessor consolidates.",
+      "noDepartments": "There are no departments yet. An admin creates them in the admin area.",
+      "none": "not assigned",
+      "saved": "Assignment saved."
+    },
+    "submissions": {
+      "heading": "Submissions",
+      "submitted": "submitted",
+      "draft": "in progress",
+      "reopen": "Reopen",
+      "reopened": "Submission reopened."
+    },
+    "sources": {
+      "heading": "Sources and authors",
+      "hint": "Sources can be selected when commenting.",
+      "name": "Name",
+      "role": "Role",
+      "unit": "Unit",
+      "type": "Type",
+      "types": {
+        "person": "Person",
+        "document": "Document",
+        "tool": "Tool",
+        "other": "Other"
+      },
+      "add": "Add source",
+      "empty": "No sources yet.",
+      "created": "Source created.",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "inactive": "inactive",
+      "deleted": "Source deleted."
+    },
+    "duplicate": "Duplicate",
+    "duplicateHint": "Copies master data, team, assignments, sources, answers, comments and consolidation into a new assessment with status “Collecting”.",
+    "duplicateName": "Name of the copy",
+    "duplicateDefault": "{name} (copy)",
+    "duplicated": "Copy created.",
+    "toCopy": "Open copy",
+    "export": "Export as JSON",
+    "exportHint": "The file contains master data, assignments, sources, answers, comments and consolidation – for archiving or for importing into another installation.",
+    "import": "Import JSON",
+    "importTitle": "Import assessment?",
+    "importText": "A new assessment “{name}” will be created from the file. Existing assessments remain unchanged.",
+    "importConfirm": "Import",
+    "imported": "Import finished: “{name}” with {answers} answers and {comments} comments.",
+    "ignoredHeading": "Skipped:",
+    "ignored": {
+      "checkpoints": "unknown checkpoints: {list}",
+      "departments": "unknown departments: {list}",
+      "members": "unknown people: {list}",
+      "keyAreas": "unknown key areas: {list}"
+    }
+  },
+  "questionnaire": {
+    "heading": "Questionnaire",
+    "areas": "Key areas",
+    "myAreas": "My key areas",
+    "allAreas": "All key areas",
+    "progress": "{done} of {total} answered",
+    "filterOpen": "Open only",
+    "filterAll": "All",
+    "filter": {
+      "all": "All checkpoints",
+      "classic": "Classic only",
+      "agile": "Agile only",
+      "ai": "AI only"
+    },
+    "department": "Department",
+    "viewDepartment": "Show answers of",
+    "noDepartment": "You are not assigned to a department. Please contact an admin.",
+    "notAssigned": "This key area is not assigned to your department – read only.",
+    "readOnly": "Read only",
+    "submitted": "Your department has submitted. Changes are only possible after the assessor reopens the submission.",
+    "notCollecting": "Collection has been closed.",
+    "submit": "Submit department",
+    "submitTitle": "Submit answers?",
+    "submitText": "Afterwards your department cannot change anything until the assessor reopens the submission.",
+    "submittedOk": "Answers submitted.",
+    "saved": "saved",
+    "saving": "saving …",
+    "notSaved": "Not saved – please try again.",
+    "conflict": "{name} has changed this answer in the meantime (now: {value}). Your choice was not saved.",
+    "conflictTake": "Save my choice anyway",
+    "conflictKeep": "Keep current answer",
+    "aiBadge": "AI",
+    "agileBadge": "agile",
+    "hint": "Hint",
+    "recommendation": "Recommendation",
+    "prev": "Previous key area",
+    "next": "Next key area",
+    "areaNotFound": "This key area does not exist in this assessment.",
+    "empty": "No checkpoints for this filter.",
+    "lastChange": "last changed by {name}",
+    "history": "Show history",
+    "level": "Level {level}",
+    "presenceOne": "{name} is currently working on {area}.",
+    "presenceMany": "{names} are currently working on {area}."
+  },
+  "comments": {
+    "heading": "Comments",
+    "count": "{n} comments | {n} comment | {n} comments",
+    "add": "Add comment",
+    "text": "Comment",
+    "source": "Source (optional)",
+    "noSource": "no source",
+    "save": "Save comment",
+    "counter": "{n} / {max}",
+    "tooLong": "At most {max} characters.",
+    "empty": "Please enter a text.",
+    "edited": "edited",
+    "deleteTitle": "Delete comment?",
+    "deleteText": "The comment will be removed. The change history is kept.",
+    "deleted": "Comment deleted.",
+    "none": "No comments yet.",
+    "by": "{name}",
+    "errors": {
+      "forbidden": "You are not allowed to do this.",
+      "invalid_input": "Please check your input."
+    }
+  },
+  "consolidation": {
+    "heading": "Consolidation",
+    "hint": "Compare the departments’ answers per checkpoint and set the consolidated answer. A rationale is required when deviating from the suggestion or when departments disagree.",
+    "suggestion": "Suggestion",
+    "consolidated": "Consolidated",
+    "rationale": "Rationale",
+    "rationaleRequired": "Rationale (required)",
+    "take": "Take suggestion",
+    "save": "Set",
+    "saved": "Consolidated answer saved.",
+    "disagree": "disagree",
+    "done": "set",
+    "open": "open",
+    "filterDisagree": "Disagreements only",
+    "filterOpen": "Not yet set only",
+    "progress": "{done} of {total} set",
+    "noDepartments": "No department is assigned to this key area.",
+    "errors": {
+      "rationale_required": "Please enter a rationale (deviation from the suggestion or departments disagree).",
+      "forbidden": "Only assessors consolidate.",
+      "version_conflict": "The answer has been changed in the meantime. The view was refreshed."
+    },
+    "forbidden": "Consolidation is reserved for assessors.",
+    "answer": "Answer"
+  },
+  "history": {
+    "heading": "Change history",
+    "hint": "All changes to answers, comments, assignments and master data. Entries cannot be changed or deleted.",
+    "assessment": "Assessment",
+    "allAssessments": "All assessments",
+    "keyArea": "Key area",
+    "checkpoint": "Checkpoint",
+    "user": "Person",
+    "allUsers": "All people",
+    "department": "Department",
+    "allDepartments": "All departments",
+    "from": "From",
+    "to": "To",
+    "apply": "Filter",
+    "reset": "Reset",
+    "export": "Export CSV",
+    "empty": "No entries.",
+    "more": "Load more",
+    "total": "{n} entries",
+    "oldNew": "{old} → {new}",
+    "actions": {
+      "assessment_created": "Assessment created",
+      "assessment_updated": "Master data changed",
+      "assessment_status": "Status changed",
+      "assessment_deleted": "Assessment deleted",
+      "member_added": "Added to team",
+      "member_removed": "Removed from team",
+      "assignment_changed": "Assignment changed",
+      "answer_changed": "Answer changed",
+      "department_submitted": "Department submitted",
+      "department_reopened": "Submission reopened",
+      "comment_created": "Comment added",
+      "comment_updated": "Comment changed",
+      "comment_deleted": "Comment deleted",
+      "consolidated_changed": "Consolidated answer",
+      "source_created": "Source created",
+      "source_updated": "Source changed",
+      "source_activated": "Source activated",
+      "source_deactivated": "Source deactivated",
+      "source_deleted": "Source deleted"
     }
   }
 }

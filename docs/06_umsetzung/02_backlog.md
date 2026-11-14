@@ -55,13 +55,17 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☐ KI-Modul-Auswahl durch Assessor und Admin
 - ☐ KI- und Mail-Konfiguration je Firma
 
-## Phase 5 – Erfassung
-- ☐ Assessment anlegen, Mitglieder, Zuweisung Kernbereiche
-- ☐ Fragebogen (Desktop, Tablet, Mobil), Filter klassisch/agil/KI
-- ☐ Kommentare (Verfasser automatisch, Quelle wählbar), Quellenverwaltung
-- ☐ Abteilungsantworten, Abgabe, Live-Updates (SSE), optimistisches Sperren
-- ☐ Zusammenführung (Vergleichsansicht, Vorschlag, Begründung)
-- ☐ Änderungshistorie (append-only) + Ansicht im Admin-Bereich für alle Rollen
+## Phase 5 – Erfassung (erledigt 13.11.2026)
+- ☑ Assessment anlegen (Stammdaten FA-1.1, Vorgehensmodell klassisch/agil, KI ein/aus), ändern, löschen, Status Erfassung → Zusammenführung → Freigegeben
+- ☑ Team (Mitglieder), Zuweisung Kernbereich → eine oder mehrere Abteilungen, Abgabe je Abteilung + Wiederöffnen
+- ☑ Fragebogen (Desktop, Tablet, Mobil): Navigation, Fortschritt, Filter „nur offene“ und klassisch/agil/KI, KI-/agil-Kennzeichen, Tastatur, Wischen, Speichern je Klick mit Fehleranzeige
+- ☑ Abteilungsantworten mit optimistischem Sperren (Version, 409 + Konflikthinweis)
+- ☑ Kommentare (Verfasser automatisch, Quelle wählbar, 2000 Zeichen), Quellenverwaltung (Duplikat, Deaktivieren statt Löschen)
+- ☑ Zusammenführung (Vergleichsansicht, Vorschlag R-11, Begründungspflicht)
+- ☑ Änderungshistorie (append-only per DB-Trigger) + Reiter im Admin-Bereich für alle Rollen, Filter, CSV, „Verlauf anzeigen“ am KP
+- ☑ 5b (13.11.2026): Live-Aktualisierung per Server-Sent Events und Präsenzanzeige je Kernbereich (TC-MU-001, TC-MU-003)
+- ☑ 5b: Assessment duplizieren (TC-ASM-005), JSON-Export/-Import mit Bericht über übersprungene Einträge (US-1.3, TC-IO-001…005)
+- ☑ 5b: Antworten je Kontrollpunkt nacheinander speichern (keine Scheinkonflikte bei schnellen Folgeklicks)
 
 ## Phase 6 – Auswertung
 - ☐ Scoring Engine + Unit-Tests

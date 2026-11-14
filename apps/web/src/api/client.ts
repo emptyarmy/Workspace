@@ -14,6 +14,12 @@ export function setUnauthorizedHandler(handler: () => void) {
   onUnauthorized = handler;
 }
 
+/** Verbindungs-ID des Live-Kanals dieses Fensters; geht bei Änderungen mit, damit das eigene Echo erkannt wird. */
+let liveConnection: string | null = null;
+export function setLiveConnection(id: string | null) {
+  liveConnection = id;
+}
+
 /** CSRF-Schutz: Der Server verlangt diesen Header bei zustandsändernden Aufrufen. */
 const CSRF = { 'X-Requested-With': 'ai-tpi' };
 
@@ -25,6 +31,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
       headers: {
         Accept: 'application/json',
         ...(method === 'GET' ? {} : CSRF),
+        ...(method !== 'GET' && liveConnection ? { 'X-Live-Connection': liveConnection } : {}),
         ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
       },
       body: body !== undefined ? JSON.stringify(body) : undefined,
