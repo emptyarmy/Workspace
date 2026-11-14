@@ -61,11 +61,26 @@ const r = ref<Report | null>(null);
 const loadError = ref<'not_found' | 'forbidden' | null>(null);
 const selected = ref<Checkpoint | null>(null);
 const logoBroken = ref(false);
+/** Maßnahmenplan: angenommene, begonnene und erledigte Empfehlungen (Phase 7). */
+interface PlanItem {
+  id: string;
+  horizon: 'short' | 'long';
+  title: string;
+  checkpointIds: string[];
+  status: string;
+  ownerName: string | null;
+  dueDate: string | null;
+}
+const plan = ref<PlanItem[]>([]);
 
 onMounted(async () => {
-  const res = await apiGet<Report>(`/api/assessments/${props.id}/report`);
+  const [res, recs] = await Promise.all([
+    apiGet<Report>(`/api/assessments/${props.id}/report`),
+    apiGet<{ items: PlanItem[] }>(`/api/assessments/${props.id}/recommendations`),
+  ]);
   if (!res.ok || !res.data) loadError.value = res.status === 403 ? 'forbidden' : 'not_found';
   else r.value = res.data;
+  plan.value = (recs.data?.items ?? []).filter((x) => ['accepted', 'in_progress', 'done'].includes(x.status));
 });
 
 const areaName = (id: string) => catalog.keyAreas.find((k) => k.id === id)?.name[lang.value] ?? id;
@@ -388,6 +403,42 @@ const print = () => window.print();
         </table>
       </section>
 
+      <!-- 9. Maßnahmenplan -->
+      <section class="sheet" data-testid="report-plan">
+        <h2>{{ t('report.plan') }}</h2>
+        <p v-if="plan.length === 0" data-testid="plan-empty">{{ t('report.planEmpty') }}</p>
+        <div v-else class="table-wrap" tabindex="0" role="region" :aria-label="t('report.plan')">
+          <table class="list-table">
+            <thead>
+              <tr>
+                <th scope="col">{{ t('recommendations.fields.title') }}</th>
+                <th scope="col">{{ t('report.checkpoint') }}</th>
+                <th scope="col">{{ t('recommendations.fields.status') }}</th>
+                <th scope="col">{{ t('recommendations.fields.owner') }}</th>
+                <th scope="col">{{ t('recommendations.fields.due') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="p in plan" :key="p.id" data-testid="plan-row">
+                <th scope="row">
+                  <span class="tag">{{ t(`recommendations.horizon.${p.horizon}`) }}</span> {{ p.title }}
+                </th>
+                <td>{{ p.checkpointIds.join(', ') }}</td>
+                <td>{{ t(`recommendations.status.${p.status}`) }}</td>
+                <td>{{ p.ownerName ?? '–' }}</td>
+                <td>{{ p.dueDate ? formatDate(locale, p.dueDate) : '–' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <RouterLink
+          :to="{ name: 'recommendations', params: { id } }"
+          class="no-print"
+          data-testid="plan-link"
+          >{{ t('report.planOpen') }}</RouterLink
+        >
+      </section>
+
       <!-- 10. Anhang -->
       <section class="sheet" data-testid="report-appendix">
         <h2>{{ t('report.appendix') }}</h2>
@@ -539,6 +590,9 @@ const print = () => window.print();
 .sw h3 {
   font-size: 1rem;
   margin: 0 0 0.25rem;
+}
+.table-wrap {
+  overflow-x: auto;
 }
 .matrix {
   display: grid;

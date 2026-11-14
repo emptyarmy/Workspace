@@ -63,6 +63,16 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | Konto gesperrt | Nach 5 Fehlversuchen 15 Minuten warten oder einen Admin das Passwort zurücksetzen lassen. |
 | Passwort erfüllt alle Regeln, wird aber abgelehnt | Die Stärke ist „schwach“ (z. B. Wort + Jahreszahl). Ein längeres, weniger vorhersagbares Passwort wählen. |
 
+## Empfehlungen und KI
+
+| Problem | Lösung |
+|---|---|
+| *Keine Berechtigung …* beim Erzeugen oder Speichern | Nur Assessoren im Team des Assessments dürfen Empfehlungen erzeugen und bearbeiten; Admins, Befragte und Leser lesen nur. Details: [Empfehlungen – Meldungen](/handbuch/empfehlungen/#meldungen-keine-berechtigung). |
+| *Der KI-Dienst hat nicht rechtzeitig geantwortet* | Timeout des KI-Moduls erhöhen (5–300 s). Es werden die regelbasierten Empfehlungen angezeigt. |
+| *… hat die Anmeldung abgelehnt (HTTP 401)* | API-Schlüssel im Reiter *KI-Konfiguration* erneuern, dann **Verbindung testen**. |
+| *Die Antwort … war unbrauchbar* | Das Modell lieferte kein gültiges JSON oder erfundene Kontrollpunkte. Anderes Modell wählen oder die Prompt-Vorlage vereinfachen. |
+| Nach dem Update fehlt die Tabelle `recommendation` | `npm run db:migrate` ausführen (Migration `0005_recommendations`). |
+
 ## Tests
 
 | Problem | Lösung |
@@ -70,6 +80,8 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | `sh: playwright: command not found` | `npm install`, danach einmalig `npx playwright install` |
 | `Process from config.webServer was not able to start` | Meist ist die Testdatenbank nicht erreichbar oder existiert nicht: `docker compose exec db createdb -U ai_tpi ai_tpi_e2e`. Playwright leitet die Adresse aus `DATABASE_URL` in `.env` ab. |
 | Firefox: `Could not find profile folder` (macOS) | Firefox darf den temporären Ordner von macOS nicht nutzen. Dauerhaft: `echo 'export TMPDIR="$HOME/pw-tmp"' >> ~/.zshrc`, `mkdir -p ~/pw-tmp`, neues Terminal. Übergangsweise: `PW_SKIP_FIREFOX=1 npm run test:e2e`. |
+| `empfehlungen.spec.ts`: KI-Tests schlagen mit „nicht erreichbar“ fehl | Die Tests rufen den nachgebildeten KI-Dienst unter `http://127.0.0.1:<E2E_SERVER_PORT>/test-llm/…` auf. Der Testserver muss mit `TEST_ENDPOINTS=true` laufen (macht Playwright automatisch). |
+| Ab einem bestimmten Test schlagen **alle** weiteren mit `net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5180` fehl (macOS) | Der Vite-Testserver hat sich beendet, weil macOS einem Prozess standardmäßig nur 256 offene Dateien/Verbindungen erlaubt (`ulimit -n`) und bei vielen parallelen Tests jede Seite eine Live-Verbindung hält. Die Playwright-Konfiguration hebt die Grenze für beide Testserver inzwischen selbst auf 10 240 an. Tritt es trotzdem auf: vor dem Lauf `ulimit -n 10240` im selben Terminal ausführen oder weniger Worker nutzen (`npx playwright test --workers=4`). |
 | Ports 3100 oder 5180 belegt | Playwright nutzt eigene Ports; abweichend über `E2E_SERVER_PORT` und `E2E_WEB_PORT` setzen. |
 
 ## Hinweise ohne Handlungsbedarf

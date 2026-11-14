@@ -19,7 +19,7 @@ AI_TPI nutzt **PostgreSQL 16** und **Drizzle ORM** (Entscheidung: [ADR-007](/pro
 - Sperrliste der Freemail-Domains (`packages/shared/src/identity.ts`)
 - Eintrag für den Zustand der Ersteinrichtung
 
-## Tabellen (Stand Phase 4b)
+## Tabellen (Stand Phase 7)
 
 | Tabelle | Zweck |
 |---|---|
@@ -32,7 +32,13 @@ AI_TPI nutzt **PostgreSQL 16** und **Drizzle ORM** (Entscheidung: [ADR-007](/pro
 | `one_time_token`, `session` | Einmal-Links und Sitzungen (nur SHA-256-Hashes gespeichert) |
 | `company_mail_config`, `ai_module` | E-Mail- und KI-Einstellungen je Firma (Geheimnisse verschlüsselt) |
 | `setup_state` | Ersteinrichtung abgeschlossen ja/nein |
-| `audit_log` | sicherheitsrelevante Ereignisse |
+| `audit_log` | sicherheitsrelevante Ereignisse, auch jeder KI-Aufruf für Empfehlungen |
+| `assessment`, `assessment_member`, `key_area_assignment` | Assessments, Team, Zuweisung Kernbereich → Abteilungen (Migration `0003`) |
+| `department_answer`, `department_submission`, `consolidated_answer` | Antworten je Abteilung, Abgaben, zusammengeführte Antworten (`0003`) |
+| `source`, `comment` | Quellen und Kommentare (`0003`) |
+| `change_history` | Änderungshistorie, append-only per Trigger (`0003`) |
+| `assessment_score` | Benchmark-Schnappschuss bei Freigabe (`0004`) |
+| `recommendation` | Empfehlungen und Maßnahmenplan: Horizont, Kontrollpunkte, Text, Herkunft Regel/KI mit Modul und Modell, Status, Verantwortliche, Termin (`0005`) |
 
 Vollständiges Zielmodell inkl. Assessments und Antworten: [Datenmodell](/projekt/architektur/datenmodell/).
 

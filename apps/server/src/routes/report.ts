@@ -20,6 +20,7 @@ import {
   users,
 } from '../db/schema';
 import { requireAuth } from '../plugins/auth';
+import type { Db } from '../db/client';
 
 /** Mindestanzahl Firmen je Vergleichsgruppe (R-03), damit keine einzelne Firma zurückgerechnet werden kann. */
 export const BENCHMARK_MIN_COMPANIES = 5;
@@ -59,6 +60,27 @@ function aggregate(rows: { overallIndex: number | null; aiIndex: number | null; 
       .map(([keyAreaId, xs]) => ({ keyAreaId, n: xs.length, ...quartiles(xs)! }))
       .sort((a, b) => a.keyAreaId.localeCompare(b.keyAreaId)),
   };
+}
+
+/**
+ * Branchen-Median des Erfüllungsgrads je Kernbereich für die Priorisierung der Empfehlungen.
+ * Nur wenn die Firma am Benchmark teilnimmt und die Branche genügend Firmen hat (R-03/R-04).
+ */
+export async function industryAreaMedians(
+  db: Db,
+  companyId: string,
+  catalogVersion: string,
+): Promise<Record<string, number> | undefined> {
+  const [c] = await db
+    .select({ optIn: companies.benchmarkOptIn, industryId: companies.industryId })
+    .from(companies)
+    .where(eq(companies.id, companyId));
+  if (!c?.optIn || !c.industryId) return undefined;
+  const g = aggregate(
+    (await latestSnapshots(db, catalogVersion)).filter((s) => s.industryId === c.industryId),
+  );
+  if (!g.enough) return undefined;
+  return Object.fromEntries(g.areas.map((a) => [a.keyAreaId, a.median]));
 }
 
 /**

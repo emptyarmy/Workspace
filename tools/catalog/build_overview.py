@@ -26,7 +26,7 @@ L.append(f'| Aufwand S (kurzfristig < 1 Monat) / M (1–3 Monate) / L (> 3 Monat
 L.append('\n**Legende:** Ebene K = Kontrolliert, E = Effizient, O = Optimierend · Aufw. = Umsetzungsaufwand bei Nichterfüllung · Sicht P/T/O und Cluster A–G aus Agile TPI · 🤖 = KI-Kontrollpunkt · 🔄 = neuer agiler Kontrollpunkt · ⚠️ = rekonstruiert, bitte besonders prüfen\n')
 L.append('## 2. Hinweise zur Bereinigung\n')
 L.append('- Tippfehler korrigiert (z. B. „einen einfache“, „de Testprozesses“, „lieft“, „übern“, „abziehen“ → „abzielen“, „Widerverwendung“).')
-L.append('- Projektspezifische Bewertungstexte (BRUNATA, Projekt B2B, aqua, NTT Data, DSC) entfernt – sie können als Demo-Assessment dienen (F-18).')
+L.append('- Projektspezifische Bewertungstexte (firmenspezifische Einschätzungen, Projekt B2B, aqua, NTT Data, DSC) entfernt – sie können als Demo-Assessment dienen (F-18).')
 L.append('- Uneinheitliche Ebenenbezeichnungen vereinheitlicht (Kontrolliert / Effizient / Optimierend).')
 L.append('- **KB02 „Grad der Beteiligung“:** Überschrift und Ebene KONTROLLIERT fehlten im Word-Dokument; die 4 Kontrollpunkte dieser Ebene sind nach TPI NEXT rekonstruiert (⚠️).')
 L.append('- Wo ein agiler Kontrollpunkt inhaltlich einem TPI-NEXT-Punkt entspricht, wurde die Formulierung des TPI-NEXT-Punktes behutsam um die agile Sicht ergänzt (z. B. „Auftraggeber bzw. Product Owner“).\n')

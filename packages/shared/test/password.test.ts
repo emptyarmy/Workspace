@@ -59,7 +59,7 @@ describe('Passwortstärke', () => {
   });
 
   it('erkennt Bezug zu Nutzerdaten (TC-PWD-011)', () => {
-    const inputs = userInputsFrom(['max.mustermann@brunata.com', 'Max Mustermann']);
+    const inputs = userInputsFrom(['max.mustermann@heise.de', 'Max Mustermann']);
     const withUser = assessPassword('Mustermann2026!', inputs);
     const without = assessPassword('Mustermann2026!');
     expect(without.acceptable).toBe(true); // für andere Nutzer originell genug

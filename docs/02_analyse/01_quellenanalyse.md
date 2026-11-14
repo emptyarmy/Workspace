@@ -6,7 +6,7 @@ Stand: 08.11.2026 – Ergebnis der Erstprüfung der drei gelieferten Dateien (Ko
 
 | Datei | Inhalt | Sprache | Modell |
 |---|---|---|---|
-| `Testmanagement_und_KVP.docx` | Einleitung KVP/TPI NEXT®, Kontrollpunkte je Kernbereich und Ebene inkl. BRUNATA-Einschätzungen; danach Kapitel zu Funktionstest, DoR/DoD, Ishikawa, ABC-Analyse, KVP-Ablauf sowie **fachfremde Kapitel zu SAP-Materialstammdaten** | DE | **TPI NEXT®** (Ebenen Kontrolliert/Effizient/Optimierend) |
+| `Testmanagement_und_KVP.docx` | Einleitung KVP/TPI NEXT®, Kontrollpunkte je Kernbereich und Ebene; danach Kapitel zu Funktionstest, DoR/DoD, Ishikawa, ABC-Analyse, KVP-Ablauf | DE | **TPI NEXT®** (Ebenen Kontrolliert/Effizient/Optimierend) |
 | `AgileTPI_Tool_2_5xls.xls` | Excel-Werkzeug (schreibgeschützt verschlüsselt, Standardpasswort) mit 6 Blättern und VBA-Makros | EN | **Agile TPI** (Sichten P/T/O, Cluster A–G) |
 | `Agile_Test_Practice_Improvement_2.4.doc` | Methodenbeschreibung Agile TPI V2.4 (März 2017, Sogeti), Verbesserungsstrategie mit Clustern, Hinweise zu Tester-Skills | EN | Agile TPI |
 
@@ -53,9 +53,8 @@ Beide Quellen verwenden **16 Kernbereiche**. In der Anforderung ist von 14 die R
 - **Kernbereich 2 „Grad der Beteiligung“**: Überschrift und Ebene KONTROLLIERT fehlen; die Kontrollpunkte der Ebene EFFIZIENT hängen unter „Teststrategie“ (vermutlich Copy-&-Paste-Verlust).
 - Bei mehreren Bereichen fehlt der Text der Ebene INITIAL (z. B. Metriken).
 - Uneinheitliche Ebenenbezeichnungen: „Optimierend“ / „optimiert“ / „OPTIMIEREND“, „effizient“ / „EFFIZIENT“.
-- Tippfehler (z. B. „Entwicklungsprojket“, „BRUNTA“, „einen einfache“, „noch noch“) und Platzhalter „Fehler! Es wurde kein Dateiname angegeben.“ (fehlende Grafiken).
-- Projektspezifische Bewertungstexte (BRUNATA, Projekt B2B, Partner DSC/NTT Data, Tool aqua) sind mit dem generischen Katalog vermischt.
-- Ab Abschnitt „SAP Materialstammdaten“ fachfremder Inhalt → für die App irrelevant.
+- Tippfehler (z. B. „Entwicklungsprojket“, „einen einfache“, „noch noch“) und Platzhalter „Fehler! Es wurde kein Dateiname angegeben.“ (fehlende Grafiken).
+- Projektspezifische Bewertungstexte (Projekt B2B, Partner DSC/NTT Data, Tool aqua) sind mit dem generischen Katalog vermischt.
 
 → Der deutsche Katalog muss vor dem Import **bereinigt** werden (Arbeitspaket AP-2.1).
 

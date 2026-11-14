@@ -24,7 +24,7 @@ Einladungen, Einmal-Links und Hinweise an Personen Ihrer Firma laufen über den 
 
 Admin-Bereich → Reiter **KI-Konfiguration** (`/admin?tab=ai`).
 
-Jede Firma hat ihre eigenen Module. Empfehlungen einer Firma entstehen ausschließlich mit deren Einstellungen und API-Schlüsseln. Später wählt der Assessor oder Admin je Bericht ein Modul; das **Standardmodul** ist vorbelegt.
+Jede Firma hat ihre eigenen Module. Empfehlungen einer Firma entstehen ausschließlich mit deren Einstellungen und API-Schlüsseln. Beim Erzeugen der [Handlungsempfehlungen](/handbuch/empfehlungen/) wählt der Assessor ein Modul; das **Standardmodul**, das der Admin hier festlegt, ist vorbelegt. Die **Prompt-Vorlage** ersetzt die Standard-Anweisung an die KI; das geforderte JSON-Antwortformat hängt der Server immer an.
 
 | Modus | Anbieter | Basis-URL (Vorschlag) |
 |---|---|---|

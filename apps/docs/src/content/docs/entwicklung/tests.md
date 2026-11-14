@@ -45,12 +45,12 @@ npx playwright test --project=desktop-chrome tests/e2e/industries.spec.ts
 
 So läuft ein Testlauf ab:
 
-1. Playwright startet einen **eigenen** API-Server (Port 3100) und eine eigene Weboberfläche (Port 5180).
+1. Playwright startet einen **eigenen** API-Server (Port 3100) und eine eigene Weboberfläche (Port 5180). Beide heben vorher die Grenze für offene Dateien/Verbindungen auf 10 240 an (`ulimit -n`; macOS erlaubt sonst nur 256, was bei vielen parallelen Workern den Vite-Server beendet).
 2. Die Testdatenbank `ai_tpi_e2e` wird vorher geleert. Ihre Adresse kommt aus `E2E_DATABASE_URL` oder wird aus `DATABASE_URL` in `.env` abgeleitet.
 3. Das Projekt `setup` führt die Ersteinrichtung über die Oberfläche durch und speichert die Admin-Sitzung.
 4. E-Mails landen in einer **Test-Outbox** (`/api/test/outbox`), deshalb ist kein Mailpit nötig.
 5. Alle Profile teilen sich die Datenbank. Tests verwenden deshalb eindeutige Adressen, und Tests, die Firmeneinstellungen ändern, legen sich eine **eigene Testfirma** an (`createTestCompany` in `tests/e2e/helpers.ts`).
-6. KI-Anbieter werden nie echt aufgerufen; der Testserver bildet einen Ollama-Endpunkt nach.
+6. KI-Anbieter werden nie echt aufgerufen; der Testserver bildet einen Ollama-Endpunkt (Verbindungstest) und einen OpenAI-kompatiblen KI-Dienst (`/test-llm/…`, Empfehlungen) nach.
 
 ### Umgebungsvariablen für Tests
 
@@ -75,6 +75,7 @@ So läuft ein Testlauf ab:
 | `erfassung.spec.ts` | Phase 5: Assessment anlegen/löschen, Team und Zuweisung, Fragebogen (Fortschritt, Filter, Tastatur, Fehler beim Speichern, Konflikt zweier Nutzer), Abgabe, Quellen, Kommentare, Zusammenführung, Änderungshistorie. Jeder Test legt eine eigene Testfirma mit Team an (`erfassung-helpers.ts`, Zeitlimit 90 s), damit die Listen der E2E-Firma klein bleiben |
 | `erfassung-live.spec.ts` | Phase 5b: Live-Aktualisierung zweier Browser (≤ 2 s), Präsenzanzeige, Duplizieren, JSON-Export/-Import mit Fehlerfällen |
 | `auswertung.spec.ts` | Phase 6: Bericht (Kennzahlen, Matrix mit Detail, Diagramme, Konsenslücken, Anhang, Druckansicht, keine Daten), Benchmark (≥ 5 Firmen, zu wenige, Opt-out, keine Namen, Mobil). Vergleichsfirmen über `/api/test/benchmark-fixture` in einer eigenen Testbranche |
+| `empfehlungen.spec.ts` | Phase 7: regelbasierte Empfehlungen (Horizont, Aufteilung), Maßnahmenplan (annehmen, Verantwortliche, Termin, bearbeiten, Bericht), KI-Modul wählen, Datenschutz-Dialog (Ablehnen ohne Aufruf), KI-Kennzeichnung, Fehlerfälle Timeout/ungültiges JSON/unbekannte KP/401/500, Rechte. Der KI-Dienst wird vom Testserver nachgebildet (`/test-llm/<token>/<szenario>`) |
 | `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
 | `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |

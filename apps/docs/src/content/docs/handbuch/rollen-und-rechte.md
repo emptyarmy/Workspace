@@ -25,7 +25,8 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 | Passwort zurücksetzen (andere Firma, nur per E-Mail-Adresse, max. 3/Tag) | ✔ | – | – | – |
 | Admins für andere Firmen anlegen | ✔ | – | – | – |
 | Admins löschen (nur eigene Firma) | ✔ | – | – | – |
-| KI-Modul für Empfehlungen wählen | ✔ | ✔ | – | – |
+| Standard-KI-Modul der Firma festlegen | ✔ | – | – | – |
+| KI-Modul beim Erzeugen der Empfehlungen wählen, Empfehlungen erzeugen und Maßnahmenplan bearbeiten | – | ✔ | – | – |
 | Antworten der eigenen Abteilung erfassen | – | ✔ | ✔ | – |
 | Kommentieren | – | ✔ | ✔ | – |
 | Bericht ansehen (eigene Assessments; Admin: alle der Firma) | ✔ | ✔ | ✔¹ | ✔ |
@@ -40,6 +41,7 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 - **Firmentrennung:** Daten anderer Firmen sind für niemanden sichtbar. Wer eine fremde ID aufruft, bekommt „nicht gefunden“ (404), nicht „verboten“. So wird nicht einmal verraten, ob es den Datensatz gibt.
 - **E-Mail-Domain:** Alle Personen einer Firma brauchen eine Adresse mit einer der [zugelassenen Domains](/handbuch/meine-firma-und-branchen/#e-mail-domains) der Firma.
 - **Externe Berater** erhalten von ihrer Firma eine interne Adresse mit dem Präfix `ext.` (z. B. `ext.max.mustermann@firma.de`). AI_TPI erkennt das Präfix und zeigt das Kennzeichen **„Extern“**. Eine manuelle Einstellung dafür gibt es nicht.
+- **Fehlende Rechte werden erklärt:** Versucht jemand eine Aktion, die seine Rolle nicht erlaubt (z. B. weil die Rolle inzwischen geändert wurde), meldet die Anwendung „Keine Berechtigung“ mit dem Grund – etwa „Mit der Rolle „Leser“ können Sie Empfehlungen nur lesen“ – statt eines allgemeinen Fehlers. Die Schnittstelle liefert dafür 403 mit einem `reason` (siehe [API-Referenz](/referenz/api/#empfehlungen-phase-7)).
 - **Schutz vor Aussperren:** Niemand kann sich selbst löschen, deaktivieren oder herabstufen. Der **letzte aktive Admin** einer Firma bleibt immer erhalten.
 
 Details zur Erfassung: [Assessments und Fragebogen](/handbuch/assessments-und-fragebogen/). Fachliche Grundlage: [Admin-Bereich (Konzept)](/projekt/architektur/admin-bereich/).

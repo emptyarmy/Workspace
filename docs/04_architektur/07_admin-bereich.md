@@ -91,7 +91,7 @@ Außerdem erhalten die **übrigen Admins einer Firma** eine Mail, wenn ein Admin
 Die Mail nennt: wer (Name, E-Mail, Firma), was, wann, betroffener Nutzer. Zusätzlich gibt es einen Eintrag im Audit-Log beider Firmen.
 
 ### 3.6 Externe Berater (S-03, S-08)
-- Externe erhalten eine Firmenadresse mit Präfix **`ext.`** (z. B. `ext.max.mustermann@brunata.com`) und durchlaufen die normale Domain-Prüfung.
+- Externe erhalten eine Firmenadresse mit Präfix **`ext.`** (z. B. `ext.max.mustermann@heise.de`) und durchlaufen die normale Domain-Prüfung.
 - Das System setzt automatisch `isExternal = true` und zeigt das Badge **„Extern“**; Filter „nur Externe“ in der Nutzerliste.
 - Das Präfix wird case-insensitiv erkannt (`EXT.`, `Ext.`).
 - **Keine manuelle Pflege in der Anwendung (S-08):** Ob jemand extern ist, ergibt sich **ausschließlich** aus der E-Mail-Adresse, die die **Mailserver-Administratoren** der Firma einrichten. In der Anwendung gibt es kein Feld „extern“.

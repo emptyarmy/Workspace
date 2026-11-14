@@ -434,3 +434,56 @@ export const assessmentScores = pgTable(
   },
   (t) => [index('assessment_score_company_idx').on(t.companyId, t.releasedAt)],
 );
+
+// ---------- Phase 7: Handlungsempfehlungen und Maßnahmenplan ----------
+export const recHorizonEnum = pgEnum('rec_horizon', ['short', 'long']);
+export const recOriginEnum = pgEnum('rec_origin', ['rule', 'ai']);
+export const recStatusEnum = pgEnum('rec_status', [
+  'proposed',
+  'accepted',
+  'in_progress',
+  'done',
+  'rejected',
+]);
+
+export const recommendations = pgTable(
+  'recommendation',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    keyAreaId: text('key_area_id').notNull(),
+    checkpointIds: text('checkpoint_ids').array().notNull(),
+    horizon: recHorizonEnum('horizon').notNull(),
+    /** `whole` | `first_step` | `full` (Aufteilung „teilweise“ + Aufwand M). */
+    part: text('part').notNull().default('whole'),
+    effort: text('effort').notNull(),
+    priority: integer('priority').notNull(),
+    title: text('title').notNull(),
+    text: text('text').notNull(),
+    /** Ursprünglicher Text der Regel-Engine (Transparenz, auch bei KI-Empfehlungen einsehbar). */
+    ruleText: text('rule_text').notNull(),
+    nextStep: text('next_step'),
+    benefit: text('benefit'),
+    metric: text('metric'),
+    ownerRole: text('owner_role'),
+    origin: recOriginEnum('origin').notNull(),
+    /** Gewähltes KI-Modul (Name/Anbieter/Modell als Schnappschuss, auch wenn das Modul später gelöscht wird). */
+    aiModuleId: uuid('ai_module_id').references(() => aiModules.id, { onDelete: 'set null' }),
+    aiModuleName: text('ai_module_name'),
+    aiProvider: text('ai_provider'),
+    aiModel: text('ai_model'),
+    benchmarkGap: real('benchmark_gap'),
+    lang: text('lang').notNull(),
+    status: recStatusEnum('status').notNull().default('proposed'),
+    ownerUserId: uuid('owner_user_id').references(() => users.id, { onDelete: 'set null' }),
+    dueDate: date('due_date'),
+    edited: boolean('edited').notNull().default(false),
+    version: integer('version').notNull().default(1),
+    createdByUserId: uuid('created_by_user_id').references(() => users.id, { onDelete: 'set null' }),
+    createdAt: createdAt(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('recommendation_assessment_idx').on(t.assessmentId, t.horizon, t.priority)],
+);

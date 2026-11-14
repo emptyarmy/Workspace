@@ -158,6 +158,26 @@ test.describe('TC-A11Y-001 axe-Scan', () => {
     await scan(page, info, 'bericht-detail');
     await page.getByTestId('cell-detail-close').click();
     await visit('benchmark', '/benchmark', 'benchmark');
+    // Empfehlungen (Phase 7): Liste mit Maßnahmen-Feldern und Datenschutz-Dialog
+    await page.goto(`/assessments/${asm}/empfehlungen`);
+    await page.getByTestId('recs-start').click();
+    await expect(page.getByTestId('rec-card').first()).toBeVisible();
+    await scan(page, info, 'empfehlungen');
+    await companyAdmin.request.post('/api/admin/ai-modules', {
+      headers: CSRF,
+      data: {
+        name: 'A11y KI',
+        mode: 'local',
+        provider: 'openai_compatible',
+        baseUrl: `http://127.0.0.1:${process.env.E2E_SERVER_PORT ?? 3100}/test-llm/a11y-${id}/ok`,
+        model: 'm',
+      },
+    });
+    await page.reload();
+    await page.getByTestId('recs-start').click();
+    await expect(page.getByTestId('recs-consent')).toBeVisible();
+    await scan(page, info, 'empfehlungen-zustimmung');
+    await page.getByTestId('recs-decline').click();
 
     const r = await loggedInContext(browser, respondent.email, E2E.userPassword);
     const rp = await r.newPage();
