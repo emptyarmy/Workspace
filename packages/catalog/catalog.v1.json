@@ -223,7 +223,9 @@
             "en": "Track committed resources (people, environments, data) and escalate deviations early."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB01.K.04",
@@ -302,7 +304,9 @@
             "en": "Agree that changes to delivery plan or scope are communicated to test management early and unprompted."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB01.AG.12",
@@ -343,7 +347,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB01.O.01",
@@ -380,7 +386,9 @@
             "en": "Agree concrete adjustments with development and requirements management (e.g. testable requirements, early deliveries)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB01.O.03",
@@ -396,7 +404,9 @@
             "en": "Evaluate the collaboration jointly on a regular basis (e.g. semi-annual review) and derive actions."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -443,7 +453,9 @@
           "source": "TPI_NEXT_RECON",
           "tags": [
             "reconstructed"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB02.K.02",
@@ -507,7 +519,9 @@
           "source": "TPI_NEXT_RECON",
           "tags": [
             "reconstructed"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB02.AG.11",
@@ -567,7 +581,9 @@
             "en": "Include testers in defect triage meetings."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB02.E.03",
@@ -648,7 +664,9 @@
             "en": "Anchor test participation in all steps of the development process (process description, DoR/DoD)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -777,7 +795,9 @@
             "en": "Align the test strategy with all relevant stakeholders (e.g. review meeting)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB03.E.02",
@@ -860,7 +880,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB03.O.01",
@@ -920,7 +942,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -986,7 +1010,9 @@
             "en": "Define reporting lines and decision authority within the test organisation."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB04.K.03",
@@ -1066,7 +1092,9 @@
             "en": "Plan test capacity across projects and track commitments."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB04.E.03",
@@ -1082,7 +1110,9 @@
             "en": "Evaluate organisational models (central, decentral, hybrid) and document the decision."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB04.E.04",
@@ -1098,7 +1128,9 @@
             "en": "Create or update a test policy and check compliance by sampling."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB04.AG.13",
@@ -1179,7 +1211,9 @@
             "en": "Use this application’s benchmark or industry comparisons to put performance into context."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -1224,7 +1258,9 @@
             "en": "Document decisions centrally (e.g. decision log) and refer to it in the daily."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB05.K.02",
@@ -1261,7 +1297,9 @@
             "en": "Record agreements and decisions in writing (minutes, ticket, wiki)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB05.K.04",
@@ -1321,7 +1359,9 @@
             "en": "Create a simple communication matrix (who receives what, when, how)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB05.E.02",
@@ -1337,7 +1377,9 @@
             "en": "Review the meeting calendar and add missing test participation."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB05.E.03",
@@ -1395,7 +1437,9 @@
             "en": "Create usage rules for communication tools and review them annually."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -1568,7 +1612,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB06.O.01",
@@ -1605,7 +1651,9 @@
             "en": "Add the handover of measurement data to the project closure checklist."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -1650,7 +1698,9 @@
             "en": "Create a lean test plan from a template (assignment, scope, dates, roles)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB07.K.02",
@@ -1836,7 +1886,9 @@
             "en": "Maintain a lessons-learned collection and review it at project start."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -1944,7 +1996,9 @@
             "en": "Present the test estimate to the principal and record their agreement."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.E.01",
@@ -1960,7 +2014,9 @@
             "en": "Add a second technique to the existing estimate (e.g. analogy estimation)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.E.02",
@@ -1976,7 +2032,9 @@
             "en": "Introduce a formal estimating technique (e.g. test point analysis)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.E.03",
@@ -2013,7 +2071,9 @@
             "en": "Schedule the testability review and project evaluation as fixed activities."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.E.AI1",
@@ -2031,7 +2091,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.O.01",
@@ -2047,7 +2109,9 @@
             "en": "Plan time to prepare reusable testware at project end."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.O.02",
@@ -2063,7 +2127,9 @@
             "en": "Provide company-wide estimating methods and templates."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.O.03",
@@ -2079,7 +2145,9 @@
             "en": "Collect actual effort across projects and derive key figures."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB08.AG.22",
@@ -2147,7 +2215,9 @@
             "en": "Define 3–5 basic metrics (e.g. test progress, open defects by severity)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.K.02",
@@ -2184,7 +2254,9 @@
             "en": "Introduce plausibility checks for metric data."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.AG.11",
@@ -2225,7 +2297,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.E.01",
@@ -2262,7 +2336,9 @@
             "en": "Automate data collection from the tools."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.E.03",
@@ -2278,7 +2354,9 @@
             "en": "Add efficiency metrics (e.g. defect detection rate, test effort per defect)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.E.04",
@@ -2315,7 +2393,9 @@
             "en": "Regularly ask recipients about the usefulness of the metrics."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.O.02",
@@ -2331,7 +2411,9 @@
             "en": "Establish a simple change process for metrics."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB09.O.AI1",
@@ -2349,7 +2431,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -2394,7 +2478,9 @@
             "en": "Define defect statuses and transitions and configure them in the tool."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.K.02",
@@ -2473,7 +2559,9 @@
             "en": "Configure permissions for status transitions in the tool."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.E.02",
@@ -2510,7 +2598,9 @@
             "en": "Set up standard reports and filters for defects."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.E.04",
@@ -2618,7 +2708,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.O.01",
@@ -2634,7 +2726,9 @@
             "en": "Create a cross-project defect management guideline."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.O.02",
@@ -2650,7 +2744,9 @@
             "en": "Formally assign responsibility for defect management to the line or project organisation."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB10.O.03",
@@ -2689,7 +2785,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -2755,7 +2853,9 @@
             "en": "Link every test case to its requirement or user story."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB11.K.03",
@@ -2815,7 +2915,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB11.E.01",
@@ -2831,7 +2933,9 @@
             "en": "Introduce unique cross-team naming and versioning conventions."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB11.E.02",
@@ -2868,7 +2972,9 @@
             "en": "Set up a role and permission concept for testware."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB11.O.01",
@@ -2884,7 +2990,9 @@
             "en": "Specify in the test plan which testware will be kept."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB11.O.02",
@@ -2992,7 +3100,9 @@
             "en": "Align the test method with the process model (e.g. Scrum)."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB12.K.03",
@@ -3092,7 +3202,9 @@
             "en": "Check the application of mandatory elements by sampling."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB12.E.AI1",
@@ -3110,7 +3222,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB12.O.01",
@@ -3126,7 +3240,9 @@
             "en": "Set up a feedback channel (e.g. form, retro topic) for the test method."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB12.O.02",
@@ -3278,7 +3394,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.E.01",
@@ -3315,7 +3433,9 @@
             "en": "Practise test design techniques in workshops using real examples."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.E.03",
@@ -3331,7 +3451,9 @@
             "en": "Measure satisfaction and collaboration in team surveys."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.E.04",
@@ -3347,7 +3469,9 @@
             "en": "Check in the retrospective whether test tasks were done as planned."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.AG.13",
@@ -3388,7 +3512,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.O.01",
@@ -3425,7 +3551,9 @@
             "en": "Define a career path for test roles together with HR."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB13.O.03",
@@ -3441,7 +3569,9 @@
             "en": "Agree individual improvement goals with testers."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -3549,7 +3679,9 @@
             "en": "Introduce peer reviews for test cases."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB14.E.02",
@@ -3586,7 +3718,9 @@
             "en": "Apply e.g. equivalence partitioning and boundary value analysis as standard."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB14.E.04",
@@ -3625,7 +3759,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB14.O.01",
@@ -3662,7 +3798,9 @@
             "en": "Have test cases sampled and reviewed by another team."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB14.O.03",
@@ -3701,7 +3839,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -3746,7 +3886,9 @@
             "en": "Identify missing tools and provide them."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.K.02",
@@ -3783,7 +3925,9 @@
             "en": "Collect stakeholder feedback on the tools."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.AG.11",
@@ -3847,7 +3991,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.E.01",
@@ -3905,7 +4051,9 @@
             "en": "Create a short business case for new tools."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.E.04",
@@ -3921,7 +4069,9 @@
             "en": "Describe tool use per test activity in the test method."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.E.AI1",
@@ -3939,7 +4089,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.E.AI2",
@@ -3957,7 +4109,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.O.01",
@@ -3994,7 +4148,9 @@
             "en": "Set up a knowledge base on tools and automation."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.O.03",
@@ -4010,7 +4166,9 @@
             "en": "Run an annual tool evaluation."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB15.O.AI1",
@@ -4028,7 +4186,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -4115,7 +4275,9 @@
             "en": "Measure test environment availability and escalate outages."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.K.04",
@@ -4131,7 +4293,9 @@
             "en": "Maintain a change calendar for test environments."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.E.01",
@@ -4210,7 +4374,9 @@
             "en": "Turn environment agreements into SLAs with measurable indicators."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.AG.11",
@@ -4251,7 +4417,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.O.01",
@@ -4288,7 +4456,9 @@
             "en": "Create a standard contract for using test environments."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.O.03",
@@ -4304,7 +4474,9 @@
             "en": "Create a service catalogue for test environment services."
           },
           "source": "TPI_NEXT_DE",
-          "tags": []
+          "tags": [],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB16.O.AI1",
@@ -4322,7 +4494,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -4369,7 +4543,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.K.02",
@@ -4387,7 +4563,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.K.03",
@@ -4405,7 +4583,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.K.04",
@@ -4423,7 +4603,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.E.01",
@@ -4441,7 +4623,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.E.02",
@@ -4459,7 +4643,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.E.03",
@@ -4477,7 +4663,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.E.04",
@@ -4495,7 +4683,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.O.01",
@@ -4513,7 +4703,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.O.02",
@@ -4531,7 +4723,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB17.O.03",
@@ -4549,7 +4743,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -4596,7 +4792,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.K.02",
@@ -4614,7 +4812,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.K.03",
@@ -4632,7 +4832,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.E.01",
@@ -4650,7 +4852,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.E.02",
@@ -4668,7 +4872,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.E.03",
@@ -4686,7 +4892,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.O.01",
@@ -4704,7 +4912,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB18.O.02",
@@ -4722,7 +4932,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     },
@@ -4769,7 +4981,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.K.02",
@@ -4787,7 +5001,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.K.03",
@@ -4805,7 +5021,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.E.01",
@@ -4823,7 +5041,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.E.02",
@@ -4841,7 +5061,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.E.03",
@@ -4859,7 +5081,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.E.04",
@@ -4877,7 +5101,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "P",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.O.01",
@@ -4895,7 +5121,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "O",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.O.02",
@@ -4913,7 +5141,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         },
         {
           "id": "KB19.O.03",
@@ -4931,7 +5161,9 @@
           "source": "AI_EXT",
           "tags": [
             "AI"
-          ]
+          ],
+          "view": "T",
+          "viewSource": "assigned"
         }
       ]
     }

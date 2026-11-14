@@ -2,7 +2,7 @@
 
 | Datei | Inhalt |
 |---|---|
-| `catalog.v1.json` | **Maßgebliche Quelle** des Fragenkatalogs: 19 Kernbereiche, 223 Kontrollpunkte, alle Texte auf Deutsch und Englisch, Aufwand, Empfehlungsbaustein, Agile-Attribute (Sicht, Cluster, Verweise) |
+| `catalog.v1.json` | **Maßgebliche Quelle** des Fragenkatalogs: 19 Kernbereiche, 223 Kontrollpunkte, alle Texte auf Deutsch und Englisch, Aufwand, Empfehlungsbaustein, Agile-Attribute (Sicht, Cluster, Verweise); Sicht bei allen KP, bei KP ohne Agile-Gegenstück zugeordnet (`viewSource: "assigned"`) |
 | `catalog.schema.json` | JSON-Schema (Draft 2020-12) zur automatischen Prüfung |
 | `sources/agile-tpi-2.5.json` | Originaltexte der 108 Agile-TPI-Kontrollpunkte (Referenz für die Zuordnung) |
 

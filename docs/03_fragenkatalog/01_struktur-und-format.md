@@ -18,7 +18,8 @@ Katalog (Version, Sprache-unabhängig)
 | `level` | ✔ | `controlled` / `efficient` / `optimizing` | `controlled` |
 | `text.de` / `text.en` | ✔ | Kontrollpunkt-Text | „Die Teststrategie basiert auf einer Produktrisikoanalyse.“ |
 | `hint.de` / `hint.en` | – | Erläuterung / Beispiel für Befragte | |
-| `view` | – | Agile-TPI-Sicht `P` / `T` / `O` | `T` |
+| `view` | – | Sicht `P` / `T` / `O` – aus Agile TPI übernommen oder (bei KP ohne Agile-Gegenstück) fachlich zugeordnet; im Katalog v1 bei allen KP gesetzt | `T` |
+| `viewSource` | – | `assigned`, wenn die Sicht nicht aus Agile TPI stammt, sondern zugeordnet wurde (Prüfung in AP-2.7) | `assigned` |
 | `cluster` | – | Agile-TPI-Cluster `A`–`G` (Priorität) | `B` |
 | `effort` | ✔ | Umsetzungsaufwand bei Nichterfüllung `S` / `M` / `L` | `S` |
 | `tags` | – | z. B. `AI`, `agile` | `["AI"]` |
@@ -47,7 +48,7 @@ Der Katalog soll **ohne Programmierkenntnisse** erweiterbar sein. Optionen (F-12
 | ☑ AP-2.1 | Deutsche KP aus Word extrahieren, bereinigen, firmenspezifische Bewertungstexte abtrennen (→ Beispiel-Assessment) |
 | ☑ AP-2.2 | Fehlenden KB2 „Grad der Beteiligung“ ergänzen |
 | ☑ AP-2.3 | Englische Übersetzung erstellen, mit Agile-TPI-Formulierungen abgleichen |
-| ☑ AP-2.4 | Sicht/Cluster aus Agile TPI zuordnen (soweit sinnvoll) |
+| ☑ AP-2.4 | Sicht/Cluster aus Agile TPI zuordnen (soweit sinnvoll); Sicht für die übrigen 116 KP fachlich ergänzt (14.11.2026) |
 | ☑ AP-2.5 | Aufwandsklasse und Empfehlungsbaustein je KP ergänzen |
 | ☑ AP-2.6 | KI-Erweiterung finalisieren und übersetzen |
 | ☐ AP-2.7 | Fachliches Review und Freigabe durch den Auftraggeber |

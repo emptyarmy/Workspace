@@ -80,6 +80,10 @@ Keine Quelle berücksichtigt KI-gestützte Anforderungsprüfung, Testfallgenerie
 ## 3. Empfehlung zum Vorgehen
 
 > **Entschieden (F-01):** TPI NEXT® führend, agile Teile ergänzt – siehe ADR-001 und `03_fragenkatalog/04_agile-ergaenzung.md`.
+>
+> **Umsetzungsstand (14.11.2026):** Empfehlung 1 und 2 sind umgesetzt, Empfehlung 3 wurde nicht gewählt.
+> - Zu 1: Der Katalog folgt den TPI-NEXT®-Ebenen; die deutschen KP sind bereinigt (AP-2.1/2.2), alle 223 KP liegen auf Englisch vor (AP-2.3). Kernbereichs- und Ebenennamen entsprechen der englischen TPI-NEXT®-Originalterminologie (z. B. *Stakeholder commitment*, *Degree of involvement*, *Controlled/Efficient/Optimizing*).
+> - Zu 2: Alle 223 KP haben eine **Sicht P/T/O**. 107 KP übernehmen Sicht und Cluster aus ihrem Agile-TPI-Gegenstück; die übrigen 116 (TPI-NEXT-Punkte ohne Agile-Gegenstück und KI-Punkte) haben eine fachlich zugeordnete Sicht (`viewSource: "assigned"`, in der Katalog-Übersicht mit * markiert), aber **keinen Cluster**, weil sich die Agile-TPI-Verbesserungsreihenfolge nicht sinnvoll ableiten lässt. Damit zählen Matrix- und Balkendarstellung je Sicht alle KP; die Regel-Engine der Empfehlungen nutzt den Cluster, wo vorhanden. Die Zuordnung ist Teil der fachlichen Freigabe (AP-2.7).
 
 1. **Führendes Modell: TPI NEXT®-Ebenen** (entspricht der Anforderung „INITIAL, KONTROLLIERT, EFFIZIENT, OPTIMIEREND“), deutsche KP bereinigen, englische Fassung **übersetzen** (bei Bedarf mit Abgleich gegen die englische Originalliteratur).
 2. Die **Agile-TPI-Informationen** (Sicht P/T/O, Cluster) als **optionale Zusatzattribute** je KP nutzen, wo eine sinnvolle Zuordnung möglich ist → ermöglicht die Matrix- und Balkendarstellung wie im Excel und eine Priorisierung.

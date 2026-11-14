@@ -20,6 +20,12 @@ for a in cat['keyAreas']:
 used = collections.Counter(r for c in cps for r in c.get('agileRefs', []))
 for x in agile:
     if used[x['id']] != 1: errors.append(f"Agile-Punkt {x['id']} ist {used[x['id']]}x zugeordnet (erwartet: 1x)")
+# Sicht P/T/O: jeder KP hat eine Sicht; 'assigned' genau dann, wenn es kein Agile-Gegenstück gibt (Analyse, Empfehlung 2).
+for c in cps:
+    if 'view' not in c: errors.append(f"{c['id']}: Sicht (view) fehlt")
+    elif bool(c.get('agileRefs')) == (c.get('viewSource') == 'assigned'):
+        errors.append(f"{c['id']}: viewSource passt nicht zu agileRefs")
 if errors:
     print('\n'.join(errors)); print(f'FEHLER: {len(errors)}'); sys.exit(1)
-print(f'OK – {len(cat["keyAreas"])} Kernbereiche, {len(cps)} Kontrollpunkte, alle {len(agile)} Agile-Punkte genau einmal zugeordnet.')
+print(f'OK – {len(cat["keyAreas"])} Kernbereiche, {len(cps)} Kontrollpunkte, alle {len(agile)} Agile-Punkte genau einmal zugeordnet, Sicht P/T/O vollständig '
+      f'({sum(1 for c in cps if c.get("viewSource") == "assigned")} davon zugeordnet ohne Agile-Gegenstück).')

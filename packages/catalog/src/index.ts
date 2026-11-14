@@ -21,6 +21,8 @@ export interface Checkpoint {
   tags: Array<'agile' | 'AI' | 'reconstructed'>;
   agileRefs?: string[];
   view?: 'P' | 'T' | 'O';
+  /** Fehlt = Sicht aus Agile TPI (agileRefs); `assigned` = für KP ohne Agile-Gegenstück zugeordnet. */
+  viewSource?: 'assigned';
   cluster?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
   hint?: I18nText;
   dependsOn?: string[];

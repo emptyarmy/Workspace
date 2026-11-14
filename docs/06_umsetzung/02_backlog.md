@@ -19,7 +19,7 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ AP-2.1 DE-Kontrollpunkte TPI NEXT extrahiert und bereinigt (153)
 - ☑ AP-2.2 KB2 „Grad der Beteiligung“ vervollständigt (4 rekonstruierte KP)
 - ☑ AP-2.3 EN-Übersetzung TPI NEXT; DE-Übersetzung Agile TPI
-- ☑ AP-2.4 Agile-KP zugeordnet: 92 zusammengeführt, 16 neu
+- ☑ AP-2.4 Agile-KP zugeordnet: 92 zusammengeführt, 16 neu; Sicht P/T/O für die übrigen 116 KP ergänzt (Analyse-Empfehlung 2, 14.11.2026)
 - ☑ AP-2.5 Aufwand + Empfehlungsbaustein (DE/EN) je KP
 - ☑ AP-2.6 KI-Kernbereiche KB17–19 + KI-Ergänzungen übernommen und übersetzt (50)
 - ☐ AP-2.7 Fachliche Freigabe (Übersicht: `docs/03_fragenkatalog/05_katalog-v1-uebersicht.md`)

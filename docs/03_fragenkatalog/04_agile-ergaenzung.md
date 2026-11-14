@@ -5,7 +5,7 @@
 
 ## 1. Vorgehen
 
-1. **Attribute übernehmen:** Jeder Kontrollpunkt (KP) erhält – wo sinnvoll – die Agile-TPI-Attribute **Sicht** (P = Individuum, T = Team, O = Organisation) und **Cluster** (A–G = Verbesserungsreihenfolge). Damit sind Matrix und Balken wie im Excel-Tool möglich und die Empfehlungen werden nach Clustern priorisiert.
+1. **Attribute übernehmen:** Jeder Kontrollpunkt (KP) erhält – wo sinnvoll – die Agile-TPI-Attribute **Sicht** (P = Individuum, T = Team, O = Organisation) und **Cluster** (A–G = Verbesserungsreihenfolge). KP ohne Agile-Gegenstück erhalten seit 14.11.2026 eine fachlich zugeordnete Sicht (`viewSource: "assigned"`), aber keinen Cluster. Damit sind Matrix und Balken wie im Excel-Tool möglich und die Empfehlungen werden nach Clustern priorisiert.
 2. **Agile Kontrollpunkte ergänzen:** Alle 108 Agile-TPI-KP werden einem TPI-NEXT-Kernbereich und einer Ebene zugeordnet und erhalten das Tag `agile`.
 3. **Dubletten zusammenführen:** Hat ein agiler KP inhaltlich eine Entsprechung in TPI NEXT (z. B. 3.1.2 „strategy based on product risks“ ↔ KB03.K.02), wird **kein neuer KP** angelegt, sondern der TPI-NEXT-KP um die agile Formulierung (Hinweistext) und Sicht/Cluster ergänzt.
 4. **Filter in der App:** „Klassisch“, „Agil“ oder „Alle“ – je nach Vorgehensmodell des Projekts (siehe neue Frage N-14).
