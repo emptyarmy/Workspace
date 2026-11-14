@@ -455,7 +455,17 @@ test.describe('Admin-Bereich auf allen Geräten', () => {
   test('TC-ADM-001 TC-RWD-001 alle Reiter ohne horizontales Scrollen; Reiter per Tastatur und Adresse erreichbar', async ({
     page,
   }) => {
-    for (const tab of ['users', 'departments', 'company', 'industries', 'cross', 'mail', 'ai', 'audit']) {
+    for (const tab of [
+      'users',
+      'departments',
+      'company',
+      'industries',
+      'cross',
+      'mail',
+      'ai',
+      'audit',
+      'history',
+    ]) {
       await openTab(page, tab);
       await expect(page.getByTestId(`admin-tab-${tab}`)).toHaveAttribute('aria-selected', 'true');
       await expect(page.locator('[role="tabpanel"]')).toBeVisible();
@@ -469,7 +479,7 @@ test.describe('Admin-Bereich auf allen Geräten', () => {
     await expect(page.getByTestId('admin-tab-users')).toBeFocused();
     await expect(page).toHaveURL(/tab=users/);
     await page.keyboard.press('End');
-    await expect(page.getByTestId('admin-tab-audit')).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByTestId('admin-tab-history')).toHaveAttribute('aria-selected', 'true');
   });
 
   test('TC-ADM-024 Nicht-Admins erhalten auf die neuen Admin-Schnittstellen 403', async ({

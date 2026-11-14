@@ -40,10 +40,11 @@ onMounted(async () => {
   if (res.ok && res.data) {
     industries.value = res.data.industries;
     state.value = 'available';
-  } else if (res.status === 404) {
+  } else if (res.status === 404 && res.error === 'not_found') {
     // Bewusst ohne Unterscheidung (R-06): bereits eingerichtet, nicht über localhost oder abgeschaltet.
     state.value = 'unavailable';
   } else {
+    // 404 ohne die Antwort des AI_TPI-Servers: Unter /api antwortet eine andere Anwendung (SERVER_PORT belegt).
     // Server nicht erreichbar (0), Datenbank nicht verfügbar (503) oder interner Fehler (500).
     errorStatus.value = res.status;
     state.value = 'error';
@@ -98,9 +99,15 @@ async function submit() {
     </p>
     <div v-if="state === 'error'" class="alert alert-error" role="alert" data-testid="setup-error">
       <p class="err-title">
-        {{ errorStatus === 0 ? t('setup.serverDown') : t('setup.serverError', { status: errorStatus }) }}
+        {{
+          errorStatus === 0
+            ? t('setup.serverDown')
+            : errorStatus === 404
+              ? t('setup.foreignServer')
+              : t('setup.serverError', { status: errorStatus })
+        }}
       </p>
-      <p>{{ t('setup.serverHint') }}</p>
+      <p>{{ errorStatus === 404 ? t('setup.foreignServerHint') : t('setup.serverHint') }}</p>
     </div>
     <template v-else-if="state === 'available'">
       <p>{{ t('setup.intro') }}</p>

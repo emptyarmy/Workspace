@@ -55,3 +55,20 @@ sidebar:
 | `name_de_taken` / `name_en_taken` | 409 | Branchenbezeichnung (DE/EN) vergeben |
 | `industry_in_use` | 409 | Branche ist einer Firma zugeordnet |
 | `standard_industry` | 409 | Standardbranche kann nicht gelöscht werden |
+
+## Erfassung (Phase 5)
+
+| Code | HTTP | Bedeutung |
+|---|---|---|
+| `forbidden` | 403 | eigene Firma, aber nicht im Team des Assessments – oder Rolle reicht nicht (z. B. Befragter in der Zusammenführung) |
+| `invalid_transition` | 409 | Statuswechsel nicht erlaubt (nur Erfassung ⇄ Zusammenführung ⇄ Freigegeben) |
+| `self` | 409 | Assessor will sich selbst aus dem Team entfernen |
+| `version_conflict` | 409 | Antwort wurde inzwischen geändert; `current` enthält den aktuellen Stand |
+| `not_assigned` | 403 | Kernbereich ist der eigenen Abteilung nicht zugewiesen |
+| `submitted` | 409 | Abteilung hat bereits abgegeben |
+| `not_collecting` | 409 | Assessment ist nicht im Status „Erfassung“ |
+| `duplicate` | 409 | Quelle mit gleichem Namen und gleicher Rolle existiert |
+| `in_use` | 409 | Quelle wird in Kommentaren verwendet – deaktivieren statt löschen |
+| `rationale_required` | 400 | Begründung fehlt (Abweichung vom Vorschlag oder uneinige Abteilungen); `suggestion` in der Antwort |
+| `invalid_format` | 400 | Importdatei ist keine AI_TPI-Exportdatei oder hat einen ungültigen Aufbau |
+| `unsupported_version` | 400 | Importdatei hat eine unbekannte `schemaVersion` (steht in der Antwort) |

@@ -73,3 +73,19 @@ erDiagram
 | `ai_module` | KI-Module je Firma (S-04, S-09) | `mode` (`rules` \| `local` \| `cloud`), `provider`, `base_url`, `model`, `api_key_enc` (verschlüsselt), `temperature`, `max_tokens`, `timeout_sec`, `send_comments`, `pseudonymize`, `prompt_template`, `is_default`; Name je Firma eindeutig |
 | `department` | zusätzlich eindeutiger Name je Firma (ohne Groß-/Kleinschreibung) | – |
 | `audit_log` | zusätzliche Indizes für Firmenansicht und Tageslimit | `(company_id, created_at)`, `(target_company_id, created_at)`, `(user_id, action, created_at)` |
+
+## Ergänzung Phase 5 (Migration `0003_assessments`)
+
+| Tabelle | Zweck | Wichtige Felder |
+|---|---|---|
+| `assessment` | Assessment je Firma | Stammdaten (`project`, `assessor_name`, `domain`, `organization_unit`, `main_stakeholder`, `contact`, `assessment_type`, `start_date`, `end_date`, `interview_count`, `scope`), `method_model` (`classic` \| `agile`), `include_ai`, `catalog_version`, `status` (`collecting` \| `consolidating` \| `released`), `released_at` |
+| `assessment_member` | Team | `(assessment_id, user_id)` |
+| `key_area_assignment` | Kernbereich → Abteilungen | `(assessment_id, key_area_id, department_id)`; mehrere Abteilungen je KB möglich |
+| `department_answer` | Antwort je Abteilung und KP | `value` (`yes` \| `partial` \| `no` \| `na`; „offen“ = keine Zeile), `version` (optimistisches Sperren), `updated_by_user_id` |
+| `department_submission` | Abgabe einer Abteilung | `(assessment_id, department_id)`, `submitted_at` |
+| `consolidated_answer` | festgelegte Antwort je KP | `value`, `suggested_value`, `rationale`, `version` |
+| `source` | Quellen/Autoren je Assessment | `name`, `role`, `unit`, `type`, `active`; eindeutig je Assessment über `lower(name)` + `lower(role)` |
+| `comment` | Kommentar je KP | `author_user_id`, `department_id`, `source_id`, `text` (≤ 2000), `updated_at` |
+| `change_history` | Änderungshistorie | ohne Fremdschlüssel auf `assessment` (überdauert das Löschen), Schnappschüsse von Name, Rolle, Abteilung und Assessment; Trigger `change_history_no_update_delete` weist `UPDATE`/`DELETE` ab |
+
+**Rechte (umgesetzt in `apps/server/src/assessment/access.ts`):** Fremde Firma → 404; eigene Firma ohne Mitgliedschaft → 403 (Admins: Lesezugriff); Antworten nur Befragte bzw. Assessoren mit Abteilung in zugewiesenen Kernbereichen; Zusammenführung nur Assessoren; Befragte sehen nur die Antworten der eigenen Abteilung.

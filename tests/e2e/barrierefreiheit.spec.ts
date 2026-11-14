@@ -1,6 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { ADMIN_STATE, E2E } from './helpers';
+import { expect, request as pwRequest, test, type Page, type TestInfo } from '@playwright/test';
+import {
+  activateByEmail,
+  ADMIN_STATE,
+  createTestCompany,
+  CSRF,
+  E2E,
+  loggedInContext,
+  uniqueId,
+} from './helpers';
 
 /**
  * TC-A11Y-001 – automatischer Barrierefreiheits-Scan (axe-core, WCAG 2.1 A/AA) aller vorhandenen Seiten.
@@ -72,5 +80,81 @@ test.describe('TC-A11Y-001 axe-Scan', () => {
       await scan(page, info, 'dialog');
       await page.getByTestId('confirm-cancel').click();
     });
+  });
+
+  test('Erfassung: Assessments, Anlage, Detail-Reiter, Fragebogen mit Kommentaren, Zusammenführung, Historie', async ({
+    browser,
+    baseURL,
+  }, info) => {
+    const admin = await pwRequest.newContext({ baseURL, storageState: ADMIN_STATE });
+    const id = uniqueId(info);
+    // Eigene Firma, damit die Listen der E2E-Firma klein bleiben.
+    const company = await createTestCompany(admin, info);
+    const companyAdmin = await loggedInContext(browser, company.adminEmail, company.password);
+    const dep = (
+      await (
+        await companyAdmin.request.post('/api/admin/departments', {
+          headers: CSRF,
+          data: { name: `A11y ${id}` },
+        })
+      ).json()
+    ).id as string;
+    const mk = async (role: string) => {
+      const email = `a11y-${role}.${id}@${company.domain}`;
+      const r = await companyAdmin.request.post('/api/admin/users', {
+        headers: CSRF,
+        data: { name: `A11y ${role}`, email, role, departmentId: dep },
+      });
+      expect(r.status()).toBe(201);
+      await activateByEmail(admin, email);
+      return { id: (await r.json()).id as string, email };
+    };
+    const assessor = await mk('assessor');
+    const respondent = await mk('respondent');
+    const ctx = await loggedInContext(browser, assessor.email, E2E.userPassword);
+    const created = await ctx.request.post('/api/assessments', {
+      headers: CSRF,
+      data: { project: `A11y ${id}`, assessorName: 'A11y', startDate: '2026-11-01' },
+    });
+    const asm = (await created.json()).id as string;
+    await ctx.request.post(`/api/assessments/${asm}/members`, {
+      headers: CSRF,
+      data: { userId: respondent.id },
+    });
+    await ctx.request.put(`/api/assessments/${asm}/assignments/KB01`, {
+      headers: CSRF,
+      data: { departmentIds: [dep] },
+    });
+    await ctx.request.post(`/api/assessments/${asm}/sources`, {
+      headers: CSRF,
+      data: { name: 'Quelle A11y' },
+    });
+    const page = await ctx.newPage();
+
+    const visit = async (name: string, url: string, ready: string) => {
+      await page.goto(url);
+      await expect(page.getByTestId(ready).first()).toBeVisible();
+      await page.waitForLoadState('networkidle');
+      await scan(page, info, name);
+    };
+    await visit('assessments', '/assessments', 'assessment-list');
+    await visit('assessment-neu', '/assessments/neu', 'master-form');
+    for (const tab of ['overview', 'team', 'sources'])
+      await visit(`assessment-${tab}`, `/assessments/${asm}?tab=${tab}`, `atab-${tab}`);
+    await visit('zusammenfuehrung', `/assessments/${asm}/zusammenfuehrung`, 'consolidation');
+    await visit('historie', `/admin?tab=history&assessmentId=${asm}`, 'history-panel');
+
+    const r = await loggedInContext(browser, respondent.email, E2E.userPassword);
+    const rp = await r.newPage();
+    await rp.goto(`/assessments/${asm}/fragebogen/KB01`);
+    await rp.getByTestId('cp-KB01.K.01').getByTestId('answer-yes').click();
+    await expect(rp.getByTestId('cp-KB01.K.01').getByTestId('save-state')).toContainText('✓ gespeichert');
+    await rp.getByTestId('cp-KB01.K.01').getByTestId('toggle-comments').click();
+    await expect(rp.getByTestId('comment-form')).toBeVisible();
+    await scan(rp, info, 'fragebogen');
+    await r.close();
+    await ctx.close();
+    await companyAdmin.close();
+    await admin.dispose();
   });
 });

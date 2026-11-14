@@ -1,11 +1,13 @@
 /**
  * Datenbankschema (Auszug für Phase 3/4 – Firmen, Nutzer, Anmeldung, Mail-/KI-Konfiguration, Audit).
- * Fachliche Tabellen (Assessments, Antworten, Zusammenführung, Historie, Benchmark) folgen in Phase 5/6.
+ * Phase 5: Assessments, Abteilungsantworten, Zusammenführung, Quellen, Kommentare, Änderungshistorie.
+ * Benchmark und Empfehlungen folgen in Phase 6/7.
  * Siehe docs/04_architektur/02_datenmodell.md.
  */
 import { sql } from 'drizzle-orm';
 import {
   boolean,
+  date,
   index,
   integer,
   jsonb,
@@ -207,5 +209,202 @@ export const auditLog = pgTable(
     index('audit_log_company_idx').on(t.companyId, t.createdAt),
     index('audit_log_target_company_idx').on(t.targetCompanyId, t.createdAt),
     index('audit_log_user_action_idx').on(t.userId, t.action, t.createdAt),
+  ],
+);
+
+// ─── Phase 5: Erfassung ────────────────────────────────────────────────────────
+
+export const assessmentStatusEnum = pgEnum('assessment_status', ['collecting', 'consolidating', 'released']);
+export const methodModelEnum = pgEnum('method_model', ['classic', 'agile']);
+/** Gespeicherte Antworten; „offen“ = keine Zeile. */
+export const answerValueEnum = pgEnum('answer_value', ['yes', 'partial', 'no', 'na']);
+
+/** Assessment mit Stammdaten wie im Excel-Blatt „Information“ (FA-1.1). */
+export const assessments = pgTable(
+  'assessment',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    companyId: uuid('company_id')
+      .notNull()
+      .references(() => companies.id, { onDelete: 'cascade' }),
+    project: text('project').notNull(),
+    assessorName: text('assessor_name').notNull(),
+    domain: text('domain').notNull().default(''),
+    organizationUnit: text('organization_unit').notNull().default(''),
+    mainStakeholder: text('main_stakeholder').notNull().default(''),
+    contact: text('contact').notNull().default(''),
+    assessmentType: text('assessment_type').notNull().default(''),
+    startDate: date('start_date').notNull(),
+    endDate: date('end_date'),
+    interviewCount: integer('interview_count'),
+    scope: text('scope').notNull().default(''),
+    methodModel: methodModelEnum('method_model').notNull().default('agile'),
+    includeAi: boolean('include_ai').notNull().default(true),
+    catalogVersion: text('catalog_version').notNull(),
+    status: assessmentStatusEnum('status').notNull().default('collecting'),
+    releasedAt: timestamp('released_at', { withTimezone: true }),
+    createdByUserId: uuid('created_by_user_id').references(() => users.id),
+    createdAt: createdAt(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('assessment_company_idx').on(t.companyId, t.createdAt)],
+);
+
+/** Nutzer, die am Assessment mitarbeiten; die Rechte ergeben sich aus der Rolle. */
+export const assessmentMembers = pgTable(
+  'assessment_member',
+  {
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.assessmentId, t.userId] })],
+);
+
+/** Kernbereich → Abteilung; ein Kernbereich kann mehreren Abteilungen zugewiesen sein (parallele Erfassung). */
+export const keyAreaAssignments = pgTable(
+  'key_area_assignment',
+  {
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    keyAreaId: text('key_area_id').notNull(),
+    departmentId: uuid('department_id')
+      .notNull()
+      .references(() => departments.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.assessmentId, t.keyAreaId, t.departmentId] })],
+);
+
+/** Antwort einer Abteilung je Kontrollpunkt; `version` für optimistisches Sperren (409 bei Konflikt). */
+export const departmentAnswers = pgTable(
+  'department_answer',
+  {
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    departmentId: uuid('department_id')
+      .notNull()
+      .references(() => departments.id, { onDelete: 'cascade' }),
+    checkpointId: text('checkpoint_id').notNull(),
+    value: answerValueEnum('value').notNull(),
+    version: integer('version').notNull().default(1),
+    updatedByUserId: uuid('updated_by_user_id').references(() => users.id),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.assessmentId, t.departmentId, t.checkpointId] })],
+);
+
+/** Abgabe einer Abteilung (Status „abgegeben“); danach sind ihre Antworten gesperrt, bis der Assessor sie wieder öffnet. */
+export const departmentSubmissions = pgTable(
+  'department_submission',
+  {
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    departmentId: uuid('department_id')
+      .notNull()
+      .references(() => departments.id, { onDelete: 'cascade' }),
+    submittedByUserId: uuid('submitted_by_user_id').references(() => users.id),
+    submittedAt: timestamp('submitted_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.assessmentId, t.departmentId] })],
+);
+
+/** Vom Assessor festgelegte Antwort je Kontrollpunkt – einzige Grundlage für Bericht, Benchmark und Empfehlungen. */
+export const consolidatedAnswers = pgTable(
+  'consolidated_answer',
+  {
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    checkpointId: text('checkpoint_id').notNull(),
+    value: answerValueEnum('value').notNull(),
+    suggestedValue: text('suggested_value').notNull(),
+    rationale: text('rationale'),
+    version: integer('version').notNull().default(1),
+    consolidatedByUserId: uuid('consolidated_by_user_id').references(() => users.id),
+    consolidatedAt: timestamp('consolidated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.assessmentId, t.checkpointId] })],
+);
+
+/** Quellen bzw. Autoren der Informationen (US-3.2), je Assessment gepflegt. */
+export const sources = pgTable(
+  'source',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(),
+    role: text('role').notNull().default(''),
+    unit: text('unit').notNull().default(''),
+    type: text('type').notNull().default('person'),
+    active: boolean('active').notNull().default(true),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    uniqueIndex('source_assessment_name_role_uq').on(
+      t.assessmentId,
+      sql`lower(${t.name})`,
+      sql`lower(${t.role})`,
+    ),
+  ],
+);
+
+/** Kommentare zu Kontrollpunkten; Verfasser wird automatisch gesetzt (US-3.1). */
+export const comments = pgTable(
+  'comment',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    assessmentId: uuid('assessment_id')
+      .notNull()
+      .references(() => assessments.id, { onDelete: 'cascade' }),
+    checkpointId: text('checkpoint_id').notNull(),
+    departmentId: uuid('department_id').references(() => departments.id, { onDelete: 'set null' }),
+    authorUserId: uuid('author_user_id')
+      .notNull()
+      .references(() => users.id),
+    sourceId: uuid('source_id').references(() => sources.id),
+    text: text('text').notNull(),
+    createdAt: createdAt(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
+  },
+  (t) => [index('comment_assessment_cp_idx').on(t.assessmentId, t.checkpointId)],
+);
+
+/**
+ * Änderungshistorie (N-03): append-only. Ein Datenbank-Trigger verhindert UPDATE und DELETE
+ * (Migration 0003). Kein Fremdschlüssel auf das Assessment, damit die Historie ein Löschen überdauert.
+ */
+export const changeHistory = pgTable(
+  'change_history',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    companyId: uuid('company_id').notNull(),
+    assessmentId: uuid('assessment_id'),
+    assessmentName: text('assessment_name'),
+    entityType: text('entity_type').notNull(),
+    entityId: text('entity_id'),
+    keyAreaId: text('key_area_id'),
+    checkpointId: text('checkpoint_id'),
+    action: text('action').notNull(),
+    oldValue: text('old_value'),
+    newValue: text('new_value'),
+    rationale: text('rationale'),
+    userId: uuid('user_id'),
+    userNameSnapshot: text('user_name_snapshot').notNull(),
+    userRoleSnapshot: text('user_role_snapshot').notNull(),
+    departmentId: uuid('department_id'),
+    departmentSnapshot: text('department_snapshot'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('change_history_company_idx').on(t.companyId, t.createdAt),
+    index('change_history_assessment_idx').on(t.assessmentId, t.checkpointId, t.createdAt),
   ],
 );

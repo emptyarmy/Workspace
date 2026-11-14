@@ -86,6 +86,61 @@ Alle Endpunkte unter `/api/admin/*` nur für die Rolle **Admin**.
 | GET | `/api/admin/cross-password-reset` | Tageskontingent `{ limit, used, remaining }` |
 | POST | `/api/admin/cross-password-reset` | `{ email }`; **immer 202** bei bekannter/unbekannter Adresse; `own_company`, **429** `reset_limit` |
 
+## Assessments (Phase 5)
+
+Alle Endpunkte brauchen eine Anmeldung. Fremde Firma oder unbekannte ID → **404**; eigene Firma, aber nicht im Team → **403** `forbidden` (Admins haben Lesezugriff auf alle Assessments der Firma, aber keinen Schreibzugriff).
+
+| Methode | Pfad | Wer | Zweck |
+|---|---|---|---|
+| GET | `/api/assessments` | alle | sichtbare Assessments (Admin: alle der Firma, sonst nur als Team-Mitglied) |
+| POST | `/api/assessments` | Assessor | anlegen; Stammdaten wie FA-1.1, `methodModel` (`agile`/`classic`), `includeAi`; Anlegender wird Mitglied |
+| GET | `/api/assessments/:id` | Team, Admin | Stammdaten, Team, Zuweisungen, Abteilungen, Abgaben, Quellen, eigene Rechte (`me`) |
+| PATCH | `/api/assessments/:id` | Assessor | Stammdaten ändern (vollständiger Datensatz) |
+| POST | `/api/assessments/:id/status` | Assessor | `{ status }`: `collecting` ⇄ `consolidating` ⇄ `released`; sonst **409** `invalid_transition` |
+| DELETE | `/api/assessments/:id` | Assessor | löschen (Historie bleibt) |
+| GET | `/api/assessments/:id/candidates` | Assessor | Personen, die ins Team können (keine Admins) |
+| POST | `/api/assessments/:id/members` | Assessor | `{ userId }` aufnehmen |
+| DELETE | `/api/assessments/:id/members/:userId` | Assessor | entfernen; sich selbst nicht (**409** `self`) |
+| PUT | `/api/assessments/:id/assignments/:keyAreaId` | Assessor | `{ departmentIds: [] }` – Abteilungen eines Kernbereichs ersetzen |
+| GET | `/api/assessments/:id/answers?departmentId=` | Team, Admin | Abteilungsantworten; Befragte erhalten nur die eigene Abteilung |
+| PUT | `/api/assessments/:id/answers/:checkpointId` | Befragter, Assessor mit Abteilung | `{ value, version }`; `open` nimmt die Antwort zurück. Version veraltet → **409** `version_conflict` mit `current`; nicht zugewiesen → **403** `not_assigned`; abgegeben → **409** `submitted`; Status ≠ Erfassung → **409** `not_collecting`; nicht im Umfang → **404** |
+| POST | `/api/assessments/:id/submission` | Befragter, Assessor mit Abteilung | eigene Abteilung abgeben |
+| DELETE | `/api/assessments/:id/submissions/:departmentId` | Assessor | Abgabe wieder öffnen |
+| GET | `/api/assessments/:id/comments` | Team, Admin | Kommentare mit Verfasser, Abteilung, Quelle |
+| POST | `/api/assessments/:id/comments` | Assessor; Befragte in Kernbereichen ihrer Abteilung | `{ checkpointId, text (1–2000), sourceId? }`; deaktivierte Quelle → **400** |
+| PATCH | `/api/assessments/:id/comments/:commentId` | Verfasser | `{ text?, sourceId? }` |
+| DELETE | `/api/assessments/:id/comments/:commentId` | Verfasser, Assessor | löschen |
+| GET | `/api/assessments/:id/sources` | Team, Admin | Quellen |
+| POST | `/api/assessments/:id/sources` | Assessor | `{ name, role?, unit?, type? }`; gleicher Name + Rolle → **409** `duplicate` |
+| PATCH | `/api/assessments/:id/sources/:sourceId` | Assessor | ändern, `active` |
+| DELETE | `/api/assessments/:id/sources/:sourceId` | Assessor | nur unbenutzte; sonst **409** `in_use` |
+| GET | `/api/assessments/:id/consolidation` | Assessor, Leser, Admin | je Kontrollpunkt: Abteilungsantworten, `suggestion`, `disagree`, `consolidated`; Befragte **403** |
+| PUT | `/api/assessments/:id/consolidation/:checkpointId` | Assessor | `{ value, version, rationale? }`; Begründung fehlt bei Abweichung/Uneinigkeit → **400** `rationale_required` |
+
+### Live-Aktualisierung, Duplizieren, Export/Import (Phase 5b)
+
+| Methode | Pfad | Wer | Zweck |
+|---|---|---|---|
+| GET | `/api/assessments/:id/events?keyAreaId=&view=` | Team, Admin | Ereignisstrom (`text/event-stream`): `hello` (`connectionId`), `presence` (`users`), `answer`, `comment`, `consolidated`, `submission`, `assessment`. Befragte erhalten keine Antworten anderer Abteilungen und keine Zusammenführung |
+| POST | `/api/assessments/:id/presence` | Team, Admin | `{ connectionId, keyAreaId, view }` – eigenen Kernbereich melden; fremde Verbindung → **404** |
+| POST | `/api/assessments/:id/duplicate` | Assessor | `{ project }` – Kopie anlegen; Antwort wie beim Import |
+| GET | `/api/assessments/:id/export` | Team, Admin | Exportdatei (`format: "ai-tpi-assessment"`, `schemaVersion: 1`) als Download |
+| POST | `/api/assessments/import` | Assessor | Exportdatei (bis 20 MB) → **201** `{ id, project, imported, ignored }`; **400** `invalid_format`, `unsupported_version` (mit `schemaVersion`), `invalid_input` (Stammdaten) |
+
+Die Live-Ereignisse laufen über einen Serverprozess im Speicher. Für mehrere Serverinstanzen müsste ein gemeinsamer Kanal (z. B. PostgreSQL `LISTEN/NOTIFY`) ergänzt werden.
+
+## Änderungshistorie
+
+Append-only: Es gibt keine Endpunkte zum Ändern oder Löschen; ein Datenbank-Trigger weist `UPDATE`/`DELETE` ab.
+
+| Methode | Pfad | Zweck |
+|---|---|---|
+| GET | `/api/history` | Filter `assessmentId`, `keyAreaId`, `checkpointId`, `userId`, `departmentId`, `from`, `to` (JJJJ-MM-TT), `limit` (≤ 200), `offset`; Antwort `{ total, items }` |
+| GET | `/api/history/facets` | Personen und Abteilungen, die in der sichtbaren Historie vorkommen |
+| GET | `/api/history.csv` | CSV (Semikolon, UTF-8 mit BOM), gleiche Filter, max. 10 000 Zeilen |
+
+Sichtbar ist nur die eigene Firma; Nicht-Admins sehen nur Assessments, in deren Team sie sind.
+
 ## Nur für Tests
 
 Aktiv nur mit `NODE_ENV=test` **und** `TEST_ENDPOINTS=true`:

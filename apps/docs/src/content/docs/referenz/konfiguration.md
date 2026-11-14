@@ -13,7 +13,7 @@ Die Konfiguration steht in `.env` im Projektordner (Vorlage: `.env.example`). We
 |---|---|---|
 | `NODE_ENV` | `development` | `development`, `test` oder `production` |
 | `SERVER_HOST` | `127.0.0.1` | Adresse, auf der der Server lauscht |
-| `SERVER_PORT` | `3000` | Port des API-Servers. Die Weboberfläche nutzt denselben Wert für ihren Proxy. |
+| `SERVER_PORT` | `3000` | Port des API-Servers. Die Weboberfläche nutzt denselben Wert für ihren Proxy. Die Vorlage `.env.example` setzt `3001`, weil 3000 oft belegt ist. Ist der Port belegt, bricht der Server mit einer Meldung ab. |
 | `DATABASE_URL` | – | PostgreSQL, z. B. `postgres://ai_tpi:ai_tpi@localhost:5432/ai_tpi`. Ohne Angabe laufen nur Katalog und Health. |
 | `SETUP_ENABLED` | `true` | Ersteinrichtung erlauben (zusätzlich nur über localhost und nur ohne Nutzer) |
 | `SECRET_ENCRYPTION_KEY` | – | Schlüssel (≥ 32 Zeichen) für SMTP-Passwörter und KI-API-Schlüssel. **Pflicht bei `production`**; leer = Entwicklungsschlüssel |

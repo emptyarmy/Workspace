@@ -139,6 +139,14 @@ test('TC-SET-006 Ersteinrichtung: Server oder Datenbank nicht erreichbar → eig
   await page.route('**/api/setup/status', (r) => r.abort('connectionrefused'));
   await page.reload();
   await expect(page.getByTestId('setup-error')).toContainText('nicht erreichbar');
+
+  // Andere Anwendung auf SERVER_PORT: 404, aber nicht die Antwort des AI_TPI-Servers
+  await page.route('**/api/setup/status', (r) =>
+    r.fulfill({ status: 404, contentType: 'text/html', body: '<h1>Not Found</h1>' }),
+  );
+  await page.reload();
+  await expect(page.getByTestId('setup-error')).toContainText('andere Anwendung');
+  await expect(page.getByTestId('setup-unavailable')).toHaveCount(0);
 });
 
 test('TC-AUTH-006 geschützte Seite ohne Anmeldung → Login, danach Rückkehr zur Seite', async ({ page }) => {
