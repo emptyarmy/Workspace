@@ -539,7 +539,8 @@
       "questionnaire": "Fragebogen",
       "consolidation": "Zusammenführung",
       "history": "Änderungshistorie",
-      "report": "Bericht"
+      "report": "Bericht",
+      "recommendations": "Empfehlungen"
     },
     "statusChange": {
       "consolidating": "Zur Zusammenführung",
@@ -748,7 +749,14 @@
       "source_updated": "Quelle geändert",
       "source_activated": "Quelle aktiviert",
       "source_deactivated": "Quelle deaktiviert",
-      "source_deleted": "Quelle gelöscht"
+      "source_deleted": "Quelle gelöscht",
+      "recommendation_generated": "Empfehlungen erzeugt",
+      "recommendation_updated": "Empfehlung geändert",
+      "recommendation_status_accepted": "Empfehlung angenommen",
+      "recommendation_status_rejected": "Empfehlung abgelehnt",
+      "recommendation_status_in_progress": "Maßnahme begonnen",
+      "recommendation_status_done": "Maßnahme erledigt",
+      "recommendation_status_proposed": "Empfehlung zurückgesetzt"
     }
   },
   "report": {
@@ -809,7 +817,10 @@
     "na": "n. a.",
     "close": "Schließen",
     "method": "Methodik: Eine Ebene gilt als erreicht, wenn alle anwendbaren Kontrollpunkte dieser und der darunter liegenden Ebenen erfüllt sind. Erfüllungsgrad = (erfüllt + 0,5 × teilweise) / (Kontrollpunkte − nicht anwendbar). Grundlage sind die konsolidierten Antworten.",
-    "levelShort": "Ebene"
+    "levelShort": "Ebene",
+    "plan": "Maßnahmenplan",
+    "planEmpty": "Noch keine angenommenen Empfehlungen.",
+    "planOpen": "Empfehlungen öffnen"
   },
   "benchmark": {
     "heading": "Benchmark",
@@ -836,5 +847,100 @@
     "aiCompare": "KI-Index im Vergleich",
     "basis": "Grundlage: {project}",
     "draft": "(noch nicht freigegeben)"
+  },
+  "recommendations": {
+    "heading": "Handlungsempfehlungen",
+    "intro": "Empfehlungen entstehen aus den nicht oder teilweise erfüllten Kontrollpunkten der Zusammenführung. Kurzfristig heißt in weniger als einem Monat umsetzbar, langfristig in einem Monat oder mehr.",
+    "module": "KI-Modul",
+    "rulesOnly": "Nur Regeln (ohne KI)",
+    "default": "Standard",
+    "rulesHint": "Die Empfehlungen werden ausschließlich aus den Textbausteinen des Fragenkatalogs erzeugt. Es werden keine Daten an einen KI-Dienst gesendet.",
+    "aiHint": "Vor dem Senden sehen Sie, welche Daten an den KI-Dienst übertragen werden, und müssen zustimmen.",
+    "generate": "Empfehlungen erzeugen",
+    "generating": "Wird erzeugt …",
+    "readOnly": "Sie können die Empfehlungen lesen. Erzeugen und Bearbeiten ist Assessoren des Assessments vorbehalten.",
+    "declined": "Abgebrochen: Es wurden keine Daten gesendet.",
+    "generated": "{n} Empfehlungen erzeugt. Bereits angenommene oder abgelehnte Empfehlungen bleiben erhalten.",
+    "nothingToDo": "Keine Handlungsfelder: Alle bewerteten Kontrollpunkte sind erfüllt.",
+    "tips": {
+      "repeat": "Wiederholen Sie das Assessment regelmäßig, um den Stand zu halten.",
+      "benchmark": "Vergleichen Sie Ihre Werte im Benchmark mit der Branche.",
+      "ai": "Prüfen Sie, ob die nächsthöhere Ebene oder die KI-Kernbereiche in den Umfang aufgenommen werden sollen."
+    },
+    "openHint": "Hinweis: {n} Kontrollpunkte sind noch nicht zusammengeführt und fließen nicht in die Empfehlungen ein.",
+    "fallback": "Stattdessen werden die regelbasierten Empfehlungen angezeigt.",
+    "aiErrors": {
+      "timeout": "Der KI-Dienst hat nicht rechtzeitig geantwortet.",
+      "unreachable": "Der KI-Dienst ist nicht erreichbar.",
+      "auth_failed": "Der KI-Dienst hat die Anmeldung abgelehnt (HTTP {status}). Bitte den API-Schlüssel in der KI-Konfiguration prüfen.",
+      "http_error": "Der KI-Dienst meldet einen Fehler (HTTP {status}).",
+      "invalid_response": "Die Antwort des KI-Dienstes war unbrauchbar (kein gültiges JSON oder unbekannte Kontrollpunkte) und wurde verworfen."
+    },
+    "errors": {
+      "generic": "Die Empfehlungen konnten nicht erzeugt werden. Bitte versuchen Sie es erneut.",
+      "save": "Die Änderung konnte nicht gespeichert werden.",
+      "network": "Keine Verbindung zum Server. Bitte prüfen Sie die Verbindung und versuchen Sie es erneut."
+    },
+    "conflict": "Die Empfehlung wurde inzwischen von jemand anderem geändert. Die aktuelle Fassung wurde geladen.",
+    "saved": "Gespeichert.",
+    "empty": "Noch keine Empfehlungen erzeugt.",
+    "none": "Keine Empfehlungen in dieser Ansicht.",
+    "filter": {
+      "label": "Anzeigen",
+      "all": "Alle",
+      "open": "Nur offene Vorschläge",
+      "plan": "Maßnahmenplan (angenommen, in Arbeit, erledigt)"
+    },
+    "horizon": {
+      "short": "Kurzfristig (< 1 Monat)",
+      "long": "Langfristig (≥ 1 Monat)"
+    },
+    "priority": "Priorität",
+    "aiGenerated": "KI-generiert ({model}, {date})",
+    "ruleBased": "Regelbasiert",
+    "edited": "bearbeitet",
+    "effort": "Aufwand {e}",
+    "gap": "{n} Prozentpunkte unter dem Branchen-Median",
+    "ruleText": "Ursprünglicher Regeltext",
+    "accept": "Annehmen",
+    "reject": "Ablehnen",
+    "edit": "Bearbeiten",
+    "status": {
+      "proposed": "Vorgeschlagen",
+      "accepted": "Angenommen",
+      "in_progress": "In Arbeit",
+      "done": "Erledigt",
+      "rejected": "Abgelehnt"
+    },
+    "fields": {
+      "title": "Titel",
+      "text": "Beschreibung",
+      "status": "Status",
+      "owner": "Verantwortlich",
+      "due": "Termin",
+      "nextStep": "Nächster Schritt",
+      "benefit": "Nutzen",
+      "metric": "Messgröße",
+      "ownerRole": "Rolle"
+    },
+    "consent": {
+      "title": "Daten an den KI-Dienst senden?",
+      "text": "Für die Empfehlungen werden die unten gezeigten Daten an das KI-Modul „{module}“ ({target}) gesendet.",
+      "model": "Modell: {model}",
+      "count": "{n} Kontrollpunkte mit Antwort, Ebene und Aufwand",
+      "comments": "Kommentare werden mitgesendet (nicht pseudonymisiert).",
+      "commentsPseudo": "Kommentare werden mitgesendet; Namen und E-Mail-Adressen werden ersetzt.",
+      "noComments": "Kommentare werden nicht gesendet.",
+      "noNames": "Firmenname, Projektname und Personen werden nicht gesendet.",
+      "preview": "Vorschau der übertragenen Daten",
+      "decline": "Abbrechen – nichts senden",
+      "accept": "Zustimmen und senden"
+    },
+    "readOnlyAdmin": "Als Admin haben Sie hier nur Lesezugriff. Empfehlungen erzeugen und bearbeiten die Assessoren des Assessments; das Standard-KI-Modul legen Sie im Admin-Bereich unter KI-Konfiguration fest.",
+    "forbidden": {
+      "admin_read_only": "Keine Berechtigung: Admins haben auf Empfehlungen nur Lesezugriff. Erzeugen und bearbeiten können nur die Assessoren dieses Assessments.",
+      "role_read_only": "Keine Berechtigung: Mit der Rolle „{role}“ können Sie Empfehlungen nur lesen. Erzeugen, KI-Modul wählen und bearbeiten können nur die Assessoren dieses Assessments.",
+      "not_assessor": "Keine Berechtigung: Nur Assessoren, die zum Team dieses Assessments gehören, können Empfehlungen erzeugen oder bearbeiten. Bitte wenden Sie sich an den Assessor."
+    }
   }
 }

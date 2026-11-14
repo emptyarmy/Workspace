@@ -37,7 +37,7 @@ Das Projekt wurde angelegt: 33 Dateien mit Plan, Struktur und `AGENTS.md`, noch 
 **Die Quellen passen in drei Punkten nicht zur Aufgabenstellung:**
 - **Deutsche und englische Fragen sind nicht dieselben.** Word = TPI NEXT® (Stufen Kontrolliert/Effizient/Optimierend, ca. 150 Kontrollpunkte). Excel = Agile TPI (Individuum/Team/Organisation, Prioritätsgruppen A–G, 108 Kontrollpunkte). Eine englische Fassung muss übersetzt werden.
 - **Beide Quellen haben 16 Kernbereiche, nicht 14.**
-- **Das Word-Dokument ist lückenhaft:** Bei „Grad der Beteiligung“ fehlen Überschrift und Stufe Kontrolliert; es enthält BRUNATA-spezifische Bewertungen und ab dem SAP-Kapitel themenfremde Inhalte.
+- **Das Word-Dokument ist lückenhaft:** Bei „Grad der Beteiligung“ fehlen Überschrift und Stufe Kontrolliert; es enthält firmenspezifische Bewertungen und ab dem SAP-Kapitel themenfremde Inhalte.
 - Die Excel-Makros färben nur die Reifegradmatrix ein und zeigen den angeklickten Punkt an; alles lässt sich in JavaScript nachbauen.
 
 **KI-Erweiterung (Vorschlag):** neue Kernbereiche KB17 „KI-Governance, Ethik und Kompetenz“, KB18 „KI-gestützte Anforderungsprüfung“, KB19 „KI-gestützte Entwicklung und Dokumentation“, optional KB20 „QS KI-basierter Systeme“; 21 KI-Kontrollpunkte in bestehenden Bereichen; insgesamt 55 neue Kontrollpunkte mit Aufwandsklasse (kurzfristig < 1 Monat / langfristig).

@@ -539,7 +539,8 @@
       "questionnaire": "Questionnaire",
       "consolidation": "Consolidation",
       "history": "Change history",
-      "report": "Report"
+      "report": "Report",
+      "recommendations": "Recommendations"
     },
     "statusChange": {
       "consolidating": "Start consolidation",
@@ -748,7 +749,14 @@
       "source_updated": "Source changed",
       "source_activated": "Source activated",
       "source_deactivated": "Source deactivated",
-      "source_deleted": "Source deleted"
+      "source_deleted": "Source deleted",
+      "recommendation_generated": "Recommendations generated",
+      "recommendation_updated": "Recommendation changed",
+      "recommendation_status_accepted": "Recommendation accepted",
+      "recommendation_status_rejected": "Recommendation rejected",
+      "recommendation_status_in_progress": "Action started",
+      "recommendation_status_done": "Action done",
+      "recommendation_status_proposed": "Recommendation reset"
     }
   },
   "report": {
@@ -809,7 +817,10 @@
     "na": "n/a",
     "close": "Close",
     "method": "Method: a level is reached when all applicable checkpoints of this and the lower levels are fulfilled. Fulfilment = (fulfilled + 0.5 × partially) / (checkpoints − not applicable). Based on the consolidated answers.",
-    "levelShort": "Level"
+    "levelShort": "Level",
+    "plan": "Action plan",
+    "planEmpty": "No accepted recommendations yet.",
+    "planOpen": "Open recommendations"
   },
   "benchmark": {
     "heading": "Benchmark",
@@ -836,5 +847,100 @@
     "aiCompare": "AI index compared",
     "basis": "Based on: {project}",
     "draft": "(not yet released)"
+  },
+  "recommendations": {
+    "heading": "Recommendations",
+    "intro": "Recommendations are derived from checkpoints that are not or only partly met in the consolidation. Short-term means feasible in less than a month, long-term in a month or more.",
+    "module": "AI module",
+    "rulesOnly": "Rules only (no AI)",
+    "default": "default",
+    "rulesHint": "Recommendations are created solely from the text modules of the catalogue. No data is sent to an AI service.",
+    "aiHint": "Before sending you will see which data is transferred to the AI service and must agree.",
+    "generate": "Generate recommendations",
+    "generating": "Generating …",
+    "readOnly": "You can read the recommendations. Only assessors of this assessment can generate and edit them.",
+    "declined": "Cancelled: no data was sent.",
+    "generated": "{n} recommendations generated. Accepted or rejected recommendations are kept.",
+    "nothingToDo": "No fields of action: all rated checkpoints are met.",
+    "tips": {
+      "repeat": "Repeat the assessment regularly to keep the level.",
+      "benchmark": "Compare your values with your industry in the benchmark.",
+      "ai": "Check whether the next level or the AI key areas should be added to the scope."
+    },
+    "openHint": "Note: {n} checkpoints have not been consolidated yet and are not considered.",
+    "fallback": "The rule-based recommendations are shown instead.",
+    "aiErrors": {
+      "timeout": "The AI service did not answer in time.",
+      "unreachable": "The AI service cannot be reached.",
+      "auth_failed": "The AI service rejected the credentials (HTTP {status}). Please check the API key in the AI configuration.",
+      "http_error": "The AI service reported an error (HTTP {status}).",
+      "invalid_response": "The AI response was unusable (no valid JSON or unknown checkpoints) and was discarded."
+    },
+    "errors": {
+      "generic": "The recommendations could not be generated. Please try again.",
+      "save": "The change could not be saved.",
+      "network": "No connection to the server. Please check your connection and try again."
+    },
+    "conflict": "Someone else changed this recommendation in the meantime. The current version has been loaded.",
+    "saved": "Saved.",
+    "empty": "No recommendations generated yet.",
+    "none": "No recommendations in this view.",
+    "filter": {
+      "label": "Show",
+      "all": "All",
+      "open": "Open proposals only",
+      "plan": "Action plan (accepted, in progress, done)"
+    },
+    "horizon": {
+      "short": "Short-term (< 1 month)",
+      "long": "Long-term (≥ 1 month)"
+    },
+    "priority": "Priority",
+    "aiGenerated": "AI-generated ({model}, {date})",
+    "ruleBased": "Rule-based",
+    "edited": "edited",
+    "effort": "Effort {e}",
+    "gap": "{n} percentage points below the industry median",
+    "ruleText": "Original rule text",
+    "accept": "Accept",
+    "reject": "Reject",
+    "edit": "Edit",
+    "status": {
+      "proposed": "Proposed",
+      "accepted": "Accepted",
+      "in_progress": "In progress",
+      "done": "Done",
+      "rejected": "Rejected"
+    },
+    "fields": {
+      "title": "Title",
+      "text": "Description",
+      "status": "Status",
+      "owner": "Owner",
+      "due": "Due date",
+      "nextStep": "Next step",
+      "benefit": "Benefit",
+      "metric": "Metric",
+      "ownerRole": "Role"
+    },
+    "consent": {
+      "title": "Send data to the AI service?",
+      "text": "To create the recommendations, the data shown below is sent to the AI module “{module}” ({target}).",
+      "model": "Model: {model}",
+      "count": "{n} checkpoints with answer, level and effort",
+      "comments": "Comments are included (not pseudonymised).",
+      "commentsPseudo": "Comments are included; names and e-mail addresses are replaced.",
+      "noComments": "Comments are not sent.",
+      "noNames": "Company name, project name and people are not sent.",
+      "preview": "Preview of the transferred data",
+      "decline": "Cancel – send nothing",
+      "accept": "Agree and send"
+    },
+    "readOnlyAdmin": "As an admin you have read-only access here. The assessors of this assessment generate and edit recommendations; you set the default AI module in the admin area under AI configuration.",
+    "forbidden": {
+      "admin_read_only": "Not permitted: admins have read-only access to recommendations. Only the assessors of this assessment can generate and edit them.",
+      "role_read_only": "Not permitted: with the role “{role}” you can only read recommendations. Only the assessors of this assessment can generate them, choose the AI module or edit them.",
+      "not_assessor": "Not permitted: only assessors who belong to this assessment's team can generate or edit recommendations. Please contact the assessor."
+    }
   }
 }

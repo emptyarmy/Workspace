@@ -7,7 +7,7 @@ sidebar:
 
 ## Anmeldeadresse
 
-Jede Firma hat eine eigene Anmeldeseite mit ihrem Logo: `http(s)://<server>/login/<firmenkürzel>`, z. B. `/login/brunata`. Ein unbekanntes Kürzel zeigt ein neutrales Logo und keine Fehlerseite, damit sich nicht erraten lässt, welche Firmen es gibt.
+Jede Firma hat eine eigene Anmeldeseite mit ihrem Logo: `http(s)://<server>/login/<firmenkürzel>`, z. B. `/login/heise`. Ein unbekanntes Kürzel zeigt ein neutrales Logo und keine Fehlerseite, damit sich nicht erraten lässt, welche Firmen es gibt.
 
 ## Erstes Passwort (Einladung)
 

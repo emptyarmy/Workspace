@@ -16,7 +16,7 @@ Grundlage: Antworten zu N-11, R-01, R-02 (09.11.2026). Offene Detailfragen: R-03
 | Nr. | Regel |
 |---|---|
 | M1 | **Jeder Admin verwaltet seine eigene Firma**: Nutzer, Abteilungen, Logo, Branche, Domains sowie die **firmeneigene KI- und Mail-Konfiguration** (S-04). |
-| M2 | **E-Mail-Domain-Bindung:** Jede Firma hat eine oder mehrere zugelassene E-Mail-Domains (z. B. `brunata.de`). Admin und alle Nutzer einer Firma müssen eine E-Mail-Adresse **dieser Domain(s)** haben. Eine Nutzeranlage mit fremder Domain wird abgewiesen. |
+| M2 | **E-Mail-Domain-Bindung:** Jede Firma hat eine oder mehrere zugelassene E-Mail-Domains (z. B. `heise.de`). Admin und alle Nutzer einer Firma müssen eine E-Mail-Adresse **dieser Domain(s)** haben. Eine Nutzeranlage mit fremder Domain wird abgewiesen. |
 | M3 | **Admins für andere Firmen anlegen (S-01):** Ein Admin kann eine **neue Firma** anlegen **oder** für eine **bereits bestehende Firma** weitere Admins anlegen – jeweils mit E-Mail-Adresse der Domain dieser Firma. Der neue Admin erhält die Einladungs-Mail. |
 | M4 | **Zugriff auf selbst angelegte Admins (S-01):** Der anlegende Admin behält Zugriff auf die **von ihm angelegten Admin-Konten** (Liste „Von mir angelegte Admins“): Er kann sie auf eine **Nicht-Admin-Rolle** (Assessor, Befragter, Leser) umstellen, aktiv/inaktiv setzen, Einladung erneut senden und **Passwort zurücksetzen**. |
 | M4c | **Ergebnisse (S-06, S-11):** Admins dürfen die Befragungsergebnisse der **eigenen** Firma lesen. Ergebnisse **anderer** Firmen sehen sie nicht – nur die aggregierten Benchmark-Daten (eigene Firma vs. eigene Branche vs. alle Branchen). |
@@ -25,7 +25,7 @@ Grundlage: Antworten zu N-11, R-01, R-02 (09.11.2026). Offene Detailfragen: R-03
 | M4a | Der Schutz des **letzten aktiven Admins je Firma** gilt auch hier: Ein fremder Admin kann den letzten Admin einer Firma nicht herabstufen oder deaktivieren. |
 | M4b | **Benachrichtigung (S-01, festgelegt):** Die Admins einer Firma erhalten eine E-Mail, wenn ein Admin **außerhalb ihrer Domain** Änderungen an ihren Nutzern vornimmt, weitere Admins für ihre Firma erstellt oder bestehende Admins ihrer Firma gelöscht werden. Zusätzlich Audit-Log in beiden Firmen. |
 | M5 | Jeder Nutzer gehört zu **genau einer** Firma; sie ergibt sich aus der Domain seiner E-Mail-Adresse. |
-| M5a | **Externe Berater (S-03, S-08)** erhalten von den **Mailserver-Administratoren** ihrer Firma eine interne Adresse mit Präfix `ext.`, z. B. `ext.max.mustermann@brunata.com`. Die Anwendung erkennt das Präfix automatisch und kennzeichnet den Nutzer als **„Extern“**; eine manuelle Konfiguration in der Anwendung gibt es nicht. |
+| M5a | **Externe Berater (S-03, S-08)** erhalten von den **Mailserver-Administratoren** ihrer Firma eine interne Adresse mit Präfix `ext.`, z. B. `ext.max.mustermann@heise.de`. Die Anwendung erkennt das Präfix automatisch und kennzeichnet den Nutzer als **„Extern“**; eine manuelle Konfiguration in der Anwendung gibt es nicht. |
 | M6 | Eine E-Mail-Domain darf nur **einer** Firma zugeordnet sein; Freemail-Domains (gmail.com, web.de, gmx.de, outlook.com …) sind gesperrt (Vorschlag S-02). |
 | M7 | Der **erste Admin** (Ersteinrichtung über localhost) legt dabei seine eigene Firma an: Name, Kürzel, Domain (vorbelegt aus seiner E-Mail-Adresse), Branche, Logo. |
 
@@ -115,4 +115,4 @@ Angelehnt an die Wirtschaftszweig-Klassifikation (WZ 2008 / NACE Rev. 2), für I
 | NGO | Non-Profit, Verbände und Kirchen | Non-Profit & Associations | S 94 |
 | OTH | Sonstige | Other | – |
 
-Hinweis: Die Branche „Immobilien- und Wohnungswirtschaft, Messdienste“ schließt Abrechnungsdienstleister wie BRUNATA ein. Ist eine feinere Unterteilung gewünscht, z. B. nach Unternehmensgröße (KMU / Mittelstand / Konzern) als zweite Vergleichsdimension, siehe R-05.
+Hinweis: Die Branche „Immobilien- und Wohnungswirtschaft, Messdienste“ schließt Abrechnungs- und Messdienstleister ein. Ist eine feinere Unterteilung gewünscht, z. B. nach Unternehmensgröße (KMU / Mittelstand / Konzern) als zweite Vergleichsdimension, siehe R-05.

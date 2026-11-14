@@ -68,6 +68,15 @@ function project(
   return { name, use, dependencies: ['setup'], testIgnore };
 }
 
+/**
+ * macOS erlaubt einem Prozess standardmäßig nur 256 offene Dateien/Verbindungen (`ulimit -n`).
+ * Bei vielen parallelen Workern hält jede Seite zusätzlich eine Live-Verbindung (SSE) über den Vite-Proxy;
+ * Vite stieß dann an die Grenze und beendete sich mitten im Lauf (alle folgenden Tests: ERR_CONNECTION_REFUSED).
+ * Deshalb heben die Testserver ihre eigene Grenze an (ohne Root möglich, bis zur harten Grenze).
+ */
+const raiseFileLimit =
+  process.platform === 'win32' ? '' : 'ulimit -n 10240 2>/dev/null || ulimit -n hard 2>/dev/null; ';
+
 const setupProject = project('setup', devices['Desktop Chrome']);
 delete setupProject.dependencies;
 delete setupProject.testIgnore;
@@ -99,7 +108,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: 'npm run db:reset:e2e -w @ai-tpi/server && npm run start -w @ai-tpi/server',
+      command: `${raiseFileLimit}npm run db:reset:e2e -w @ai-tpi/server && npm run start -w @ai-tpi/server`,
       url: `http://127.0.0.1:${SERVER_PORT}/api/health`,
       reuseExistingServer: false,
       env: {
@@ -113,7 +122,7 @@ export default defineConfig({
       timeout: 90_000,
     },
     {
-      command: 'npm run dev -w @ai-tpi/web',
+      command: `${raiseFileLimit}npm run dev -w @ai-tpi/web`,
       url: BASE_URL,
       reuseExistingServer: false,
       env: { WEB_PORT: String(WEB_PORT), SERVER_PORT: String(SERVER_PORT) },

@@ -44,16 +44,16 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Passwortregeln live (grün) + Stärkeanzeige 3 Stufen (zxcvbn-ts), geteilt Client/Server
 - ☑ Sitzungen, CSRF-Header, Kontosperre, Audit-Log – ☐ IP-basiertes Rate Limit
 - ◐ SSO-Vorbereitung: Tabelle `auth_identity` vorhanden; Provider-Schnittstelle folgt mit SSO
-- ☐ Admin: Benutzer (anlegen, ändern, aktiv/inaktiv, löschen mit Bestätigungsdialog, Rollen), Firmen (Logo, Branche), Abteilungen, Branchenliste, Passwortrichtlinie, Mail
-- ☐ Mandantentrennung (companyId, Row Level Security) + Negativtests
-- ☐ Firmen-Domains, Domain-Prüfung, Freemail-Sperrliste
-- ☐ Admins für neue/bestehende Firmen anlegen; „Von mir angelegte Admins“; Benachrichtigung der Ziel-Admins
-- ☐ Kennzeichnung externer Berater (`ext.`-Präfix, keine manuelle Pflege)
-- ☐ Passwort-Reset per Button (Admin), firmenübergreifende Benachrichtigungs-Mails
-- ☐ Admin: Lesezugriff auf Ergebnisse der eigenen Firma, Sperre für andere Firmen; Benchmark-Ansicht für alle Rollen
-- ☐ Firmenübergreifender Passwort-Reset per E-Mail-Eingabe mit Limit und Info-Mail
-- ☐ KI-Modul-Auswahl durch Assessor und Admin
-- ☐ KI- und Mail-Konfiguration je Firma
+- ☑ Admin: Benutzer (anlegen, ändern, aktiv/inaktiv, löschen mit Bestätigungsdialog, Rollen), Firmen (Logo, Branche), Abteilungen, Branchenliste, Mail – siehe 4a/4b; Passwortrichtlinie konfigurierbar → verschoben
+- ☑ Mandantentrennung (companyId in jeder Abfrage, fremde IDs → 404) + Negativtests – Row Level Security → verschoben
+- ☑ Firmen-Domains, Domain-Prüfung, Freemail-Sperrliste
+- ☑ Admins für neue/bestehende Firmen anlegen; „Von mir angelegte Admins“; Benachrichtigung der Ziel-Admins (4b)
+- ☑ Kennzeichnung externer Berater (`ext.`-Präfix, keine manuelle Pflege) (4a)
+- ☑ Passwort-Reset per Button (Admin), firmenübergreifende Benachrichtigungs-Mails (4a/4b)
+- ☑ Admin: Lesezugriff auf Ergebnisse der eigenen Firma, Sperre für andere Firmen (Phase 5/6); Benchmark-Ansicht für alle Rollen (Phase 6)
+- ☑ Firmenübergreifender Passwort-Reset per E-Mail-Eingabe mit Limit und Info-Mail (4b)
+- ☑ KI-Modul-Auswahl: Standardmodul durch den Admin (4b), Auswahl beim Erzeugen durch den Assessor (Phase 7)
+- ☑ KI- und Mail-Konfiguration je Firma (4b)
 
 ## Phase 5 – Erfassung (erledigt 13.11.2026)
 - ☑ Assessment anlegen (Stammdaten FA-1.1, Vorgehensmodell klassisch/agil, KI ein/aus), ändern, löschen, Status Erfassung → Zusammenführung → Freigegeben
@@ -74,12 +74,13 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Benchmark: Snapshot bei Freigabe (`assessment_score`), Aggregation Branche/Gesamt mit Median und Quartilen, Mindestanzahl 5 (R-03), Opt-out (R-04), Benchmark-Seite für alle Rollen
 - ☐ Offen (Release 2): Vergleich mit dem Vorjahr (Delta je KB), Gewichte je Kernbereich konfigurierbar, Excel-Export
 
-## Phase 7 – Empfehlungen
-- ☐ Regel-Engine (Ebene → Cluster → Abhängigkeit → Aufwand) + Unit-Tests
-- ☐ KI-Adapter: Anthropic, OpenAI, Azure OpenAI, Ollama, LM Studio, OpenAI-kompatibel
-- ☐ Admin: KI-Konfiguration, Schlüssel verschlüsselt, Verbindungstest
-- ☐ Datenschutzdialog, Schema-Validierung der KI-Antwort, Fallback
-- ☐ Maßnahmenplan
+## Phase 7 – Empfehlungen (erledigt 14.11.2026)
+- ☑ Regel-Engine (`packages/shared/src/recommend.ts`): Kandidaten „nein“/„teilweise“, Priorität nächste Ebene → Cluster → Abhängigkeit → Abstand zum Branchen-Median bzw. Erfüllungsgrad → Aufwand; Horizont S kurz, M/L lang, „teilweise“ + M aufgeteilt; Bündelung je Kernbereich/Ebene; max. 10 + 10; Unit-Tests
+- ☑ KI-Adapter: Anthropic, OpenAI, Azure OpenAI, Ollama, LM Studio, OpenAI-kompatibel (`apps/server/src/assessment/llm.ts`), Zeitlimit des Moduls
+- ☑ Admin: KI-Konfiguration, Schlüssel verschlüsselt, Verbindungstest (bereits 4b)
+- ☑ Datenschutzdialog mit Vorschau der gesendeten Daten, Pseudonymisierung der Kommentare, Schema-Validierung der KI-Antwort (nur bekannte KP-IDs), Fallback auf Regeln mit Hinweis, Audit-Eintrag je KI-Aufruf
+- ☑ Maßnahmenplan: annehmen, ablehnen, bearbeiten, Status, Verantwortliche, Termin; Historie; Abschnitt im Bericht
+- ☐ Offen (Release 2): Abhängigkeiten `dependsOn` im Katalog pflegen (Engine wertet sie bereits aus), Export des Maßnahmenplans
 
 ## Phase 8 – Abschluss
 - ☐ Alle Testfälle aus `05_test/02_testfallkatalog.md` automatisiert

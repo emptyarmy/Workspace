@@ -91,7 +91,7 @@
 | F-13 | 🟠 | Exportformate | PDF + JSON (R1), Excel (R1.1) | |
 | F-14 | 🟢 | Bericht ein-/zweisprachig | gewählte Sprache | |
 | F-17 | 🟢 | Corporate Design, Dunkelmodus | Farben je Firma aus Logo ableitbar; Hell/Dunkel | |
-| F-18 | 🟠 | BRUNATA-Bewertungstexte als Demo-Assessment | ja | |
+| F-18 | 🟠 | Firmenspezifische Bewertungstexte als Demo-Assessment | ja | |
 | F-20 | 🟠 | Vorlage Management-Bericht | Gliederung in `04_architektur/04_…` | |
 | F-21 | 🟠 | Grenze kurz-/langfristig | Durchlaufzeit < 1 Monat | |
 | F-22 | 🟢 | Maßnahmenplan / Export Jira, aqua | Maßnahmenplan R1, Export später | |

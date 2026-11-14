@@ -132,7 +132,7 @@ describe('Passwort serverseitig prüfen (TC-PWD-024)', () => {
     expect(res.json().error).toBe('invalid_token');
   });
   it('Passwort vergessen ohne Datenbank: trotzdem 202 (keine Aussage über Existenz)', async () => {
-    for (const email of ['admin@brunata.com', 'unbekannt@nirgendwo.de']) {
+    for (const email of ['admin@heise.de', 'unbekannt@nirgendwo.de']) {
       const res = await app.inject({
         method: 'POST',
         url: '/api/auth/password-reset',

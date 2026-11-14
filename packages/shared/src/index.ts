@@ -3,3 +3,4 @@ export * from './strength';
 export * from './identity';
 export * from './assessment';
 export * from './score';
+export * from './recommend';

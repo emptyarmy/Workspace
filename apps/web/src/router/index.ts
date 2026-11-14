@@ -78,6 +78,13 @@ export const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/assessments/:id/empfehlungen',
+      name: 'recommendations',
+      component: () => import('../views/assessments/RecommendationsView.vue'),
+      props: true,
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/benchmark',
       name: 'benchmark',
       component: () => import('../views/BenchmarkView.vue'),

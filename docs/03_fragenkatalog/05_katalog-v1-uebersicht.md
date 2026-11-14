@@ -20,7 +20,7 @@
 ## 2. Hinweise zur Bereinigung
 
 - Tippfehler korrigiert (z. B. „einen einfache“, „de Testprozesses“, „lieft“, „übern“, „abziehen“ → „abzielen“, „Widerverwendung“).
-- Projektspezifische Bewertungstexte (BRUNATA, Projekt B2B, aqua, NTT Data, DSC) entfernt – sie können als Demo-Assessment dienen (F-18).
+- Projektspezifische Bewertungstexte (firmenspezifische Einschätzungen, Projekt B2B, aqua, NTT Data, DSC) entfernt – sie können als Demo-Assessment dienen (F-18).
 - Uneinheitliche Ebenenbezeichnungen vereinheitlicht (Kontrolliert / Effizient / Optimierend).
 - **KB02 „Grad der Beteiligung“:** Überschrift und Ebene KONTROLLIERT fehlten im Word-Dokument; die 4 Kontrollpunkte dieser Ebene sind nach TPI NEXT rekonstruiert (⚠️).
 - Wo ein agiler Kontrollpunkt inhaltlich einem TPI-NEXT-Punkt entspricht, wurde die Formulierung des TPI-NEXT-Punktes behutsam um die agile Sicht ergänzt (z. B. „Auftraggeber bzw. Product Owner“).

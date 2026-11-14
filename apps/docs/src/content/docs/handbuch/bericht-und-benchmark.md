@@ -22,6 +22,7 @@ Im Assessment auf **Bericht** klicken. Den Bericht sehen alle Team-Mitglieder un
 | **KI-Reifegrad** | KI-Index und Netz der KI-Kernbereiche KB17–KB19 |
 | **Benchmark** | Vergleich mit Branche und allen Firmen (siehe unten) |
 | **Konsenslücken** | Kontrollpunkte, bei denen die Abteilungen unterschiedlich geantwortet haben. Befragte sehen diesen Abschnitt nicht, weil er Antworten anderer Abteilungen zeigt. |
+| **Maßnahmenplan** | Angenommene, begonnene und erledigte [Empfehlungen](/handbuch/empfehlungen/) mit Horizont, Kontrollpunkten, Status, Verantwortlichen und Termin |
 | **Anhang** | Alle Kontrollpunkte mit Antwort, Begründung und Kommentaren sowie die Berechnungsregeln |
 
 Farben: **Erfüllt** grün ✔, **Teilweise** gelb ◐, **Nicht erfüllt** rot ✖, **Nicht anwendbar** grau schraffiert –, **Offen** weiß mit gestricheltem Rahmen.

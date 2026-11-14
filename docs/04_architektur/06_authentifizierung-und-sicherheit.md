@@ -111,7 +111,7 @@ AuthProvider
 ## 6. Firmenlogo auf der Login-Seite (mehrere Firmen, N-11, R-01 – festgelegt)
 
 Weil mehrere Firmen die Anwendung nutzen, muss die Login-Seite **vor** der Anmeldung wissen, welches Logo sie zeigen soll. **Festgelegt (R-01):**
-- **Firmenspezifische Login-Adresse** `https://<server>/login/<firmenkuerzel>` (z. B. `/login/brunata`). Sie zeigt Logo und Namen dieser Firma. Die Einladungs-Mail enthält genau diesen Link.
+- **Firmenspezifische Login-Adresse** `https://<server>/login/<firmenkuerzel>` (z. B. `/login/heise`). Sie zeigt Logo und Namen dieser Firma. Die Einladungs-Mail enthält genau diesen Link.
 - Die allgemeine Adresse `/login` zeigt das **Logo des Betreibers** (konfigurierbar) bzw. ein neutrales App-Logo.
 - Nach der Anmeldung erscheint in der Kopfzeile immer das Logo der Firma des Nutzers.
 

@@ -43,10 +43,10 @@ gantt
 | MS-1 | Anforderungen geklärt | ☑ alle 🔴-Fragen beantwortet (09.11.2026) |
 | MS-2 | Fragenkatalog v1.0 (◐ Entwurf am 09.11.2026 erstellt, Freigabe ausstehend) | 19 KB, TPI NEXT + Agile + KI, DE/EN, Schema-validiert, fachlich freigegeben |
 | MS-3 | Fundament (☑ 09.11.2026) | `docker compose up` startet App + DB + Mailpit; Login-Seite mit Logo; erster Playwright-Test grün auf allen Profilen |
-| MS-4 | Anmeldung & Admin | Testfälle SET, USR, AUTH, RST, PWD, ADM (ohne KI) grün |
-| MS-5 | Erfassung & Zusammenführung | Testfälle ASM, ANS, COM, SRC, I18N, MU, CONS, HIST, TEN grün |
-| MS-6 | Bericht & Benchmark | Testfälle REP, IO, BM grün |
-| MS-7 | Empfehlungen | Testfälle REC, ADM-KI grün |
+| MS-4 | Anmeldung & Admin (☑ 09.11.2026) | Testfälle SET, USR, AUTH, RST, PWD, ADM (ohne KI) grün |
+| MS-5 | Erfassung & Zusammenführung (☑ 13.11.2026) | Testfälle ASM, ANS, COM, SRC, I18N, MU, CONS, HIST, TEN grün |
+| MS-6 | Bericht & Benchmark (☑ 14.11.2026) | Testfälle REP, IO, BM grün |
+| MS-7 | Empfehlungen (☑ 14.11.2026, Testfälle im Container auf Chrome und Samsung grün) | Testfälle REC, ADM-KI grün |
 | MS-8 | Release 1.0 | alle Tests grün (lokal **und** in der CI/CD-Pipeline), Security-Review ohne kritische Befunde, A11y ok, Abnahme |
 
 ## Release-Schnitt

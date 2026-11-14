@@ -44,7 +44,7 @@ Der Katalog soll **ohne Programmierkenntnisse** erweiterbar sein. Optionen (F-12
 
 | AP | Inhalt |
 |---|---|
-| ☑ AP-2.1 | Deutsche KP aus Word extrahieren, bereinigen, BRUNATA-Bewertungstexte abtrennen (→ Beispiel-Assessment) |
+| ☑ AP-2.1 | Deutsche KP aus Word extrahieren, bereinigen, firmenspezifische Bewertungstexte abtrennen (→ Beispiel-Assessment) |
 | ☑ AP-2.2 | Fehlenden KB2 „Grad der Beteiligung“ ergänzen |
 | ☑ AP-2.3 | Englische Übersetzung erstellen, mit Agile-TPI-Formulierungen abgleichen |
 | ☑ AP-2.4 | Sicht/Cluster aus Agile TPI zuordnen (soweit sinnvoll) |

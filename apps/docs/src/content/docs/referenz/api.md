@@ -138,6 +138,41 @@ Die Live-Ereignisse laufen über einen Serverprozess im Speicher. Für mehrere S
 
 Die Berechnung steckt in `packages/shared/src/score.ts` (Client und Server gleich). Bei der Freigabe legt der Server einen Schnappschuss in `assessment_score` an (Migration `0004_scores`); beim Zurücknehmen der Freigabe wird er gelöscht, bei Änderungen der konsolidierten Antworten nach der Freigabe erneuert.
 
+## Empfehlungen (Phase 7)
+
+| Methode | Pfad | Wer | Zweck |
+|---|---|---|---|
+| GET | `/api/assessments/:id/recommendations` | Team, Admin | `{ items, canEdit, members }` – Empfehlungen sortiert nach Horizont, Status (abgelehnte zuletzt) und Priorität; `members` (für Verantwortliche) nur für Assessoren |
+| GET | `/api/assessments/:id/ai-modules` | Assessor | KI-Module der Firma zur Auswahl (Standard zuerst), ohne Schlüssel und Basis-URL; sonst **403** mit Grund (siehe unten) |
+| POST | `/api/assessments/:id/recommendations/preview` | Assessor | `{ moduleId, lang }` – Datenschutz-Vorschau: `messages.system`/`messages.user` genau wie beim Senden, Ziel-Host, Modul; **kein** Aufruf des KI-Dienstes |
+| POST | `/api/assessments/:id/recommendations/generate` | Assessor | `{ moduleId \| null, consent, lang }` – erzeugt Empfehlungen; KI-Modul ohne `consent: true` → **400** `consent_required`. Antwort `{ origin, notice, noticeDetail?, status?, created, openCount, items, canEdit, members }` |
+| PATCH | `/api/assessments/:id/recommendations/:recId` | Assessor | `{ version, status?, title?, text?, nextStep?, benefit?, metric?, ownerRole?, ownerUserId?, dueDate? }`; veraltete `version` → **409** mit `current`; Verantwortliche nur aus dem Team (**400** `invalid_owner`) |
+
+`notice`: `nothing_to_do` (keine nicht/teilweise erfüllten Kontrollpunkte) oder bei KI-Fehlern `ai_timeout`, `ai_unreachable`, `ai_auth_failed`, `ai_http_error` (mit `status`), `ai_invalid_response` (`noticeDetail`: `invalid_json`, `schema`, `unknown_checkpoint`, `empty`). In allen KI-Fehlerfällen liefert der Server die regelbasierten Empfehlungen (`origin: "rule"`).
+
+Ohne Schreibrecht antworten `ai-modules`, `preview`, `generate` und `PATCH` mit **403** und nennen den Grund, damit die Oberfläche eine verständliche Meldung zeigen kann:
+
+```json
+{ "error": "forbidden", "reason": "role_read_only", "role": "reader" }
+```
+
+| `reason` | Wer |
+|---|---|
+| `admin_read_only` | Admin der Firma (Lesezugriff, S-11) |
+| `role_read_only` | Befragte und Leser |
+| `not_assessor` | alle anderen, z. B. Assessor ohne Schreibrecht im Assessment |
+
+Nutzer, die nicht zum Team gehören, erhalten wie bei allen Assessment-Endpunkten **403** `forbidden` ohne `reason`.
+
+Erwartete KI-Antwort (JSON, Code-Fences werden toleriert):
+
+```json
+{ "recommendations": [ { "horizon": "short", "checkpointIds": ["KB01.K.01"], "title": "…", "text": "…",
+  "nextStep": "…", "benefit": "…", "metric": "…", "ownerRole": "…" } ] }
+```
+
+Jeder KI-Aufruf erzeugt einen Audit-Eintrag (`ai.recommendations` bzw. `ai.recommendations_failed`), Erzeugen und Änderungen einen Eintrag in der Änderungshistorie.
+
 ## Änderungshistorie
 
 Append-only: Es gibt keine Endpunkte zum Ändern oder Löschen; ein Datenbank-Trigger weist `UPDATE`/`DELETE` ab.
@@ -163,6 +198,8 @@ Aktiv nur mit `NODE_ENV=test` **und** `TEST_ENDPOINTS=true`:
 | POST | `/api/test/expire-sessions` | `{ email }` – Sitzungen als 61 Minuten unbenutzt markieren |
 | POST | `/api/test/expire-tokens` | `{ email }` – Einmal-Links ablaufen lassen |
 | GET | `/api/test/fake-ollama/api/tags` | nachgebildeter Ollama-Endpunkt für den KI-Verbindungstest |
+| POST | `/test-llm/:token/:szenario/chat/completions` | nachgebildeter OpenAI-kompatibler KI-Dienst (außerhalb von `/api`, da der Server ohne CSRF-Header aufruft). Szenarien `ok`, `alt`, `timeout`, `invalid_json`, `unknown_id`, `http_401`, `http_500` |
+| GET | `/api/test/llm-calls/:token` | Anzahl der Aufrufe und letzte Anfrage an den nachgebildeten KI-Dienst (TC-REC-007) |
 
 ## Beispiel
 

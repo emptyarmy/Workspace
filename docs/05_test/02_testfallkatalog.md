@@ -135,9 +135,9 @@ Weitere Fälle:
 | TC-TEN-019 | N | D | Admin A ändert einen **nicht** von ihm angelegten Admin von B (API) | 404 |
 | TC-TEN-020 | N | D | Admin A stuft den **letzten** aktiven Admin von B herab | verhindert |
 | TC-TEN-021 | N | D | Admin A versucht beim angelegten Admin Name/E-Mail zu ändern oder ihn zu löschen | nicht möglich (nur Rolle/Aktiv-Status) |
-| TC-TEN-022 | P | D | Nutzer `ext.max.mustermann@brunata.com` anlegen | Badge „Extern“ in Nutzerliste, Kommentar und Historie |
+| TC-TEN-022 | P | D | Nutzer `ext.max.mustermann@heise.de` anlegen | Badge „Extern“ in Nutzerliste, Kommentar und Historie |
 | TC-TEN-028 | N | D | Nutzerformular enthält kein Feld „extern“; API-Feld `isExternal` im Request wird ignoriert | Kennzeichnung nur aus E-Mail abgeleitet (S-08) |
-| TC-TEN-023 | P | D | Präfix in Großschreibung `EXT.Max.M@brunata.com` | als extern erkannt |
+| TC-TEN-023 | P | D | Präfix in Großschreibung `EXT.Max.M@heise.de` | als extern erkannt |
 | TC-TEN-024 | N | D | Externer mit fremder Domain `ext.max@beratung.de` | abgewiesen (Domain-Regel gilt auch für Externe) |
 | TC-TEN-025 | P | D | Firma A und B konfigurieren unterschiedliche KI-Module (gemockt) | Empfehlungen von A über Modul A, von B über Modul B |
 | TC-TEN-026 | N | D | Admin A ruft KI- oder Mail-Konfiguration von B ab (API) | 404; API-Schlüssel von B nie in Antworten von A |
@@ -166,8 +166,8 @@ Weitere Fälle:
 | TC-REC-012 | N | D | Befragter/Leser versucht KI-Modul zu wählen | Auswahl nicht sichtbar; API 403 |
 | TC-TEN-027 | P | D | Einladungs-Mail eines Nutzers von B wird über Mailserver von B versendet | Absender/Transport von B (Mailpit-Header) |
 | TC-TEN-011 | N | D | Admin B sieht Nutzer und Daten von Firma A | nicht möglich, 404 |
-| TC-TEN-012 | P | D | Domain-Prüfung case-insensitive (`Max@BRUNATA.de`) | als Firmen-Domain erkannt |
-| TC-TEN-013 | N | D | Subdomain `@mail.brunata.de`, nicht eingetragen | abgewiesen |
+| TC-TEN-012 | P | D | Domain-Prüfung case-insensitive (`Max@HEISE.de`) | als Firmen-Domain erkannt |
+| TC-TEN-013 | N | D | Subdomain `@mail.heise.de`, nicht eingetragen | abgewiesen |
 | TC-TEN-014 | N | D | Letzte Domain entfernen, obwohl Nutzer existieren | verhindert |
 | TC-TEN-015 | N | D | Letzten Admin von Firma B deaktivieren, während Firma A weitere Admins hat | verhindert (Schutz gilt je Firma) |
 | TC-TEN-029 | N | D | Domain hinzufügen: Freemail-Domain bzw. Domain einer anderen Firma | abgewiesen; gültige Domain wird klein geschrieben gespeichert |
@@ -323,7 +323,7 @@ Weitere Fälle:
 
 ## Automatisierungsstand (14.11.2026)
 
-Automatisiert (Playwright, Vitest-API/DB, Unit): **222 von 248** Testfällen. Die IDs stehen jeweils im Testtitel.
+Automatisiert (Playwright, Vitest-API/DB, Unit): **234 von 248** Testfällen. Die IDs stehen jeweils im Testtitel.
 
 | Bereich | automatisiert / gesamt |
 |---|---|
@@ -340,7 +340,7 @@ Automatisiert (Playwright, Vitest-API/DB, Unit): **222 von 248** Testfällen. Di
 | IO | 5 / 5 |
 | MU | 7 / 7 |
 | PWD | 27 / 27 |
-| REC | 0 / 12 |
+| REC | 12 / 12 |
 | REP | 8 / 8 |
 | RST | 8 / 9 |
 | RWD | 4 / 4 |
@@ -349,7 +349,7 @@ Automatisiert (Playwright, Vitest-API/DB, Unit): **222 von 248** Testfällen. Di
 | TEN | 25 / 29 |
 | USR | 16 / 19 |
 
-Automatisiert: TC-A11Y-001, TC-ADM-001, TC-ADM-002, TC-ADM-003, TC-ADM-004, TC-ADM-005, TC-ADM-006, TC-ADM-007, TC-ADM-008, TC-ADM-009, TC-ADM-010, TC-ADM-011, TC-ADM-012, TC-ADM-014, TC-ADM-015, TC-ADM-016, TC-ADM-017, TC-ADM-020, TC-ADM-021, TC-ADM-022, TC-ADM-023, TC-ADM-024, TC-ADM-025, TC-ADM-026, TC-ADM-027, TC-ADM-028, TC-ADM-032, TC-ADM-033, TC-ADM-034, TC-ADM-035, TC-ADM-038, TC-ADM-039, TC-ADM-040, TC-ADM-041, TC-ADM-042, TC-ADM-043, TC-ADM-044, TC-ADM-045, TC-ADM-046, TC-ADM-047, TC-ADM-048, TC-ADM-049, TC-ADM-050, TC-ADM-051, TC-ADM-052, TC-ADM-053, TC-ANS-001, TC-ANS-002, TC-ANS-003, TC-ANS-004, TC-ANS-005, TC-ANS-006, TC-ANS-007, TC-ANS-008, TC-ANS-009, TC-ANS-010, TC-ANS-011, TC-ASM-001, TC-ASM-002, TC-ASM-003, TC-ASM-004, TC-ASM-005, TC-ASM-006, TC-ASM-007, TC-ASM-008, TC-ASM-009, TC-AUTH-001, TC-AUTH-002, TC-AUTH-003, TC-AUTH-004, TC-AUTH-005, TC-AUTH-006, TC-AUTH-007, TC-AUTH-008, TC-AUTH-009, TC-AUTH-010, TC-AUTH-011, TC-AUTH-012, TC-AUTH-013, TC-BM-001, TC-BM-002, TC-BM-003, TC-BM-004, TC-BM-005, TC-BM-006, TC-COM-001, TC-COM-002, TC-COM-003, TC-COM-004, TC-COM-005, TC-COM-006, TC-COM-007, TC-COM-008, TC-COM-009, TC-CONS-001, TC-CONS-002, TC-CONS-003, TC-CONS-004, TC-CONS-005, TC-CONS-006, TC-CONS-007, TC-CONS-008, TC-HIST-001, TC-HIST-002, TC-HIST-003, TC-HIST-004, TC-HIST-005, TC-I18N-001, TC-I18N-002, TC-I18N-003, TC-I18N-004, TC-I18N-005, TC-IO-001, TC-IO-002, TC-IO-003, TC-IO-004, TC-IO-005, TC-MU-001, TC-MU-002, TC-MU-003, TC-MU-004, TC-MU-005, TC-MU-006, TC-MU-007, TC-PWD-001, TC-PWD-002, TC-PWD-003, TC-PWD-004, TC-PWD-005, TC-PWD-006, TC-PWD-007, TC-PWD-008, TC-PWD-009, TC-PWD-010, TC-PWD-011, TC-PWD-012, TC-PWD-013, TC-PWD-014, TC-PWD-015, TC-PWD-016, TC-PWD-017, TC-PWD-020, TC-PWD-021, TC-PWD-022, TC-PWD-023, TC-PWD-024, TC-PWD-025, TC-PWD-026, TC-PWD-027, TC-PWD-028, TC-PWD-029, TC-REP-001, TC-REP-002, TC-REP-003, TC-REP-004, TC-REP-005, TC-REP-006, TC-REP-007, TC-REP-008, TC-RST-001, TC-RST-002, TC-RST-003, TC-RST-004, TC-RST-005, TC-RST-007, TC-RST-008, TC-RST-009, TC-RWD-001, TC-RWD-002, TC-RWD-003, TC-RWD-004, TC-SET-001, TC-SET-002, TC-SET-003, TC-SET-004, TC-SET-005, TC-SET-006, TC-SRC-001, TC-SRC-002, TC-SRC-003, TC-SRC-004, TC-TEN-003, TC-TEN-004, TC-TEN-005, TC-TEN-006, TC-TEN-007, TC-TEN-008, TC-TEN-009, TC-TEN-011, TC-TEN-012, TC-TEN-013, TC-TEN-014, TC-TEN-015, TC-TEN-016, TC-TEN-017, TC-TEN-018, TC-TEN-019, TC-TEN-020, TC-TEN-021, TC-TEN-022, TC-TEN-023, TC-TEN-024, TC-TEN-026, TC-TEN-027, TC-TEN-028, TC-TEN-029, TC-USR-001, TC-USR-002, TC-USR-003, TC-USR-004, TC-USR-005, TC-USR-006, TC-USR-007, TC-USR-008, TC-USR-009, TC-USR-010, TC-USR-011, TC-USR-012, TC-USR-013, TC-USR-015, TC-USR-016, TC-USR-017.
+Automatisiert: TC-A11Y-001, TC-ADM-001, TC-ADM-002, TC-ADM-003, TC-ADM-004, TC-ADM-005, TC-ADM-006, TC-ADM-007, TC-ADM-008, TC-ADM-009, TC-ADM-010, TC-ADM-011, TC-ADM-012, TC-ADM-014, TC-ADM-015, TC-ADM-016, TC-ADM-017, TC-ADM-020, TC-ADM-021, TC-ADM-022, TC-ADM-023, TC-ADM-024, TC-ADM-025, TC-ADM-026, TC-ADM-027, TC-ADM-028, TC-ADM-032, TC-ADM-033, TC-ADM-034, TC-ADM-035, TC-ADM-038, TC-ADM-039, TC-ADM-040, TC-ADM-041, TC-ADM-042, TC-ADM-043, TC-ADM-044, TC-ADM-045, TC-ADM-046, TC-ADM-047, TC-ADM-048, TC-ADM-049, TC-ADM-050, TC-ADM-051, TC-ADM-052, TC-ADM-053, TC-ANS-001, TC-ANS-002, TC-ANS-003, TC-ANS-004, TC-ANS-005, TC-ANS-006, TC-ANS-007, TC-ANS-008, TC-ANS-009, TC-ANS-010, TC-ANS-011, TC-ASM-001, TC-ASM-002, TC-ASM-003, TC-ASM-004, TC-ASM-005, TC-ASM-006, TC-ASM-007, TC-ASM-008, TC-ASM-009, TC-AUTH-001, TC-AUTH-002, TC-AUTH-003, TC-AUTH-004, TC-AUTH-005, TC-AUTH-006, TC-AUTH-007, TC-AUTH-008, TC-AUTH-009, TC-AUTH-010, TC-AUTH-011, TC-AUTH-012, TC-AUTH-013, TC-BM-001, TC-BM-002, TC-BM-003, TC-BM-004, TC-BM-005, TC-BM-006, TC-COM-001, TC-COM-002, TC-COM-003, TC-COM-004, TC-COM-005, TC-COM-006, TC-COM-007, TC-COM-008, TC-COM-009, TC-CONS-001, TC-CONS-002, TC-CONS-003, TC-CONS-004, TC-CONS-005, TC-CONS-006, TC-CONS-007, TC-CONS-008, TC-HIST-001, TC-HIST-002, TC-HIST-003, TC-HIST-004, TC-HIST-005, TC-I18N-001, TC-I18N-002, TC-I18N-003, TC-I18N-004, TC-I18N-005, TC-IO-001, TC-IO-002, TC-IO-003, TC-IO-004, TC-IO-005, TC-MU-001, TC-MU-002, TC-MU-003, TC-MU-004, TC-MU-005, TC-MU-006, TC-MU-007, TC-PWD-001, TC-PWD-002, TC-PWD-003, TC-PWD-004, TC-PWD-005, TC-PWD-006, TC-PWD-007, TC-PWD-008, TC-PWD-009, TC-PWD-010, TC-PWD-011, TC-PWD-012, TC-PWD-013, TC-PWD-014, TC-PWD-015, TC-PWD-016, TC-PWD-017, TC-PWD-020, TC-PWD-021, TC-PWD-022, TC-PWD-023, TC-PWD-024, TC-PWD-025, TC-PWD-026, TC-PWD-027, TC-PWD-028, TC-PWD-029, TC-REC-001, TC-REC-002, TC-REC-003, TC-REC-004, TC-REC-005, TC-REC-006, TC-REC-007, TC-REC-008, TC-REC-009, TC-REC-010, TC-REC-011, TC-REC-012, TC-REP-001, TC-REP-002, TC-REP-003, TC-REP-004, TC-REP-005, TC-REP-006, TC-REP-007, TC-REP-008, TC-RST-001, TC-RST-002, TC-RST-003, TC-RST-004, TC-RST-005, TC-RST-007, TC-RST-008, TC-RST-009, TC-RWD-001, TC-RWD-002, TC-RWD-003, TC-RWD-004, TC-SET-001, TC-SET-002, TC-SET-003, TC-SET-004, TC-SET-005, TC-SET-006, TC-SRC-001, TC-SRC-002, TC-SRC-003, TC-SRC-004, TC-TEN-003, TC-TEN-004, TC-TEN-005, TC-TEN-006, TC-TEN-007, TC-TEN-008, TC-TEN-009, TC-TEN-011, TC-TEN-012, TC-TEN-013, TC-TEN-014, TC-TEN-015, TC-TEN-016, TC-TEN-017, TC-TEN-018, TC-TEN-019, TC-TEN-020, TC-TEN-021, TC-TEN-022, TC-TEN-023, TC-TEN-024, TC-TEN-026, TC-TEN-027, TC-TEN-028, TC-TEN-029, TC-USR-001, TC-USR-002, TC-USR-003, TC-USR-004, TC-USR-005, TC-USR-006, TC-USR-007, TC-USR-008, TC-USR-009, TC-USR-010, TC-USR-011, TC-USR-012, TC-USR-013, TC-USR-015, TC-USR-016, TC-USR-017.
 
 **Platzhalter für geplante Funktionen:** Für jeden noch nicht automatisierten Fall gibt es in `tests/e2e/geplant/` einen Playwright-Test mit `test.fixme` (Titel = ID + Testfall, Anmerkungen „Gerät“ und „Erwartet“). Er erscheint im Bericht als übersprungen und wird nur im Profil `desktop-chrome` aufgeführt. Die Dateien erzeugt `npm run test:planned` (`tools/tests/generate_planned.py`) aus diesem Katalog. Sobald ein Fall durch einen echten Test abgedeckt ist, verschwindet sein Platzhalter beim nächsten Lauf des Skripts.
 

@@ -97,3 +97,12 @@ erDiagram
 | `assessment_score` | Benchmark-Schnappschuss eines freigegebenen Assessments | `assessment_id` (PK), `company_id`, `catalog_version`, `released_at`, `overall_index`, `ai_index`, `areas` (JSON: `keyAreaId`, `fulfillment`, `level`) – keine Antworten, Kommentare oder Namen |
 
 Der Benchmark nimmt je teilnehmender Firma (`company.benchmark_opt_in`) den jüngsten Schnappschuss mit gleicher Katalogversion.
+
+## Ergänzung Phase 7 (Migration `0005_recommendations`)
+
+| Tabelle | Zweck | Wichtige Felder |
+|---|---|---|
+| `recommendation` | Handlungsempfehlung bzw. Maßnahme eines Assessments | `key_area_id`, `checkpoint_ids` (Array), `horizon` (`short` \| `long`), `part` (`whole` \| `first_step` \| `full`), `effort`, `priority`, `title`, `text`, `rule_text` (ursprünglicher Regeltext), `next_step`, `benefit`, `metric`, `owner_role`, `origin` (`rule` \| `ai`), `ai_module_id` (bei Löschung des Moduls `null`), `ai_module_name`, `ai_provider`, `ai_model` (Schnappschuss), `benchmark_gap`, `lang`, `status` (`proposed` \| `accepted` \| `in_progress` \| `done` \| `rejected`), `owner_user_id`, `due_date`, `edited`, `version` |
+
+Beim erneuten Erzeugen werden nur Empfehlungen mit Status `proposed` ersetzt. Bearbeitete Empfehlungen (alle anderen Status) bleiben erhalten; ihre Kontrollpunkte werden im selben Horizont nicht erneut vorgeschlagen.
+
