@@ -1,4 +1,4 @@
-import type { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync, FastifyReply } from 'fastify';
 import { eq, sql } from 'drizzle-orm';
 import { catalog } from '@ai-tpi/catalog';
 import {
@@ -110,43 +110,45 @@ export const testSupportRoutes: FastifyPluginAsync = async (app) => {
    * Nachgebildeter KI-Dienst (OpenAI-kompatibel) für die Empfehlungs-Tests TC-REC-003…007/010.
    * Basis-URL eines Test-Moduls: http://127.0.0.1:<port>/test-llm/<token>/<szenario>
    * (bewusst außerhalb von /api, weil der Server ohne CSRF-Header aufruft).
-   * Szenarien: ok, alt, timeout, invalid_json, unknown_id, http_401, http_500.
+   * Szenarien: ok, alt, claude, timeout, invalid_json, unknown_id, http_401, http_500.
+   * Formate: OpenAI (chat/completions), Ollama (api/chat), Anthropic (v1/messages) – für den Anbieterwechsel TC-ADM-013.
    */
-  const llmCalls = new Map<string, { calls: number; last: unknown }>();
+  const llmCalls = new Map<string, { calls: number; last: unknown; format: string | null }>();
   app.get<{ Params: { token: string } }>('/api/test/llm-calls/:token', async (req) => {
-    return llmCalls.get(req.params.token) ?? { calls: 0, last: null };
+    return llmCalls.get(req.params.token) ?? { calls: 0, last: null, format: null };
   });
-  app.post<{
-    Params: { token: string; scenario: string };
-    Body: { messages?: { role: string; content: string }[] };
-  }>('/test-llm/:token/:scenario/chat/completions', async (req, reply) => {
-    const { token, scenario } = req.params;
-    const entry = llmCalls.get(token) ?? { calls: 0, last: null };
-    entry.calls += 1;
-    entry.last = req.body;
-    llmCalls.set(token, entry);
-    const reply200 = (content: string) =>
-      reply.send({ choices: [{ index: 0, message: { role: 'assistant', content } }] });
-    if (scenario === 'http_401') return reply.status(401).send({ error: 'invalid_api_key' });
-    if (scenario === 'http_500') return reply.status(500).send({ error: 'boom' });
+  type LlmFormat = 'openai' | 'ollama' | 'anthropic';
+  type LlmBody = { messages?: { role: string; content: string }[] };
+  /** Antworttext je Szenario; null = Fehler bzw. Zeitüberschreitung wurde bereits gesendet. */
+  async function llmAnswer(
+    scenario: string,
+    userContent: string,
+    reply: FastifyReply,
+  ): Promise<string | null> {
+    if (scenario === 'http_401') {
+      await reply.status(401).send({ error: 'invalid_api_key' });
+      return null;
+    }
+    if (scenario === 'http_500') {
+      await reply.status(500).send({ error: 'boom' });
+      return null;
+    }
     if (scenario === 'timeout') {
       await new Promise((r) => setTimeout(r, 12_000));
-      return reply200('{}');
+      return '{}';
     }
-    if (scenario === 'invalid_json') return reply200('Hier sind meine Empfehlungen: …');
-    const user = req.body?.messages?.find((m) => m.role === 'user')?.content ?? '{}';
-    const ctx = JSON.parse(user) as { candidates?: { checkpointId: string; horizon: 'short' | 'long' }[] };
+    if (scenario === 'invalid_json') return 'Hier sind meine Empfehlungen: …';
+    const ctx = JSON.parse(userContent || '{}') as {
+      candidates?: { checkpointId: string; horizon: 'short' | 'long' }[];
+    };
     const cands = ctx.candidates ?? [];
     if (scenario === 'unknown_id')
-      return reply200(
-        JSON.stringify({
-          recommendations: [{ horizon: 'short', checkpointIds: ['KB99.X.99'], title: 'X', text: 'Y' }],
-        }),
-      );
-    const prefix = scenario === 'alt' ? 'Alt-KI' : 'KI';
-    const pick = (h: 'short' | 'long') => cands.find((c) => c.horizon === h);
+      return JSON.stringify({
+        recommendations: [{ horizon: 'short', checkpointIds: ['KB99.X.99'], title: 'X', text: 'Y' }],
+      });
+    const prefix = scenario === 'alt' ? 'Alt-KI' : scenario === 'claude' ? 'Claude' : 'KI';
     const recs = (['short', 'long'] as const)
-      .map((h) => pick(h))
+      .map((h) => cands.find((c) => c.horizon === h))
       .filter((c): c is NonNullable<typeof c> => !!c)
       .map((c) => ({
         horizon: c.horizon,
@@ -158,6 +160,30 @@ export const testSupportRoutes: FastifyPluginAsync = async (app) => {
         metric: 'Anzahl Produktionsfehler je Quartal',
         ownerRole: 'Testmanager',
       }));
-    return reply200('```json\n' + JSON.stringify({ recommendations: recs }) + '\n```');
-  });
+    return '```json\n' + JSON.stringify({ recommendations: recs }) + '\n```';
+  }
+  function llmRoute(format: LlmFormat, path: string) {
+    app.post<{ Params: { token: string; scenario: string }; Body: LlmBody & { system?: string } }>(
+      `/test-llm/:token/:scenario${path}`,
+      async (req, reply) => {
+        const { token, scenario } = req.params;
+        const entry = llmCalls.get(token) ?? { calls: 0, last: null, format: null };
+        entry.calls += 1;
+        entry.last = req.body;
+        entry.format = format;
+        llmCalls.set(token, entry);
+        const user = req.body?.messages?.find((m) => m.role === 'user')?.content ?? '{}';
+        const text = await llmAnswer(scenario, user, reply);
+        if (text === null) return reply;
+        if (format === 'anthropic') return reply.send({ content: [{ type: 'text', text }] });
+        if (format === 'ollama')
+          return reply.send({ message: { role: 'assistant', content: text }, done: true });
+        return reply.send({ choices: [{ index: 0, message: { role: 'assistant', content: text } }] });
+      },
+    );
+  }
+  // OpenAI, LM Studio, OpenAI-kompatibel: <basis>/chat/completions; Ollama: <basis>/api/chat; Anthropic: <basis>/v1/messages
+  llmRoute('openai', '/chat/completions');
+  llmRoute('ollama', '/api/chat');
+  llmRoute('anthropic', '/v1/messages');
 };

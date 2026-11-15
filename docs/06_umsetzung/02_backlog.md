@@ -84,7 +84,7 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Export des Maßnahmenplans bzw. aller Empfehlungen als CSV (TC-REC-013/014, 14.11.2026)
 
 ## Phase 8 – Abschluss
-- ☐ Alle Testfälle aus `05_test/02_testfallkatalog.md` automatisiert
+- ☑ Alle 250 Testfälle aus `05_test/02_testfallkatalog.md` automatisiert (8a, 15.11.2026; neu: `tests/e2e/rechte-und-mandanten.spec.ts`; TC-RST-006 nach R-07 neu gefasst)
 - ☐ CI/CD-Pipeline (Lint, Typecheck, Unit/API, Playwright, Container-Build)
 - ☐ Security-Review (OWASP, Mandantentrennung), A11y-Prüfung
 - ☐ Betriebsdokumentation (Installation, Backup, Konfiguration)

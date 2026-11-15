@@ -76,16 +76,17 @@ So läuft ein Testlauf ab:
 | `erfassung-live.spec.ts` | Phase 5b: Live-Aktualisierung zweier Browser (≤ 2 s), Präsenzanzeige, Duplizieren, JSON-Export/-Import mit Fehlerfällen |
 | `auswertung.spec.ts` | Phase 6: Bericht (Kennzahlen, Matrix mit Detail, Diagramme, Konsenslücken, Anhang, Druckansicht, keine Daten), Benchmark (≥ 5 Firmen, zu wenige, Opt-out, keine Namen, Mobil). Vergleichsfirmen über `/api/test/benchmark-fixture` in einer eigenen Testbranche |
 | `empfehlungen.spec.ts` | Phase 7: regelbasierte Empfehlungen (Horizont, Aufteilung), Maßnahmenplan (annehmen, Verantwortliche, Termin, bearbeiten, Bericht, CSV-Download), Anzeige der Voraussetzungen, KI-Modul wählen, Datenschutz-Dialog (Ablehnen ohne Aufruf), KI-Kennzeichnung, Fehlerfälle Timeout/ungültiges JSON/unbekannte KP/401/500, Rechte. Der KI-Dienst wird vom Testserver nachgebildet (`/test-llm/<token>/<szenario>`) |
+| `rechte-und-mandanten.spec.ts` | Phase 8a: Mandantentrennung (Firma B sieht nichts von Firma A – Assessor und Admin, Oberfläche und alle Lese-/Schreib-Endpunkte), Admin liest die eigene Firma nur lesend, Leser ohne Bearbeitung, Benchmark nur aggregiert, Admin-Historie, KI-Module je Firma, Anbieterwechsel Ollama → Claude, Einmal-Link und geschützte Seiten |
 | `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
 | `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |
-| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für Funktionen späterer Phasen – siehe unten |
+| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 250 Fälle sind automatisiert |
 
 ### Barrierefreiheit
 
 `barrierefreiheit.spec.ts` prüft mit [axe-core](https://github.com/dequelabs/axe-core) (`@axe-core/playwright`) jede vorhandene Seite gegen WCAG 2.1 A/AA. Es dürfen **keine** Verstöße der Stufen *critical* und *serious* auftreten. Gefundene Verstöße hängt der Test als JSON an den Playwright-Bericht an.
 
-### Platzhalter für geplante Funktionen
+### Platzhalter für neue Testfälle
 
 Für jeden Fall des [Testfallkatalogs](/projekt/test/testfallkatalog/), den noch kein echter Test abdeckt, gibt es einen Platzhalter mit `test.fixme`. Titel ist die Testfall-ID mit Beschreibung; „Gerät“ und „Erwartet“ stehen als Anmerkungen im Bericht. Platzhalter laufen nicht, sie werden als übersprungen gezählt und nur im Profil `desktop-chrome` aufgeführt.
 

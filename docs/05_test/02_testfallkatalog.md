@@ -28,7 +28,7 @@ Alle Tests außer AUTH/PWD starten mit einem angemeldeten Nutzer (Playwright `st
 | TC-RST-003 | P | D | Einmal-Link aus der Mail öffnen | Seite „Passwort festlegen“ mit Regelliste erscheint |
 | TC-RST-004 | N | D | Einmal-Link nach Ablauf (30 min) verwenden | Abgewiesen, Hinweis auf neuen Reset |
 | TC-RST-005 | N | D | Link ein zweites Mal verwenden | Abgewiesen |
-| TC-RST-006 | N | D | Während Pflichtänderung andere URL direkt aufrufen | Rückleitung zur Passwortänderung |
+| TC-RST-006 | N | D | Während der Passwortvergabe per Einmal-Link andere geschützte URL direkt aufrufen (seit R-07 ersetzt der Einmal-Link die frühere Pflichtänderung) | Anmeldung verlangt, kein Zugriff; der Link wird nicht verbraucht und funktioniert danach weiter |
 | TC-RST-007 | P | D | Passwort über Einmal-Link gesetzt, danach Login | Login erfolgreich, kein weiterer Pflichtdialog (R-07) |
 | TC-RST-008 | N | D | Manipulierter/erfundener Token im Link | Abgewiesen, keine Detailinformation |
 | TC-RST-009 | N | D | „Passwort vergessen“ für inaktiven Nutzer | gleiche Meldung, keine Mail |
@@ -323,14 +323,14 @@ Weitere Fälle:
 | TC-RWD-004 | N | M | Sehr schmaler Viewport 320 px | keine abgeschnittenen Bedienelemente |
 | TC-A11Y-001 | P | D | axe-Scan aller Views | 0 kritische Verstöße |
 
-## Automatisierungsstand (14.11.2026)
+## Automatisierungsstand (15.11.2026)
 
-Automatisiert (Playwright, Vitest-API/DB, Unit): **236 von 250** Testfällen. Die IDs stehen jeweils im Testtitel.
+Automatisiert (Playwright, Vitest-API/DB, Unit): **250 von 250** Testfällen. Die IDs stehen jeweils im Testtitel; `npm run test:planned` erzeugt keine Platzhalter mehr.
 
 | Bereich | automatisiert / gesamt |
 |---|---|
 | A11Y | 1 / 1 |
-| ADM | 45 / 51 |
+| ADM | 51 / 51 |
 | ANS | 11 / 11 |
 | ASM | 9 / 9 |
 | AUTH | 13 / 13 |
@@ -344,15 +344,13 @@ Automatisiert (Playwright, Vitest-API/DB, Unit): **236 von 250** Testfällen. Di
 | PWD | 27 / 27 |
 | REC | 14 / 14 |
 | REP | 8 / 8 |
-| RST | 8 / 9 |
+| RST | 9 / 9 |
 | RWD | 4 / 4 |
 | SET | 6 / 6 |
 | SRC | 4 / 4 |
-| TEN | 25 / 29 |
-| USR | 16 / 19 |
+| TEN | 29 / 29 |
+| USR | 19 / 19 |
 
-Automatisiert: TC-A11Y-001, TC-ADM-001, TC-ADM-002, TC-ADM-003, TC-ADM-004, TC-ADM-005, TC-ADM-006, TC-ADM-007, TC-ADM-008, TC-ADM-009, TC-ADM-010, TC-ADM-011, TC-ADM-012, TC-ADM-014, TC-ADM-015, TC-ADM-016, TC-ADM-017, TC-ADM-020, TC-ADM-021, TC-ADM-022, TC-ADM-023, TC-ADM-024, TC-ADM-025, TC-ADM-026, TC-ADM-027, TC-ADM-028, TC-ADM-032, TC-ADM-033, TC-ADM-034, TC-ADM-035, TC-ADM-038, TC-ADM-039, TC-ADM-040, TC-ADM-041, TC-ADM-042, TC-ADM-043, TC-ADM-044, TC-ADM-045, TC-ADM-046, TC-ADM-047, TC-ADM-048, TC-ADM-049, TC-ADM-050, TC-ADM-051, TC-ADM-052, TC-ADM-053, TC-ANS-001, TC-ANS-002, TC-ANS-003, TC-ANS-004, TC-ANS-005, TC-ANS-006, TC-ANS-007, TC-ANS-008, TC-ANS-009, TC-ANS-010, TC-ANS-011, TC-ASM-001, TC-ASM-002, TC-ASM-003, TC-ASM-004, TC-ASM-005, TC-ASM-006, TC-ASM-007, TC-ASM-008, TC-ASM-009, TC-AUTH-001, TC-AUTH-002, TC-AUTH-003, TC-AUTH-004, TC-AUTH-005, TC-AUTH-006, TC-AUTH-007, TC-AUTH-008, TC-AUTH-009, TC-AUTH-010, TC-AUTH-011, TC-AUTH-012, TC-AUTH-013, TC-BM-001, TC-BM-002, TC-BM-003, TC-BM-004, TC-BM-005, TC-BM-006, TC-COM-001, TC-COM-002, TC-COM-003, TC-COM-004, TC-COM-005, TC-COM-006, TC-COM-007, TC-COM-008, TC-COM-009, TC-CONS-001, TC-CONS-002, TC-CONS-003, TC-CONS-004, TC-CONS-005, TC-CONS-006, TC-CONS-007, TC-CONS-008, TC-HIST-001, TC-HIST-002, TC-HIST-003, TC-HIST-004, TC-HIST-005, TC-I18N-001, TC-I18N-002, TC-I18N-003, TC-I18N-004, TC-I18N-005, TC-IO-001, TC-IO-002, TC-IO-003, TC-IO-004, TC-IO-005, TC-MU-001, TC-MU-002, TC-MU-003, TC-MU-004, TC-MU-005, TC-MU-006, TC-MU-007, TC-PWD-001, TC-PWD-002, TC-PWD-003, TC-PWD-004, TC-PWD-005, TC-PWD-006, TC-PWD-007, TC-PWD-008, TC-PWD-009, TC-PWD-010, TC-PWD-011, TC-PWD-012, TC-PWD-013, TC-PWD-014, TC-PWD-015, TC-PWD-016, TC-PWD-017, TC-PWD-020, TC-PWD-021, TC-PWD-022, TC-PWD-023, TC-PWD-024, TC-PWD-025, TC-PWD-026, TC-PWD-027, TC-PWD-028, TC-PWD-029, TC-REC-001, TC-REC-002, TC-REC-003, TC-REC-004, TC-REC-005, TC-REC-006, TC-REC-007, TC-REC-008, TC-REC-009, TC-REC-010, TC-REC-011, TC-REC-012, TC-REC-013, TC-REC-014, TC-REP-001, TC-REP-002, TC-REP-003, TC-REP-004, TC-REP-005, TC-REP-006, TC-REP-007, TC-REP-008, TC-RST-001, TC-RST-002, TC-RST-003, TC-RST-004, TC-RST-005, TC-RST-007, TC-RST-008, TC-RST-009, TC-RWD-001, TC-RWD-002, TC-RWD-003, TC-RWD-004, TC-SET-001, TC-SET-002, TC-SET-003, TC-SET-004, TC-SET-005, TC-SET-006, TC-SRC-001, TC-SRC-002, TC-SRC-003, TC-SRC-004, TC-TEN-003, TC-TEN-004, TC-TEN-005, TC-TEN-006, TC-TEN-007, TC-TEN-008, TC-TEN-009, TC-TEN-011, TC-TEN-012, TC-TEN-013, TC-TEN-014, TC-TEN-015, TC-TEN-016, TC-TEN-017, TC-TEN-018, TC-TEN-019, TC-TEN-020, TC-TEN-021, TC-TEN-022, TC-TEN-023, TC-TEN-024, TC-TEN-026, TC-TEN-027, TC-TEN-028, TC-TEN-029, TC-USR-001, TC-USR-002, TC-USR-003, TC-USR-004, TC-USR-005, TC-USR-006, TC-USR-007, TC-USR-008, TC-USR-009, TC-USR-010, TC-USR-011, TC-USR-012, TC-USR-013, TC-USR-015, TC-USR-016, TC-USR-017.
+Automatisiert: TC-A11Y-001, TC-ADM-001, TC-ADM-002, TC-ADM-003, TC-ADM-004, TC-ADM-005, TC-ADM-006, TC-ADM-007, TC-ADM-008, TC-ADM-009, TC-ADM-010, TC-ADM-011, TC-ADM-012, TC-ADM-013, TC-ADM-014, TC-ADM-015, TC-ADM-016, TC-ADM-017, TC-ADM-020, TC-ADM-021, TC-ADM-022, TC-ADM-023, TC-ADM-024, TC-ADM-025, TC-ADM-026, TC-ADM-027, TC-ADM-028, TC-ADM-029, TC-ADM-030, TC-ADM-031, TC-ADM-032, TC-ADM-033, TC-ADM-034, TC-ADM-035, TC-ADM-036, TC-ADM-037, TC-ADM-038, TC-ADM-039, TC-ADM-040, TC-ADM-041, TC-ADM-042, TC-ADM-043, TC-ADM-044, TC-ADM-045, TC-ADM-046, TC-ADM-047, TC-ADM-048, TC-ADM-049, TC-ADM-050, TC-ADM-051, TC-ADM-052, TC-ADM-053, TC-ANS-001, TC-ANS-002, TC-ANS-003, TC-ANS-004, TC-ANS-005, TC-ANS-006, TC-ANS-007, TC-ANS-008, TC-ANS-009, TC-ANS-010, TC-ANS-011, TC-ASM-001, TC-ASM-002, TC-ASM-003, TC-ASM-004, TC-ASM-005, TC-ASM-006, TC-ASM-007, TC-ASM-008, TC-ASM-009, TC-AUTH-001, TC-AUTH-002, TC-AUTH-003, TC-AUTH-004, TC-AUTH-005, TC-AUTH-006, TC-AUTH-007, TC-AUTH-008, TC-AUTH-009, TC-AUTH-010, TC-AUTH-011, TC-AUTH-012, TC-AUTH-013, TC-BM-001, TC-BM-002, TC-BM-003, TC-BM-004, TC-BM-005, TC-BM-006, TC-COM-001, TC-COM-002, TC-COM-003, TC-COM-004, TC-COM-005, TC-COM-006, TC-COM-007, TC-COM-008, TC-COM-009, TC-CONS-001, TC-CONS-002, TC-CONS-003, TC-CONS-004, TC-CONS-005, TC-CONS-006, TC-CONS-007, TC-CONS-008, TC-HIST-001, TC-HIST-002, TC-HIST-003, TC-HIST-004, TC-HIST-005, TC-I18N-001, TC-I18N-002, TC-I18N-003, TC-I18N-004, TC-I18N-005, TC-IO-001, TC-IO-002, TC-IO-003, TC-IO-004, TC-IO-005, TC-MU-001, TC-MU-002, TC-MU-003, TC-MU-004, TC-MU-005, TC-MU-006, TC-MU-007, TC-PWD-001, TC-PWD-002, TC-PWD-003, TC-PWD-004, TC-PWD-005, TC-PWD-006, TC-PWD-007, TC-PWD-008, TC-PWD-009, TC-PWD-010, TC-PWD-011, TC-PWD-012, TC-PWD-013, TC-PWD-014, TC-PWD-015, TC-PWD-016, TC-PWD-017, TC-PWD-020, TC-PWD-021, TC-PWD-022, TC-PWD-023, TC-PWD-024, TC-PWD-025, TC-PWD-026, TC-PWD-027, TC-PWD-028, TC-PWD-029, TC-REC-001, TC-REC-002, TC-REC-003, TC-REC-004, TC-REC-005, TC-REC-006, TC-REC-007, TC-REC-008, TC-REC-009, TC-REC-010, TC-REC-011, TC-REC-012, TC-REC-013, TC-REC-014, TC-REP-001, TC-REP-002, TC-REP-003, TC-REP-004, TC-REP-005, TC-REP-006, TC-REP-007, TC-REP-008, TC-RST-001, TC-RST-002, TC-RST-003, TC-RST-004, TC-RST-005, TC-RST-006, TC-RST-007, TC-RST-008, TC-RST-009, TC-RWD-001, TC-RWD-002, TC-RWD-003, TC-RWD-004, TC-SET-001, TC-SET-002, TC-SET-003, TC-SET-004, TC-SET-005, TC-SET-006, TC-SRC-001, TC-SRC-002, TC-SRC-003, TC-SRC-004, TC-TEN-001, TC-TEN-002, TC-TEN-003, TC-TEN-004, TC-TEN-005, TC-TEN-006, TC-TEN-007, TC-TEN-008, TC-TEN-009, TC-TEN-010, TC-TEN-011, TC-TEN-012, TC-TEN-013, TC-TEN-014, TC-TEN-015, TC-TEN-016, TC-TEN-017, TC-TEN-018, TC-TEN-019, TC-TEN-020, TC-TEN-021, TC-TEN-022, TC-TEN-023, TC-TEN-024, TC-TEN-025, TC-TEN-026, TC-TEN-027, TC-TEN-028, TC-TEN-029, TC-USR-001, TC-USR-002, TC-USR-003, TC-USR-004, TC-USR-005, TC-USR-006, TC-USR-007, TC-USR-008, TC-USR-009, TC-USR-010, TC-USR-011, TC-USR-012, TC-USR-013, TC-USR-014, TC-USR-015, TC-USR-016, TC-USR-017, TC-USR-018, TC-USR-019.
 
-**Platzhalter für geplante Funktionen:** Für jeden noch nicht automatisierten Fall gibt es in `tests/e2e/geplant/` einen Playwright-Test mit `test.fixme` (Titel = ID + Testfall, Anmerkungen „Gerät“ und „Erwartet“). Er erscheint im Bericht als übersprungen und wird nur im Profil `desktop-chrome` aufgeführt. Die Dateien erzeugt `npm run test:planned` (`tools/tests/generate_planned.py`) aus diesem Katalog. Sobald ein Fall durch einen echten Test abgedeckt ist, verschwindet sein Platzhalter beim nächsten Lauf des Skripts.
-
-Noch offen sind vor allem Fragebogen (ANS), Kommentare (COM/SRC), Bericht (REP), Empfehlungen (REC), Zusammenführung/Historie (CONS/HIST), Benchmark (BM) und Mehrbenutzer (MU) – sie folgen mit den jeweiligen Phasen.
+**Platzhalter für neue Testfälle:** Kommen neue Fälle in diesen Katalog, erzeugt `npm run test:planned` für jeden noch nicht automatisierten Fall in `tests/e2e/geplant/` in `tests/e2e/geplant/` einen Playwright-Test mit `test.fixme` (Titel = ID + Testfall, Anmerkungen „Gerät“ und „Erwartet“). Er erscheint im Bericht als übersprungen und wird nur im Profil `desktop-chrome` aufgeführt (Skript: `tools/tests/generate_planned.py`). Stand 15.11.2026 gibt es keine Platzhalter. Sobald ein Fall durch einen echten Test abgedeckt ist, verschwindet sein Platzhalter beim nächsten Lauf des Skripts.

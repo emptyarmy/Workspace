@@ -25,12 +25,21 @@ export interface Org {
   request: APIRequestContext;
   domain: string;
   slug: string;
+  /** Anmeldedaten des Firmen-Admins (für Oberflächen-Tests als Admin). */
+  adminEmail: string;
+  adminPassword: string;
 }
 
 export async function org(admin: APIRequestContext, browser: Browser, info: TestInfo): Promise<Org> {
   const c = await createTestCompany(admin, info);
   const ctx = await loggedInContext(browser, c.adminEmail, c.password);
-  return { request: ctx.request, domain: c.domain, slug: c.slug };
+  return {
+    request: ctx.request,
+    domain: c.domain,
+    slug: c.slug,
+    adminEmail: c.adminEmail,
+    adminPassword: c.password,
+  };
 }
 
 export async function department(o: Org, name: string): Promise<string> {
