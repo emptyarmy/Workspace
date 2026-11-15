@@ -8,21 +8,21 @@ Eine responsive, mandantenfähige Webanwendung (**Vue 3 + TypeScript**, Node.js/
 
 ## 2. Aktueller Projektstatus
 
-| Phase | Status |
-|---|---|
-| 0 – Analyse & Planung | ☑ abgeschlossen (Runde 1 der Fragen beantwortet) |
-| 1 – Klärung offener Fragen | ☑ alle blockierenden Fragen beantwortet (09.11.2026); nicht blockierende Fragen in `docs/01_anforderungen/04_offene-fragen.md` |
-| 2 – Fragenkatalog | ◐ Entwurf v1.0 fertig (223 KP, `packages/catalog/`); **fachliche Prüfung ausstehend** |
-| 3 – Fundament | ☑ Grundgerüst lauffähig und getestet (09.11.2026) |
-| 4a – Anmeldung & Admin eigene Firma | ☑ (09.11.2026) |
-| 4b – firmenübergreifende Admin-Funktionen, Abteilungen, KI/Mail je Firma, Audit-Log | ☑ (09.11.2026) |
-| 5a – Assessment, Team/Zuweisung, Fragebogen, Kommentare, Quellen, Zusammenführung, Änderungshistorie | ☑ (13.11.2026) – Rechte in `apps/server/src/assessment/access.ts`, Regeln (Vorschlag, Begründungspflicht, Umfang) in `packages/shared/src/assessment.ts` |
-| 5b – Live-Updates (SSE, `apps/server/src/assessment/live.ts`), Präsenz, Duplizieren, JSON-Export/-Import (`assessment/transfer.ts`) | ☑ (13.11.2026) |
-| 6 – Auswertung: Scoring (`packages/shared/src/score.ts`), Bericht, Benchmark (`apps/server/src/routes/report.ts`) | ☑ (14.11.2026) |
-| 7 – Empfehlungen: Regel-Engine (`packages/shared/src/recommend.ts`), KI-Adapter (`apps/server/src/assessment/llm.ts`), Erzeugung/Fallback (`assessment/recommend.ts`), Maßnahmenplan | ☑ (14.11.2026) |
-| 8 – Abschluss (CI/CD, Security-Review, Betriebsdoku, Abnahme) | **als Nächstes** |
-| 2 – Fragenkatalog finalisieren | geplant |
-| 3 ff. – Umsetzung | geplant (`docs/06_umsetzung/01_roadmap.md`) |
+| Phase                                                                                                                                                                                | Status                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 – Analyse & Planung                                                                                                                                                                | ☑ abgeschlossen (Runde 1 der Fragen beantwortet)                                                                                                         |
+| 1 – Klärung offener Fragen                                                                                                                                                           | ☑ alle blockierenden Fragen beantwortet (09.11.2026); nicht blockierende Fragen in `docs/01_anforderungen/04_offene-fragen.md`                           |
+| 2 – Fragenkatalog                                                                                                                                                                    | ◐ Entwurf v1.0 fertig (223 KP, `packages/catalog/`); **fachliche Prüfung ausstehend**                                                                    |
+| 3 – Fundament                                                                                                                                                                        | ☑ Grundgerüst lauffähig und getestet (09.11.2026)                                                                                                        |
+| 4a – Anmeldung & Admin eigene Firma                                                                                                                                                  | ☑ (09.11.2026)                                                                                                                                           |
+| 4b – firmenübergreifende Admin-Funktionen, Abteilungen, KI/Mail je Firma, Audit-Log                                                                                                  | ☑ (09.11.2026)                                                                                                                                           |
+| 5a – Assessment, Team/Zuweisung, Fragebogen, Kommentare, Quellen, Zusammenführung, Änderungshistorie                                                                                 | ☑ (13.11.2026) – Rechte in `apps/server/src/assessment/access.ts`, Regeln (Vorschlag, Begründungspflicht, Umfang) in `packages/shared/src/assessment.ts` |
+| 5b – Live-Updates (SSE, `apps/server/src/assessment/live.ts`), Präsenz, Duplizieren, JSON-Export/-Import (`assessment/transfer.ts`)                                                  | ☑ (13.11.2026)                                                                                                                                           |
+| 6 – Auswertung: Scoring (`packages/shared/src/score.ts`), Bericht, Benchmark (`apps/server/src/routes/report.ts`)                                                                    | ☑ (14.11.2026)                                                                                                                                           |
+| 7 – Empfehlungen: Regel-Engine (`packages/shared/src/recommend.ts`), KI-Adapter (`apps/server/src/assessment/llm.ts`), Erzeugung/Fallback (`assessment/recommend.ts`), Maßnahmenplan | ☑ (14.11.2026)                                                                                                                                           |
+| 8 – Abschluss (CI/CD, Security-Review, Betriebsdoku, Abnahme)                                                                                                                        | **als Nächstes**                                                                                                                                         |
+| 2 – Fragenkatalog finalisieren                                                                                                                                                       | geplant                                                                                                                                                  |
+| 3 ff. – Umsetzung                                                                                                                                                                    | geplant (`docs/06_umsetzung/01_roadmap.md`)                                                                                                              |
 
 **Regel:** Jede neue Funktion wird mit Positiv- und Negativtests ausgeliefert; vor jedem Commit `npm run typecheck && npm run lint && npm run test:unit`.
 
@@ -60,16 +60,19 @@ Details: docs/04_architektur/01_architektur.md
 ## 4. Verbindliche Konventionen
 
 ### 4.1 Sprache & Benennung
+
 - Dokumentation: **Deutsch**. Code, Bezeichner, Commit-Messages: **Englisch**.
 - **TypeScript strict** in allen Paketen; Vue-Komponenten als `<script setup lang="ts">`.
 - Dateinamen: `kebab-case`. JS-Bezeichner: `camelCase`, Klassen/Komponenten: `PascalCase`.
 - Checkpoint-IDs sind **stabil** und werden nie umnummeriert: `KB<NN>.<LEVEL>.<NN>` z. B. `KB03.K.02` (Kernbereich 3, Kontrolliert, Kontrollpunkt 2). Agile KP: `KB<NN>.AG.<Sicht><Nr>`; KI-Ergänzungen: `KB<NN>.<LEVEL>.AI<n>`. Herkunft zusätzlich im Attribut `tags` (`agile`, `AI`).
 
 ### 4.2 Inhalte strikt von Code trennen
+
 - Fragen, Texte, Reifegrade, Empfehlungsbausteine liegen **ausschließlich** in `packages/catalog/catalog.v1.json` (Oberflächentexte in den i18n-Dateien) – **nie** hartkodiert im Code. Nach jeder Katalogänderung `python3 tools/catalog/validate.py` ausführen.
 - Jede UI-Zeichenkette muss in **DE und EN** vorhanden sein. Ein fehlender Schlüssel ist ein Testfehler.
 
 ### 4.3 Tests
+
 - Jede UI-Funktion hat mindestens **einen Positiv- und einen Negativtest** in Playwright.
 - Testfall-IDs aus `docs/05_test/02_testfallkatalog.md` (z. B. `TC-ANS-003`) stehen im Testtitel.
 - Selektoren nur über `data-testid` oder ARIA-Rollen, niemals über CSS-Klassen.
@@ -77,6 +80,7 @@ Details: docs/04_architektur/01_architektur.md
 - Anmeldung im Playwright-Setup-Projekt, `storageState` je Rolle; E-Mails über die Mailpit-API; KI-Anbieter immer gemockt.
 
 ### 4.4 Qualität
+
 - Barrierefreiheit: WCAG 2.2 AA (Tastaturbedienung, Kontraste, ARIA).
 - Keine personenbezogenen Daten an externe Dienste ohne explizite Zustimmung (siehe Datenschutz in `docs/01_anforderungen/02_nichtfunktionale-anforderungen.md`).
 - **CSRF:** Zustandsändernde API-Aufrufe brauchen den Header `X-Requested-With: ai-tpi` (im Web über `apps/web/src/api/client.ts`).
@@ -88,6 +92,7 @@ Details: docs/04_architektur/01_architektur.md
 - KI-Empfehlungen sind **immer** als solche gekennzeichnet und vom Nutzer übersteuerbar.
 
 ### 4.5 Arbeitsweise für Agenten
+
 1. Vor jeder Änderung `docs/06_umsetzung/02_backlog.md` und relevante ADRs lesen.
 2. Kleine, nachvollziehbare Schritte; nach jedem Schritt Tests ausführen (`npm test`).
 3. Architekturentscheidungen nicht stillschweigend ändern – neuen ADR in `docs/07_entscheidungen/` anlegen.
@@ -97,23 +102,23 @@ Details: docs/04_architektur/01_architektur.md
 
 ## 5. Befehle
 
-| Zweck | Befehl |
-|---|---|
-| DB + Mailpit starten (lokal) | `docker compose up -d db mailpit` |
-| Abhängigkeiten installieren | `npm install` |
-| Migration erzeugen / ausführen | `npm run db:generate` / `npm run db:migrate` |
-| Entwicklungsserver (Web + API) | `npm run dev` |
+| Zweck                                                                         | Befehl                                                          |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| DB + Mailpit starten (lokal)                                                  | `docker compose up -d db mailpit`                               |
+| Abhängigkeiten installieren                                                   | `npm install`                                                   |
+| Migration erzeugen / ausführen                                                | `npm run db:generate` / `npm run db:migrate`                    |
+| Entwicklungsserver (Web + API)                                                | `npm run dev`                                                   |
 | Lokale Installation zurücksetzen (alle Daten weg, `/einrichtung` wieder frei) | siehe `apps/docs/src/content/docs/entwicklung/zuruecksetzen.md` |
-| Typprüfung | `npm run typecheck` |
-| Produktionsbuild | `npm run build` |
-| Lint | `npm run lint` |
-| Unit-, API- und DB-Tests | `npm run test:unit` (DB-Tests nur mit `TEST_DATABASE_URL`) |
-| Playwright ohne Browser-Download (nur Chromium) | `PW_CHROMIUM_ONLY=1 npm run test:e2e` |
-| Katalog prüfen | `npm run catalog:validate` |
-| Dokumentation ansehen / bauen | `npm run docs:dev` / `npm run docs:build` |
-| Platzhalter-Tests neu erzeugen (nach neuen echten Tests) | `npm run test:planned` |
-| Playwright E2E | `npm run test:e2e` |
-| Playwright UI-Modus | `npx playwright test --ui` |
+| Typprüfung                                                                    | `npm run typecheck`                                             |
+| Produktionsbuild                                                              | `npm run build`                                                 |
+| Lint                                                                          | `npm run lint`                                                  |
+| Unit-, API- und DB-Tests                                                      | `npm run test:unit` (DB-Tests nur mit `TEST_DATABASE_URL`)      |
+| Playwright ohne Browser-Download (nur Chromium)                               | `PW_CHROMIUM_ONLY=1 npm run test:e2e`                           |
+| Katalog prüfen                                                                | `npm run catalog:validate`                                      |
+| Dokumentation ansehen / bauen                                                 | `npm run docs:dev` / `npm run docs:build`                       |
+| Platzhalter-Tests neu erzeugen (nach neuen echten Tests)                      | `npm run test:planned`                                          |
+| Playwright E2E                                                                | `npm run test:e2e`                                              |
+| Playwright UI-Modus                                                           | `npx playwright test --ui`                                      |
 
 ## 6. Wichtige Dokumente
 

@@ -4,7 +4,17 @@ import vue from 'eslint-plugin-vue';
 import globals from 'globals';
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/node_modules/**', 'playwright-report/**', 'test-results/**', 'apps/server/drizzle/**', 'apps/docs/.astro/**', 'apps/docs/src/content/docs/projekt/**'] },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      'playwright-report/**',
+      'test-results/**',
+      'apps/server/drizzle/**',
+      'apps/docs/.astro/**',
+      'apps/docs/src/content/docs/projekt/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],

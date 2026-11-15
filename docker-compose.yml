@@ -9,19 +9,19 @@ services:
       POSTGRES_PASSWORD: ai_tpi
       POSTGRES_DB: ai_tpi
     ports:
-      - "5433:5432"
+      - '5433:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ai_tpi"]
+      test: ['CMD-SHELL', 'pg_isready -U ai_tpi']
       interval: 5s
       retries: 10
 
   mailpit:
     image: axllent/mailpit:latest
     ports:
-      - "1025:1025"   # SMTP
-      - "8025:8025"   # Web-Oberfläche und API
+      - '1025:1025' # SMTP
+      - '8025:8025' # Web-Oberfläche und API
 
 volumes:
   db-data:

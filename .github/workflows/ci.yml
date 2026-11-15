@@ -1,0 +1,171 @@
+# AI_TPI – CI-Pipeline (Phase 8d, docs/05_test/01_teststrategie.md, Starlight „Entwicklung → CI-Pipeline“).
+#
+# Jobs (laufen parallel, „container“ nach „pruefungen“):
+#   pruefungen  Format, Lint, Typecheck, Katalog, Testfallkatalog vollständig, npm audit, Dokumentation bauen
+#   unit        Vitest: Unit-, API- und Datenbanktests gegen PostgreSQL 16
+#   e2e         Playwright gegen den Produktions-Build (E2E_PROD=1), je Browser-Engine ein Job
+#   container   Image bauen und Rauchtest (Migrationen, CSP, Nutzer ≠ root, ai-tpi-setup, Anmeldung)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  pruefungen:
+    name: Prüfungen (Format, Lint, Typen, Katalog, Audit, Doku)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Format (Prettier)
+        run: npm run format:check
+      - name: Lint (ESLint)
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Fragenkatalog prüfen
+        run: npm run catalog:validate
+      - name: Testfallkatalog vollständig automatisiert
+        run: |
+          npm run test:planned
+          if ls tests/e2e/geplant/*.spec.ts >/dev/null 2>&1; then
+            echo "::error::Nicht automatisierte Testfälle (Platzhalter in tests/e2e/geplant):"
+            ls tests/e2e/geplant
+            exit 1
+          fi
+      - name: Sicherheitslücken in Abhängigkeiten (npm audit)
+        run: npm audit --audit-level=moderate
+      - name: Dokumentation bauen (Astro/Starlight)
+        run: npm run docs:build
+
+  unit:
+    name: Unit-, API- und DB-Tests (Vitest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ai_tpi
+          POSTGRES_PASSWORD: ai_tpi
+          POSTGRES_DB: ai_tpi_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ai_tpi" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgres://ai_tpi:ai_tpi@127.0.0.1:5432/ai_tpi_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:unit
+
+  e2e:
+    name: E2E ${{ matrix.engine }} (Produktions-Build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Das Projekt „setup“ (Anmeldezustände) läuft immer mit Chromium.
+          - engine: chromium
+            browsers: chromium
+            projects: --project=desktop-chrome --project=laptop-small --project=mobile-samsung
+          - engine: firefox
+            browsers: chromium firefox
+            projects: --project=desktop-firefox
+          - engine: webkit
+            browsers: chromium webkit
+            projects: --project=desktop-safari --project=tablet-ipad --project=mobile-iphone
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ai_tpi
+          POSTGRES_PASSWORD: ai_tpi
+          POSTGRES_DB: ai_tpi_e2e
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ai_tpi" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      E2E_PROD: '1'
+      E2E_DATABASE_URL: postgres://ai_tpi:ai_tpi@127.0.0.1:5432/ai_tpi_e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Playwright-Browser
+        run: npx playwright install --with-deps ${{ matrix.browsers }}
+      - name: Produktions-Build
+        run: npm run build
+      - name: Playwright
+        run: npx playwright test ${{ matrix.projects }}
+      - name: Bericht hochladen
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.engine }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
+  container:
+    name: Container bauen und Rauchtest
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: pruefungen
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ai_tpi
+          POSTGRES_PASSWORD: ai_tpi
+          POSTGRES_DB: ai_tpi_smoke
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ai_tpi" --health-interval 5s --health-timeout 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Image bauen
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          push: false
+          tags: ai-tpi:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Rauchtest
+        run: tools/docker/smoke-test.sh ai-tpi:ci postgres://ai_tpi:ai_tpi@127.0.0.1:5432/ai_tpi_smoke
+      - name: Compose-Datei prüfen
+        run: |
+          cp .env.production.example .env.ci
+          sed -i 's/^POSTGRES_PASSWORD=$/POSTGRES_PASSWORD=ci/; s/^SECRET_ENCRYPTION_KEY=$/SECRET_ENCRYPTION_KEY=ci-0123456789abcdef0123456789abcdef/' .env.ci
+          docker compose -f docker-compose.prod.yml --env-file .env.ci config --quiet

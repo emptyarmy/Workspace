@@ -59,7 +59,7 @@ flowchart LR
 | Live-Updates | Server-Sent Events | einfacher als WebSockets, reicht für Benachrichtigungen | Socket.IO |
 | PDF | Druck-Stylesheet; optional serverseitig mit Playwright/Chromium | identische Darstellung | – |
 | Betrieb | **Phase 1: lokal** (`npm run dev`, PostgreSQL + Mailpit per Docker Compose); **Phase 2: CI/CD-Pipeline** baut, testet und stellt Container bereit (N-06) | schneller Start, später automatisiert | – |
-| CI/CD | GitHub Actions oder GitLab CI (R-13): Lint → Typprüfung → Unit/API → Playwright (alle Geräteprofile) → Container-Build → Deployment | Qualitätstor vor jedem Deployment | Azure DevOps, Jenkins |
+| CI/CD | **GitHub Actions** (R-13, Phase 8d, `.github/workflows/ci.yml`): Format/Lint/Typprüfung/Katalog/Audit/Doku → Unit/API/DB → Playwright gegen den Produktions-Build (alle Geräteprofile, je Engine ein Job) → Container-Build mit Rauchtest. Deployment manuell auf den internen Server (Docker Compose) | Qualitätstor vor jedem Deployment | GitLab CI, Azure DevOps, Jenkins |
 | Tests | Vitest (Unit), Supertest (API), **Playwright** (E2E) | – | – |
 
 ## 3. Projektstruktur (Monorepo, ab Phase 3)

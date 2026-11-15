@@ -65,6 +65,9 @@ So läuft ein Testlauf ab:
 
 ### Produktions-Build testen
 
+Die [CI-Pipeline](/entwicklung/ci-pipeline/) führt die E2E-Tests immer in diesem Modus aus.
+
+
 ```bash
 npm run build
 E2E_PROD=1 npm run test:e2e

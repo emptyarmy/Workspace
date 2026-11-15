@@ -67,7 +67,7 @@
 | R-10 | 🟠 | **Gelöschte Nutzer:** Bleiben ihre Antworten, Kommentare und Historieneinträge mit pseudonymisiertem Namen („Gelöschter Nutzer #1234“) erhalten? | ja | |
 | R-11 | 🟠 | **Vorschlag für die Zusammenführung:** Soll das System bei uneinigen Abteilungen die strengere Bewertung bzw. „Teilweise“ vorschlagen? Ist eine Begründung des Assessors bei Abweichung Pflicht? | ja / ja | |
 | R-12 | 🟠 | **Datenschutz Historie:** Auch Leser sehen in der Änderungshistorie, **wer** wann was geändert hat. Ist das mit Datenschutz bzw. Betriebsrat abgestimmt, oder sollen Leser Namen nur pseudonymisiert sehen? | mit Namen, nach Abstimmung | |
-| R-13 | 🟢 | **CI/CD-Plattform** für Phase 2: GitHub Actions, GitLab CI oder Azure DevOps? Zielumgebung (interner Server, Kubernetes, Cloud)? | GitHub Actions, Docker auf internem Server | |
+| R-13 | 🟢 | **CI/CD-Plattform** für Phase 2: GitHub Actions, GitLab CI oder Azure DevOps? Zielumgebung (interner Server, Kubernetes, Cloud)? | GitHub Actions, Docker auf internem Server | Vorschlag umgesetzt (Phase 8c/8d): `.github/workflows/ci.yml`, `docker-compose.prod.yml` |
 | R-14 | 🟢 | Wird ein **lokaler Mailserver** auf dem Rechner tatsächlich betrieben? Auf macOS ist standardmäßig keiner eingerichtet, Mails würden dann nicht ankommen. Bis zur SMTP-Konfiguration kann der Admin Einladungslinks in der Oberfläche kopieren. | Mailpit lokal; Link-Kopie als Notfallweg | |
 
 ## Teil 3 – Weiterhin offen (Vorschlag gilt, falls keine Antwort)

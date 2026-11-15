@@ -69,7 +69,12 @@ function watch(page: Page): string[] {
     if (m.type() === 'error' && /Content.Security.Policy|Refused to|CSP-Verstoß/i.test(m.text()))
       problems.push(m.text());
   });
-  page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
+  page.on('pageerror', (e) => {
+    // WebKit meldet eine eigene API-Anfrage, die ein Seitenwechsel abbricht, als „… due to access control
+    // checks.“ – kein Fehler der App und kein CSP-Verstoß (die kommen über securitypolicyviolation).
+    if (/127\.0\.0\.1:\d+\/api\/.* due to access control checks\.$/.test(e.message)) return;
+    problems.push(`pageerror: ${e.message}`);
+  });
   return problems;
 }
 

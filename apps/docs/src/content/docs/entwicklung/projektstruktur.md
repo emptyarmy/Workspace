@@ -21,7 +21,8 @@ AI_TPI/
 ├── docs/                     Projektdokumentation (Anforderungen, Architektur, Tests, ADRs)
 ├── tools/catalog/            Python-Werkzeuge zum Prüfen des Katalogs
 ├── tools/tests/              Erzeugt Platzhalter-Tests für noch nicht automatisierte Testfälle
-├── tools/docker/             Startskript und Ersteinrichtungs-Befehl des Containers
+├── tools/docker/             Startskript, Ersteinrichtungs-Befehl und Rauchtest des Containers
+├── .github/workflows/ci.yml  CI-Pipeline (GitHub Actions)
 ├── docker-compose.yml        PostgreSQL 16 + Mailpit für die lokale Entwicklung
 ├── Dockerfile                Produktions-Image (mehrstufig): API + gebaute Weboberfläche
 ├── docker-compose.prod.yml   Betrieb: App-Container + PostgreSQL (Vorlage .env.production.example)

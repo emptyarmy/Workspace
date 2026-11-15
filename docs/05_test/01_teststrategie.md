@@ -37,6 +37,7 @@ Konkrete Profile werden bei der Einrichtung gegen `playwright.devices` der insta
 - Tests laufen in DE und – für ausgewählte Fälle – in EN.
 - Page-Object-Modell unter `tests/e2e/pages/`.
 - Reporter: HTML + JUnit (für CI); Traces bei Fehlern.
+- CI (GitHub Actions, Phase 8d): alle Tests bei jedem Push und Pull Request; Playwright läuft dort gegen den Produktions-Build (`E2E_PROD=1`), je Browser-Engine ein Job, mit bis zu zwei Wiederholungen. Details: Starlight „Entwicklung → CI-Pipeline“.
 
 ## 4. Eingangs-/Ausgangskriterien
 - **Start E2E:** Build erfolgreich, Unit-Tests grün.
