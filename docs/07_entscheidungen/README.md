@@ -11,3 +11,4 @@ Jede wesentliche Entscheidung wird als eigene Datei `ADR-NNN-titel.md` nach der 
 | ADR-005 | Authentifizierung und Benutzerverwaltung | **akzeptiert** | F-07, N-01, N-02, N-07 |
 | ADR-006 | Mandantenfähigkeit, Firmen-Administration, Benchmark | **akzeptiert** | N-11, R-01, R-02 |
 | ADR-007 | Drizzle ORM statt Prisma | **akzeptiert** | ADR-003 |
+| ADR-008 | Produktionsbetrieb: ein Container, gebündelter Server, Ersteinrichtung per Befehl | **akzeptiert** | ADR-003, Security-Review 8b |

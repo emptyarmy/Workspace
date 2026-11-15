@@ -31,6 +31,7 @@ export default defineConfig({
         { label: 'Einstieg', items: [{ label: 'Startseite', link: '/' }, { slug: 'einstieg/ueberblick' }, { slug: 'einstieg/schnellstart' }] },
         { label: 'Handbuch', items: [{ autogenerate: { directory: 'handbuch' } }] },
         { label: 'Entwicklung', items: [{ autogenerate: { directory: 'entwicklung' } }] },
+        { label: 'Betrieb', items: [{ autogenerate: { directory: 'betrieb' } }] },
         { label: 'Referenz', items: [{ autogenerate: { directory: 'referenz' } }] },
         {
           label: 'Projektdokumentation',

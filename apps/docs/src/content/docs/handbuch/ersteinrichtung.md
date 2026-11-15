@@ -18,6 +18,10 @@ Der allererste Admin kann keine Einladung erhalten, denn es gibt noch niemanden,
 
 Die Domain Ihrer E-Mail-Adresse (z. B. `firma.de`) wird automatisch zur zugelassenen Domain der Firma.
 
+:::note[Im Container]
+Läuft AI_TPI als Docker-Container, kommen Anfragen über das Docker-Netz und nicht über localhost – die Seite `/einrichtung` bleibt dann unsichtbar. Die Ersteinrichtung erfolgt dort mit `ai-tpi-setup` im Container, siehe [Installation mit Docker](/betrieb/installation-mit-docker/#3-ersteinrichtung). Es gelten dieselben Regeln.
+:::
+
 ## Regeln
 
 | Regel | Grund |

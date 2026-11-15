@@ -28,6 +28,17 @@ flowchart LR
   AI -- "KI-Konfiguration je Firma" --> LLM
 ```
 
+### Betrieb (Phase 8c, ADR-008)
+
+Im Produktivbetrieb liefert der Node-Server auch die gebaute Vue-Oberfläche aus (`WEB_DIST_DIR`) – ein Prozess, ein Ursprung, keine CORS-Konfiguration. Der Server-Code wird mit esbuild zu `apps/server/dist/server.mjs` gebündelt (kein tsx zur Laufzeit). Auslieferung als Container (`Dockerfile`, `docker-compose.prod.yml`) mit PostgreSQL; davor ein Reverse Proxy mit HTTPS.
+
+```mermaid
+flowchart LR
+  B["Browser"] -- HTTPS --> RP["Reverse Proxy (TLS)"]
+  RP -- "HTTP 127.0.0.1:3000" --> APP["Container app<br/>Fastify: /api/* + Weboberfläche (CSP)<br/>Migrationen beim Start"]
+  APP --> PG[("Container db<br/>PostgreSQL 16, Volume")]
+```
+
 ## 2. Technologieauswahl (Vorschlag, ADR-002 bis ADR-005)
 
 | Schicht | Vorschlag | Begründung | Alternative |

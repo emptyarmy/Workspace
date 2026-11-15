@@ -26,6 +26,7 @@ Die Konfiguration steht in `.env` im Projektordner (Vorlage: `.env.example`). We
 | `MAIL_TRANSPORT` | `smtp` | Standard-Mailversand: `smtp`, `sendmail` (Betriebssystem) oder `memory` (nur Tests) |
 | `SMTP_HOST` / `SMTP_PORT` | `localhost` / `1025` | SMTP-Server für `MAIL_TRANSPORT=smtp` (lokal Mailpit) |
 | `MAIL_FROM` | `AI_TPI <no-reply@ai-tpi.local>` | Standard-Absender |
+| `WEB_DIST_DIR` | – | Ordner der gebauten Weboberfläche (`apps/web/dist`). Gesetzt → der Server liefert die Oberfläche selbst aus (mit eigener Content-Security-Policy, Single-Page-Fallback); leer → nur API (Entwicklung mit Vite). Im Container `/app/web` |
 | `TEST_ENDPOINTS` | `false` | Testschnittstellen `/api/test/*`, nur zusammen mit `NODE_ENV=test` |
 
 Firmen können Mailserver und KI-Module zusätzlich im Admin-Bereich festlegen (siehe [E-Mail und KI-Module](/handbuch/e-mail-und-ki/)).
@@ -45,12 +46,28 @@ Firmen können Mailserver und KI-Module zusätzlich im Admin-Bereich festlegen (
 | `E2E_DATABASE_URL` | Datenbank für Playwright (muss auf `_e2e`/`_test` enden). Ohne Angabe: aus `DATABASE_URL` mit Datenbank `ai_tpi_e2e` |
 | `E2E_SERVER_PORT` / `E2E_WEB_PORT` | Ports der Testserver (Standard 3100 / 5180) |
 | `PW_SKIP_FIREFOX`, `PW_CHROMIUM_ONLY`, `PW_CHROMIUM_PATH` | Browserauswahl, siehe [Tests](/entwicklung/tests/) |
+| `E2E_PROD` | `1` = Tests gegen den Produktions-Build (gebündelter Server liefert die gebaute Oberfläche aus); vorher `npm run build` |
 
 ## Dokumentation
 
 | Variable | Standard | Bedeutung |
 |---|---|---|
 | `DOCS_PORT` | `4321` | Port von `npm run docs:dev` und `docs:preview`. Nur als Umgebungsvariable beim Start (`DOCS_PORT=4322 npm run docs:dev`), nicht aus der `.env`. |
+
+## Container (docker-compose.prod.yml)
+
+Für den Betrieb mit Docker Compose liegt die Vorlage `.env.production.example` im Projektordner. Zusätzlich zu den Variablen oben:
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `POSTGRES_PASSWORD` | – (Pflicht) | Passwort der Datenbank im Container `db`. Ohne Sonderzeichen wählen (steht in der Datenbank-URL), z. B. `openssl rand -hex 32` |
+| `POSTGRES_USER` / `POSTGRES_DB` | `ai_tpi` / `ai_tpi` | Nutzer und Datenbank |
+| `APP_PORT` | `3000` | Port auf dem Host, nur an `127.0.0.1` gebunden – Ziel des Reverse Proxys |
+| `RUN_MIGRATIONS` | `true` | Migrationen beim Start des Containers ausführen |
+| `NODE_IMAGE` / `POSTGRES_IMAGE` / `APP_IMAGE` | `node:22-bookworm-slim` / `postgres:16-alpine` / `ai-tpi:latest` | Eigene Images, z. B. aus einem Firmen-Spiegel |
+| `SETUP_COMPANY_NAME`, `SETUP_COMPANY_SLUG`, `SETUP_INDUSTRY_CODE`, `SETUP_ADMIN_NAME`, `SETUP_ADMIN_EMAIL`, `SETUP_ADMIN_PASSWORD` | – | Nur für `ai-tpi-setup`: Werte der Ersteinrichtung ohne Rückfragen (automatisierte Installation) |
+
+Im Container sind `NODE_ENV=production`, `SERVER_HOST=0.0.0.0`, `SERVER_PORT=3000` und `WEB_DIST_DIR=/app/web` fest gesetzt. Siehe [Installation mit Docker](/betrieb/installation-mit-docker/).
 
 ## Empfehlungen für den Produktivbetrieb
 

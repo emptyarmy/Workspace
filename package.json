@@ -13,7 +13,8 @@
   },
   "scripts": {
     "dev": "concurrently -k -n server,web -c blue,green \"npm:dev -w @ai-tpi/server\" \"npm:dev -w @ai-tpi/web\"",
-    "build": "npm run build -w @ai-tpi/web",
+    "build": "npm run build -w @ai-tpi/web && npm run build -w @ai-tpi/server",
+    "start": "npm run start:prod -w @ai-tpi/server",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -27,7 +28,8 @@
     "catalog:validate": "python3 tools/catalog/validate.py",
     "docs:dev": "npm run dev -w @ai-tpi/docs",
     "docs:build": "npm run build -w @ai-tpi/docs",
-    "docs:preview": "npm run preview -w @ai-tpi/docs"
+    "docs:preview": "npm run preview -w @ai-tpi/docs",
+    "db:migrate:prod": "npm run db:migrate:prod -w @ai-tpi/server"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
@@ -51,9 +53,5 @@
     "@typescript-eslint/typescript-estree": {
       "minimatch": "^11.0.8"
     }
-  },
-  "allowScripts": {
-    "esbuild": true,
-    "fsevents@2.3.3": true
   }
 }

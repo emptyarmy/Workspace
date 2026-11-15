@@ -24,6 +24,7 @@ import { setupRoutes } from './routes/setup';
 import { testSupportRoutes } from './routes/test-support';
 import { RateLimiter } from './security/rate-limit';
 import { recommendationRoutes } from './routes/recommendations';
+import { registerStatic } from './static';
 
 export interface AppDeps {
   config: AppConfig;
@@ -110,7 +111,9 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       .status(status)
       .send({ error: status === 503 ? 'db_unavailable' : status >= 500 ? 'internal_error' : 'bad_request' });
   });
-  app.setNotFoundHandler((_req, reply) => reply.status(404).send({ error: 'not_found' }));
+  // Produktion: Der Server liefert auch die gebaute Weboberfläche aus (WEB_DIST_DIR, Phase 8c).
+  if (cfg.WEB_DIST_DIR) registerStatic(app, cfg.WEB_DIST_DIR);
+  else app.setNotFoundHandler((_req, reply) => reply.status(404).send({ error: 'not_found' }));
 
   await app.register(cookie);
   await app.register(authPlugin);

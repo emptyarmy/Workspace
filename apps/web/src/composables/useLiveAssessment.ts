@@ -52,7 +52,13 @@ export function useLiveAssessment(
       const key = `${connectionId}|${keyAreaId}`;
       if (key === lastSent) return;
       lastSent = key;
-      await apiPost(`/api/assessments/${id}/presence`, { connectionId, keyAreaId, view: opts.view });
+      try {
+        await apiPost(`/api/assessments/${id}/presence`, { connectionId, keyAreaId, view: opts.view });
+      } catch {
+        // Anwesenheit ist nur ein Hinweis: Fehler (z. B. beim Seitenwechsel abgebrochene Anfrage) nicht
+        // als unbehandelten Fehler werfen und die Kette nicht blockieren – beim nächsten Anlass erneut senden.
+        lastSent = undefined;
+      }
     });
   }
 

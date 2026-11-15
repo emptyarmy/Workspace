@@ -11,7 +11,7 @@ AI_TPI ist ein **Monorepo mit npm-Workspaces**. Abhängigkeiten werden einmal im
 AI_TPI/
 ├── apps/
 │   ├── web/                  Weboberfläche: Vue 3, TypeScript, Vite, Pinia, vue-router, vue-i18n
-│   ├── server/               API: Fastify 5, TypeScript (tsx), Drizzle ORM, PostgreSQL
+│   ├── server/               API: Fastify 5, TypeScript (tsx; Produktion: esbuild-Bündel in dist/), Drizzle ORM, PostgreSQL
 │   └── docs/                 diese Dokumentation: Astro + Starlight
 ├── packages/
 │   ├── shared/               Regeln für Browser und Server: Passwort, Stärke, Rollen, E-Mail-Domains,
@@ -21,7 +21,10 @@ AI_TPI/
 ├── docs/                     Projektdokumentation (Anforderungen, Architektur, Tests, ADRs)
 ├── tools/catalog/            Python-Werkzeuge zum Prüfen des Katalogs
 ├── tools/tests/              Erzeugt Platzhalter-Tests für noch nicht automatisierte Testfälle
+├── tools/docker/             Startskript und Ersteinrichtungs-Befehl des Containers
 ├── docker-compose.yml        PostgreSQL 16 + Mailpit für die lokale Entwicklung
+├── Dockerfile                Produktions-Image (mehrstufig): API + gebaute Weboberfläche
+├── docker-compose.prod.yml   Betrieb: App-Container + PostgreSQL (Vorlage .env.production.example)
 ├── playwright.config.ts      Geräteprofile, Testserver, Testdatenbank
 ├── vitest.config.ts          Unit-, API- und Datenbanktests
 ├── AGENTS.md                 verbindliche Arbeitsregeln (auch für KI-Agenten)
@@ -34,6 +37,7 @@ AI_TPI/
 |---|---|
 | `index.ts`, `app.ts` | Start, Registrierung aller Routen, Sicherheits-Header, Fehlerbehandlung |
 | `config.ts` | Einlesen und Prüfen der Umgebungsvariablen (siehe [Konfiguration](/referenz/konfiguration/)) |
+| `static.ts` | Auslieferung der gebauten Weboberfläche im Produktionsbetrieb (`WEB_DIST_DIR`): HTML-CSP, Caching, gzip, Single-Page-Fallback |
 | `db/schema.ts` | Tabellen (Drizzle); Migrationen in `apps/server/drizzle/` |
 | `auth/` | Passwort-Hashing (Argon2id), Sitzungen, Einmal-Links, Verschlüsselung von Geheimnissen |
 | `plugins/auth.ts` | CSRF-Prüfung, Sitzung → `req.user`, `requireAuth(roles)` |
@@ -49,6 +53,9 @@ AI_TPI/
 | `mail/` | Versand (Standard oder SMTP der Firma) und Mail-Vorlagen DE/EN |
 | `audit.ts` | Einträge im Audit-Log |
 | `security/localhost.ts` | Prüfung „nur localhost“ für die Ersteinrichtung |
+| `security/rate-limit.ts`, `security/outbound.ts` | Rate-Limits; Sperre interner Ziele für KI-Aufrufe (SSRF) |
+
+Außerhalb von `src/`: `scripts/migrate.ts` (Migrationen + Stammdaten), `scripts/reset-e2e-db.ts`, `scripts/build.mjs` (esbuild-Bündel für den Betrieb) und `scripts/setup-cli.mjs` (Ersteinrichtung über die Kommandozeile, im Container `ai-tpi-setup`).
 
 ## Weboberfläche (`apps/web/src`)
 

@@ -61,6 +61,16 @@ So läuft ein Testlauf ab:
 | `PW_CHROMIUM_ONLY=1` | alle Profile mit Chromium (ohne Browser-Download) |
 | `PW_CHROMIUM_PATH` | eigener Chromium-Pfad |
 | `E2E_SERVER_PORT`, `E2E_WEB_PORT` | abweichende Testports |
+| `E2E_PROD=1` | gegen den Produktions-Build testen (siehe unten) |
+
+### Produktions-Build testen
+
+```bash
+npm run build
+E2E_PROD=1 npm run test:e2e
+```
+
+Statt Vite startet Playwright dann nur den **gebündelten Server** (`apps/server/dist/server.mjs`), der die gebaute Oberfläche aus `apps/web/dist` selbst ausliefert – wie im Container, mit der Content-Security-Policy für HTML. Alle Tests laufen unverändert; zusätzlich prüft `tests/e2e/produktion.spec.ts` (nur in diesem Modus) Auslieferung, Caching, Kompression und 404-Verhalten (TC-OPS-001) sowie die Hauptseiten auf CSP-Verstöße und Skriptfehler (TC-OPS-002). So fallen Abweichungen zwischen Entwicklung und Betrieb auf, z. B. ein von der CSP blockiertes Firmenlogo.
 
 ### Testdateien
 
@@ -80,7 +90,9 @@ So läuft ein Testlauf ab:
 | `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
 | `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |
-| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 250 Fälle sind automatisiert |
+| `sicherheit.spec.ts` | Phase 8b: Meldung bei Rate-Limit (429), Sicherheits-Header der API, CSRF-Schutz |
+| `produktion.spec.ts` | Phase 8c, nur mit `E2E_PROD=1`: Auslieferung der gebauten Oberfläche (CSP, Caching, gzip, Deep-Links, 404, Pfad-Traversal) und Hauptseiten ohne CSP-Verstoß |
+| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 252 Fälle sind automatisiert |
 
 ### Barrierefreiheit
 

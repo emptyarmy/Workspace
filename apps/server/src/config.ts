@@ -36,6 +36,11 @@ const envSchema = z.object({
    * (für Rate-Limits und Audit-Log). Die Ersteinrichtung prüft unabhängig davon immer die Socket-Adresse.
    */
   TRUST_PROXY: bool.default(false),
+  /**
+   * Ordner der gebauten Weboberfläche (apps/web/dist). Gesetzt → der Server liefert die Oberfläche selbst aus
+   * (Produktion, Container); leer → nur API (Entwicklung mit Vite).
+   */
+  WEB_DIST_DIR: z.preprocess((v) => (v === '' ? undefined : v), z.string().optional()),
   /** Testendpunkte (/api/test/*) – nur zusammen mit NODE_ENV=test aktiv. */
   TEST_ENDPOINTS: bool.default(false),
 });

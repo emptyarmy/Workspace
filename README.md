@@ -35,6 +35,18 @@ Seiten: `/einrichtung` (Ersteinrichtung, nur localhost, solange kein Nutzer exis
 **E2E-Tests** nutzen eine eigene Datenbank `ai_tpi_e2e`, die vor jedem Lauf neu aufgesetzt wird: einmalig `docker compose exec db createdb -U ai_tpi ai_tpi_e2e`. Playwright liest `.env` selbst: Ohne `E2E_DATABASE_URL` wird die Adresse aus `DATABASE_URL` abgeleitet (gleicher Server und Port, Datenbank `ai_tpi_e2e`).
 Startet Firefox lokal nicht („Could not find profile folder“), lässt `PW_SKIP_FIREFOX=1 npm run test:e2e` dieses Profil weg. Dauerhafte Abhilfe auf macOS: `export TMPDIR="$HOME/pw-tmp"` in `~/.zshrc`.
 
+## Betrieb (Container)
+
+Produktions-Build und Betrieb mit Docker Compose (Anwendung + PostgreSQL, davor ein Reverse Proxy mit HTTPS):
+
+```bash
+cp .env.production.example .env.production          # Werte eintragen
+docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+docker compose -f docker-compose.prod.yml --env-file .env.production exec app ai-tpi-setup   # Ersteinrichtung
+```
+
+Ohne Docker: `npm run build`, dann `npm run start` mit `NODE_ENV=production` und `WEB_DIST_DIR=apps/web/dist`. Details: Dokumentation → Betrieb → „Installation mit Docker“ und [ADR-008](docs/07_entscheidungen/ADR-008-produktionsbetrieb.md).
+
 ## Dokumentation (Astro)
 
 Handbuch, Entwicklerdokumentation, Referenz (Konfiguration, REST-API, Fehlercodes) und die Projektdokumentation aus `docs/` als durchsuchbare Website:

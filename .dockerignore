@@ -1,0 +1,23 @@
+# Build-Kontext des Containers (Dockerfile): nur Quelltext, keine lokalen Artefakte oder Geheimnisse.
+**/node_modules
+**/dist
+**/.astro
+.git
+.github
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage
+playwright-report
+test-results
+blob-report
+tests/e2e/.auth
+.pgdata
+.venv
+AI_TPI.zip
+# Originaldokumente – nie in ein Image
+docs/_quellen
+specs
+packages/catalog/sources

@@ -20,6 +20,12 @@ const chromiumOnly = !!process.env.PW_CHROMIUM_ONLY;
 const executablePath = process.env.PW_CHROMIUM_PATH;
 const skipFirefox = !!process.env.PW_SKIP_FIREFOX;
 
+/**
+ * E2E_PROD=1: Tests gegen den Produktions-Build (Phase 8c) – der gebündelte Server (apps/server/dist) liefert
+ * die gebaute Oberfläche (apps/web/dist) mit Content-Security-Policy selbst aus; kein Vite.
+ * Vorher einmal bauen: npm run build
+ */
+const prodMode = !!process.env.E2E_PROD;
 const WEB_PORT = Number(process.env.E2E_WEB_PORT ?? 5180);
 const SERVER_PORT = Number(process.env.E2E_SERVER_PORT ?? 3100);
 /**
@@ -49,7 +55,7 @@ function e2eDatabaseUrl(): string {
   return 'postgres://ai_tpi:ai_tpi@localhost:5432/ai_tpi_e2e';
 }
 const DATABASE_URL = e2eDatabaseUrl();
-export const BASE_URL = `http://127.0.0.1:${WEB_PORT}`;
+export const BASE_URL = `http://127.0.0.1:${prodMode ? SERVER_PORT : WEB_PORT}`;
 export const ADMIN_STATE = 'tests/e2e/.auth/admin.json';
 
 function project(
@@ -65,6 +71,8 @@ function project(
   }
   // Platzhalter geplanter Funktionen (tests/e2e/geplant) nur einmal auflisten, nicht je Geräteprofil.
   const testIgnore = name === 'desktop-chrome' ? [/.*\.setup\.ts/] : [/.*\.setup\.ts/, /[\\/]geplant[\\/]/];
+  // Prüfungen des Produktions-Builds nur mit E2E_PROD=1 (sonst liefert Vite die Oberfläche aus).
+  if (!prodMode) testIgnore.push(/produktion\.spec\.ts/);
   return { name, use, dependencies: ['setup'], testIgnore };
 }
 
@@ -108,7 +116,9 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: `${raiseFileLimit}npm run db:reset:e2e -w @ai-tpi/server && npm run start -w @ai-tpi/server`,
+      command: prodMode
+        ? `${raiseFileLimit}npm run db:reset:e2e -w @ai-tpi/server && npm run start:prod -w @ai-tpi/server`
+        : `${raiseFileLimit}npm run db:reset:e2e -w @ai-tpi/server && npm run start -w @ai-tpi/server`,
       url: `http://127.0.0.1:${SERVER_PORT}/api/health`,
       reuseExistingServer: false,
       env: {
@@ -118,15 +128,22 @@ export default defineConfig({
         MAIL_TRANSPORT: 'memory',
         TEST_ENDPOINTS: 'true',
         PUBLIC_BASE_URL: BASE_URL,
+        ...(prodMode
+          ? { WEB_DIST_DIR: resolve(dirname(fileURLToPath(import.meta.url)), 'apps/web/dist') }
+          : {}),
       },
       timeout: 90_000,
     },
-    {
-      command: `${raiseFileLimit}npm run dev -w @ai-tpi/web`,
-      url: BASE_URL,
-      reuseExistingServer: false,
-      env: { WEB_PORT: String(WEB_PORT), SERVER_PORT: String(SERVER_PORT) },
-      timeout: 60_000,
-    },
+    ...(prodMode ? [] : [webDevServer()]),
   ],
 });
+
+function webDevServer() {
+  return {
+    command: `${raiseFileLimit}npm run dev -w @ai-tpi/web`,
+    url: BASE_URL,
+    reuseExistingServer: false,
+    env: { WEB_PORT: String(WEB_PORT), SERVER_PORT: String(SERVER_PORT) },
+    timeout: 60_000,
+  };
+}
