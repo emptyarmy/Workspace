@@ -12,6 +12,7 @@ sidebar:
 - **TPI NEXT®** ist das führende Modell: 16 Kernbereiche mit den Reifegraden *Initial*, *Kontrolliert*, *Effizient* und *Optimierend*.
 - Ergänzungen aus **Agile TPI** sind in die Kernbereiche eingearbeitet.
 - **Drei zusätzliche KI-Kernbereiche** bewerten den Einsatz künstlicher Intelligenz in Qualitätssicherung, Anforderungsprüfung, Testautomatisierung, Entwicklung und Dokumentation.
+- Jeder Kontrollpunkt hat eine **Sicht** (Individuum / Team / Organisation) für die Auswertung wie im Excel-Werkzeug; bei 136 Kontrollpunkten sind **Voraussetzungen** hinterlegt, die die Reihenfolge der Empfehlungen steuern.
 - Insgesamt: **19 Kernbereiche, 223 Kontrollpunkte**, zweisprachig (Deutsch/Englisch). Details: [Katalog v1 – Übersicht](/projekt/fragenkatalog/katalog-v1-uebersicht/).
 
 ## Funktionsumfang
@@ -26,7 +27,7 @@ sidebar:
 | Zusammenführung | Assessor führt Abteilungsantworten zusammen (Vorschlag, Begründungspflicht); Änderungshistorie (unveränderbar) | umgesetzt (Phase 5) |
 | Bericht | Kennzahlen, Reifegradmatrix, Netz- und Balkendiagramme, KI-Reifegrad, Konsenslücken, Druck/PDF | umgesetzt (Phase 6) |
 | Benchmark | Anonymer Vergleich mit Branche und allen Firmen (Median, Quartile, ab 5 Firmen) | umgesetzt (Phase 6) |
-| Empfehlungen | Regelbasiert oder mit KI-Modul der Firma, kurzfristig (< 1 Monat) und langfristig (≥ 1 Monat), Datenschutz-Dialog, Maßnahmenplan | umgesetzt (Phase 7) |
+| Empfehlungen | Regelbasiert oder mit KI-Modul der Firma, kurzfristig (< 1 Monat) und langfristig (≥ 1 Monat), Datenschutz-Dialog, Maßnahmenplan mit CSV-Export, Voraussetzungen je Kontrollpunkt | umgesetzt (Phase 7) |
 | Abschluss | CI/CD, Security-Review, Betriebsdokumentation, Abnahme | geplant (Phase 8) |
 
 ## Technischer Aufbau

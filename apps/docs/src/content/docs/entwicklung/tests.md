@@ -15,7 +15,7 @@ npm run test:unit
 
 | Art | Ort | Hinweis |
 |---|---|---|
-| Unit | `packages/*/test`, `apps/web/test`, `apps/server/test/*.test.ts` | Passwortregeln, Katalog, i18n-Vollständigkeit, Verschlüsselung |
+| Unit | `packages/*/test`, `apps/web/test`, `apps/server/test/*.test.ts` | Passwortregeln, Katalog (Schema, Sicht, Voraussetzungen ohne Zyklen), Bewertung, Regel-Engine der Empfehlungen, i18n-Vollständigkeit, Verschlüsselung |
 | API | `apps/server/test/api.test.ts` | Server im Speicher (`app.inject`), ohne Datenbank |
 | Datenbank | `apps/server/test/*.integration.test.ts` | nur mit `TEST_DATABASE_URL`; **die Datenbank wird geleert** |
 
@@ -75,7 +75,7 @@ So läuft ein Testlauf ab:
 | `erfassung.spec.ts` | Phase 5: Assessment anlegen/löschen, Team und Zuweisung, Fragebogen (Fortschritt, Filter, Tastatur, Fehler beim Speichern, Konflikt zweier Nutzer), Abgabe, Quellen, Kommentare, Zusammenführung, Änderungshistorie. Jeder Test legt eine eigene Testfirma mit Team an (`erfassung-helpers.ts`, Zeitlimit 90 s), damit die Listen der E2E-Firma klein bleiben |
 | `erfassung-live.spec.ts` | Phase 5b: Live-Aktualisierung zweier Browser (≤ 2 s), Präsenzanzeige, Duplizieren, JSON-Export/-Import mit Fehlerfällen |
 | `auswertung.spec.ts` | Phase 6: Bericht (Kennzahlen, Matrix mit Detail, Diagramme, Konsenslücken, Anhang, Druckansicht, keine Daten), Benchmark (≥ 5 Firmen, zu wenige, Opt-out, keine Namen, Mobil). Vergleichsfirmen über `/api/test/benchmark-fixture` in einer eigenen Testbranche |
-| `empfehlungen.spec.ts` | Phase 7: regelbasierte Empfehlungen (Horizont, Aufteilung), Maßnahmenplan (annehmen, Verantwortliche, Termin, bearbeiten, Bericht), KI-Modul wählen, Datenschutz-Dialog (Ablehnen ohne Aufruf), KI-Kennzeichnung, Fehlerfälle Timeout/ungültiges JSON/unbekannte KP/401/500, Rechte. Der KI-Dienst wird vom Testserver nachgebildet (`/test-llm/<token>/<szenario>`) |
+| `empfehlungen.spec.ts` | Phase 7: regelbasierte Empfehlungen (Horizont, Aufteilung), Maßnahmenplan (annehmen, Verantwortliche, Termin, bearbeiten, Bericht, CSV-Download), Anzeige der Voraussetzungen, KI-Modul wählen, Datenschutz-Dialog (Ablehnen ohne Aufruf), KI-Kennzeichnung, Fehlerfälle Timeout/ungültiges JSON/unbekannte KP/401/500, Rechte. Der KI-Dienst wird vom Testserver nachgebildet (`/test-llm/<token>/<szenario>`) |
 | `konto-und-verwaltung.spec.ts` | abgelaufener Link/Sitzung, Passwort-Wiederverwendung, Logo in der Kopfzeile, Name/E-Mail ändern, Rollen, Externe, Anmeldelink, Mailfehler, Drehen auf Mobilgeräten |
 | `barrierefreiheit.spec.ts` | axe-Scan (WCAG 2.1 A/AA) aller Seiten und Reiter auf Desktop und iPhone |
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |

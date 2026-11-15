@@ -80,7 +80,8 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Admin: KI-Konfiguration, Schlüssel verschlüsselt, Verbindungstest (bereits 4b)
 - ☑ Datenschutzdialog mit Vorschau der gesendeten Daten, Pseudonymisierung der Kommentare, Schema-Validierung der KI-Antwort (nur bekannte KP-IDs), Fallback auf Regeln mit Hinweis, Audit-Eintrag je KI-Aufruf
 - ☑ Maßnahmenplan: annehmen, ablehnen, bearbeiten, Status, Verantwortliche, Termin; Historie; Abschnitt im Bericht
-- ☐ Offen (Release 2): Abhängigkeiten `dependsOn` im Katalog pflegen (Engine wertet sie bereits aus), Export des Maßnahmenplans
+- ☑ Abhängigkeiten `dependsOn` im Katalog gepflegt (136 KP, 152 Abhängigkeiten, geprüft auf Ebene, Umfang und Zyklen) und auf den Empfehlungskarten angezeigt (14.11.2026)
+- ☑ Export des Maßnahmenplans bzw. aller Empfehlungen als CSV (TC-REC-013/014, 14.11.2026)
 
 ## Phase 8 – Abschluss
 - ☐ Alle Testfälle aus `05_test/02_testfallkatalog.md` automatisiert

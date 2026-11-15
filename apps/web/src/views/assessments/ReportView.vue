@@ -431,12 +431,18 @@ const print = () => window.print();
             </tbody>
           </table>
         </div>
-        <RouterLink
-          :to="{ name: 'recommendations', params: { id } }"
-          class="no-print"
-          data-testid="plan-link"
-          >{{ t('report.planOpen') }}</RouterLink
-        >
+        <p class="no-print plan-links">
+          <RouterLink :to="{ name: 'recommendations', params: { id } }" data-testid="plan-link">{{
+            t('report.planOpen')
+          }}</RouterLink>
+          <a
+            v-if="plan.length"
+            :href="`/api/assessments/${id}/recommendations.csv?scope=plan&lang=${lang}`"
+            download
+            data-testid="plan-export"
+            >{{ t('recommendations.export.plan') }}</a
+          >
+        </p>
       </section>
 
       <!-- 10. Anhang -->
@@ -593,6 +599,11 @@ const print = () => window.print();
 }
 .table-wrap {
   overflow-x: auto;
+}
+.plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
 }
 .matrix {
   display: grid;

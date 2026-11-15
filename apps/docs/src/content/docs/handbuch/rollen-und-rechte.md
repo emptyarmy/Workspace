@@ -32,7 +32,7 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 | Bericht ansehen (eigene Assessments; Admin: alle der Firma) | ✔ | ✔ | ✔¹ | ✔ |
 | Benchmark ansehen (nur Kennzahlen, anonym) | ✔ | ✔ | ✔ | ✔ |
 | Antworten zusammenführen, freigeben | – | ✔ | – | – |
-| Bericht und Empfehlungen der **eigenen** Firma lesen | ✔ | ✔ | ✔ | ✔ |
+| Bericht und Empfehlungen der **eigenen** Firma lesen, Maßnahmenplan als CSV exportieren | ✔ | ✔ | ✔ | ✔ |
 | Ergebnisse **anderer** Firmen | – | – | – | – |
 | Aggregierter Benchmark (Firma vs. Branche vs. alle) | ✔ | ✔ | ✔ | ✔ |
 

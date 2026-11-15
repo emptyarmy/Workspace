@@ -77,6 +77,8 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 
 | Problem | Lösung |
 |---|---|
+| `python3 tools/catalog/validate.py`: *ModuleNotFoundError: No module named 'jsonschema'* | Alte Fassung des Prüfskripts. Die aktuelle braucht kein Zusatzpaket: Ohne `jsonschema` prüft sie das Schema mit Node/ajv und meldet am Ende „Schema geprüft mit ajv“. |
+| `npm run catalog:validate`: *Hinweis: Schema-Prüfung übersprungen* | Weder `jsonschema` noch Node mit ajv gefunden – zuerst `npm install` im Projektordner ausführen. Alle fachlichen Prüfungen laufen trotzdem; das Schema prüft zusätzlich `npm run test:unit`. |
 | `sh: playwright: command not found` | `npm install`, danach einmalig `npx playwright install` |
 | `Process from config.webServer was not able to start` | Meist ist die Testdatenbank nicht erreichbar oder existiert nicht: `docker compose exec db createdb -U ai_tpi ai_tpi_e2e`. Playwright leitet die Adresse aus `DATABASE_URL` in `.env` ab. |
 | Firefox: `Could not find profile folder` (macOS) | Firefox darf den temporären Ordner von macOS nicht nutzen. Dauerhaft: `echo 'export TMPDIR="$HOME/pw-tmp"' >> ~/.zshrc`, `mkdir -p ~/pw-tmp`, neues Terminal. Übergangsweise: `PW_SKIP_FIREFOX=1 npm run test:e2e`. |

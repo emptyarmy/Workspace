@@ -23,7 +23,7 @@ Katalog (Version, Sprache-unabhängig)
 | `cluster` | – | Agile-TPI-Cluster `A`–`G` (Priorität) | `B` |
 | `effort` | ✔ | Umsetzungsaufwand bei Nichterfüllung `S` / `M` / `L` | `S` |
 | `tags` | – | z. B. `AI`, `agile` | `["AI"]` |
-| `dependsOn` | – | Voraussetzungen (andere KP-IDs) | `["KB03.K.01"]` |
+| `dependsOn` | – | Voraussetzungen: KP, die zuerst erfüllt sein sollten. Regeln (geprüft von `validate.py` und den Katalog-Tests): bekannte ID, gleiche oder niedrigere Ebene, keine Zyklen, keine Abhängigkeit von agilen bzw. KI-KP, die je nach Umfang wegfallen. Die Regel-Engine zieht KP vor, von denen andere abhängen. Im Katalog v1 bei 136 KP gepflegt (152 Abhängigkeiten) | `["KB03.K.02"]` |
 | `recommendation.de/en` | ✔ | Textbaustein für die Handlungsempfehlung | „Führen Sie eine dokumentierte Produktrisikoanalyse ein …“ |
 | `source` | ✔ | Herkunft | `TPI_NEXT_DE`, `AGILE_TPI_EN`, `AI_EXT` |
 | `agileRef` | – | Original-ID aus Agile TPI | `3.1.2` |

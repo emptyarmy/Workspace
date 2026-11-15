@@ -12,7 +12,7 @@ sidebar:
 | Node.js | ≥ 22 | Anwendung, Tests, Dokumentation |
 | npm | mit Node.js | Pakete (Workspaces) |
 | Docker Desktop | aktuell | PostgreSQL und Mailpit |
-| Python 3 | optional | Prüfung des Fragenkatalogs |
+| Python 3 | optional | Prüfung des Fragenkatalogs (`npm run catalog:validate`, keine Zusatzpakete nötig) |
 
 ## In fünf Schritten starten
 

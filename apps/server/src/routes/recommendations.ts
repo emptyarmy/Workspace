@@ -1,6 +1,7 @@
 import type { FastifyPluginAsync, FastifyReply } from 'fastify';
 import { and, asc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
+import { catalog } from '@ai-tpi/catalog';
 import { REC_STATUSES } from '@ai-tpi/shared';
 import { fail, me, parseBody } from '../admin/helpers';
 import { loadAccess, recordHistory, type Access } from '../assessment/access';
@@ -26,6 +27,105 @@ const isoDate = z
   .regex(/^\d{4}-\d{2}-\d{2}$/)
   .refine((d) => !Number.isNaN(Date.parse(d)));
 const optText = (max: number) => z.string().trim().max(max).nullable().optional();
+const exportQuery = z.object({
+  scope: z.enum(['plan', 'all']).default('plan'),
+  lang: z.enum(['de', 'en']).default('de'),
+});
+const PLAN_STATUSES = new Set(['accepted', 'in_progress', 'done']);
+
+/** Texte des CSV-Exports (Spaltenköpfe und Werte) je Sprache. */
+const EXPORT_TEXT = {
+  de: {
+    head: [
+      'Horizont',
+      'Priorität',
+      'Status',
+      'Titel',
+      'Beschreibung',
+      'Kernbereich',
+      'Kontrollpunkte',
+      'Voraussetzungen',
+      'Aufwand',
+      'Verantwortlich',
+      'Termin',
+      'Nächster Schritt',
+      'Nutzen',
+      'Messgröße',
+      'Rolle',
+      'Herkunft',
+      'KI-Modul',
+      'Modell',
+      'Bearbeitet',
+      'Erstellt',
+      'Geändert',
+    ],
+    horizon: { short: 'kurzfristig (< 1 Monat)', long: 'langfristig (≥ 1 Monat)' },
+    status: {
+      proposed: 'Vorgeschlagen',
+      accepted: 'Angenommen',
+      in_progress: 'In Arbeit',
+      done: 'Erledigt',
+      rejected: 'Abgelehnt',
+    },
+    origin: { rule: 'Regelbasiert', ai: 'KI-generiert' },
+    yes: 'ja',
+    no: 'nein',
+    file: 'massnahmenplan',
+    fileAll: 'empfehlungen',
+  },
+  en: {
+    head: [
+      'Horizon',
+      'Priority',
+      'Status',
+      'Title',
+      'Description',
+      'Key area',
+      'Checkpoints',
+      'Prerequisites',
+      'Effort',
+      'Owner',
+      'Due date',
+      'Next step',
+      'Benefit',
+      'Metric',
+      'Role',
+      'Origin',
+      'AI module',
+      'Model',
+      'Edited',
+      'Created',
+      'Updated',
+    ],
+    horizon: { short: 'short-term (< 1 month)', long: 'long-term (≥ 1 month)' },
+    status: {
+      proposed: 'Proposed',
+      accepted: 'Accepted',
+      in_progress: 'In progress',
+      done: 'Done',
+      rejected: 'Rejected',
+    },
+    origin: { rule: 'Rule-based', ai: 'AI-generated' },
+    yes: 'yes',
+    no: 'no',
+    file: 'action-plan',
+    fileAll: 'recommendations',
+  },
+} as const;
+
+/** CSV-Zelle: Anführungszeichen verdoppeln, Formel-Injektion in Tabellenkalkulationen verhindern. */
+export const csvCell = (v: unknown) => {
+  const s = v == null ? '' : v instanceof Date ? v.toISOString() : String(v);
+  const safe = /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+  return `"${safe.replace(/"/g, '""')}"`;
+};
+const fileSlug = (s: string) =>
+  s
+    .normalize('NFKD')
+    .replace(/[^\w-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'assessment';
+
 const patchBody = z
   .object({
     version: z.number().int().min(1),
@@ -112,6 +212,60 @@ export const recommendationRoutes: FastifyPluginAsync = async (app) => {
     const acc = await loadAccess(db(), req, reply, req.params.id);
     if (!acc) return;
     return listPayload(acc);
+  });
+
+  /**
+   * Export des Maßnahmenplans (`scope=plan`: angenommen, in Arbeit, erledigt) bzw. aller Empfehlungen (`scope=all`)
+   * als CSV (Semikolon, UTF-8 mit BOM) – für alle, die die Empfehlungen lesen dürfen.
+   */
+  app.get<{ Params: { id: string } }>('/api/assessments/:id/recommendations.csv', async (req, reply) => {
+    const q = exportQuery.safeParse(req.query);
+    if (!q.success) return fail(reply, 400, 'invalid_input');
+    const acc = await loadAccess(db(), req, reply, req.params.id);
+    if (!acc) return;
+    const T = EXPORT_TEXT[q.data.lang];
+    const lang = q.data.lang;
+    const cps = new Map(catalog.keyAreas.flatMap((a) => a.checkpoints.map((c) => [c.id, c] as const)));
+    const areas = new Map(catalog.keyAreas.map((a) => [a.id, a.name[lang]]));
+    const items = (await listRecommendations(db(), acc.assessment.id)).filter(
+      (r) => q.data.scope === 'all' || PLAN_STATUSES.has(r.status),
+    );
+    const lines = items.map((r) =>
+      [
+        T.horizon[r.horizon],
+        r.priority,
+        T.status[r.status],
+        r.title,
+        r.text,
+        `${r.keyAreaId} ${areas.get(r.keyAreaId) ?? ''}`.trim(),
+        r.checkpointIds.join(', '),
+        [...new Set(r.checkpointIds.flatMap((id) => cps.get(id)?.dependsOn ?? []))]
+          .filter((d) => !r.checkpointIds.includes(d))
+          .join(', '),
+        r.effort,
+        r.ownerName,
+        r.dueDate,
+        r.nextStep,
+        r.benefit,
+        r.metric,
+        r.ownerRole,
+        T.origin[r.origin],
+        r.aiModuleName,
+        r.aiModel,
+        r.edited ? T.yes : T.no,
+        r.createdAt,
+        r.updatedAt,
+      ]
+        .map(csvCell)
+        .join(';'),
+    );
+    const name = `${q.data.scope === 'plan' ? T.file : T.fileAll}-${fileSlug(acc.assessment.project)}-${new Date()
+      .toISOString()
+      .slice(0, 10)}.csv`;
+    reply
+      .header('content-type', 'text/csv; charset=utf-8')
+      .header('content-disposition', `attachment; filename="${name}"`);
+    return `\uFEFF${[T.head.map(csvCell).join(';'), ...lines].join('\r\n')}\r\n`;
   });
 
   /** KI-Module zur Auswahl beim Erzeugen (S-09); das Standardmodul steht vorne. */

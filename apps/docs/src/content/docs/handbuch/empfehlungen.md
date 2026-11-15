@@ -30,7 +30,7 @@ Erneutes Erzeugen ersetzt nur die Empfehlungen im Status **Vorgeschlagen**. Ange
 | Kandidaten | Kontrollpunkte mit **Nicht erfüllt** oder **Teilweise erfüllt** |
 | 1 | Zuerst die **nächsthöhere, noch nicht erreichte Ebene** des Kernbereichs (Fundament vor Kür) |
 | 2 | Niedriger **Cluster**-Buchstabe (Agile TPI, A vor B …) |
-| 3 | Kontrollpunkte, von denen andere abhängen |
+| 3 | Kontrollpunkte, von denen andere abhängen (Voraussetzungen, siehe unten) |
 | 4 | Kernbereich mit dem größten Abstand zum **Branchen-Median** (wenn der Benchmark genug Firmen hat), sonst mit dem niedrigsten Erfüllungsgrad |
 | 5 | Geringerer Aufwand zuerst (Quick Wins) |
 
@@ -39,6 +39,15 @@ Erneutes Erzeugen ersetzt nur die Empfehlungen im Status **Vorgeschlagen**. Ange
 | S | **kurzfristig** (< 1 Monat) |
 | M, L | **langfristig** (≥ 1 Monat) |
 | M und „teilweise erfüllt“ | aufgeteilt: kurzfristig **Erster Schritt**, langfristig **Vollständige Umsetzung** |
+
+### Voraussetzungen
+
+Im Fragenkatalog ist bei 136 Kontrollpunkten hinterlegt, welche anderen Kontrollpunkte zuerst erfüllt sein sollten – z. B. setzt eine risikobasierte Differenzierung der Tests (KB03.K.03) die Produktrisikoanalyse (KB03.K.02) voraus, und KI-Kontrollpunkte setzen die KI-Richtlinie (KB17.K.01) bzw. die menschliche Freigabe (KB17.E.01) voraus. Jede Empfehlungskarte zeigt das an:
+
+- **Setzt voraus: …** – diese Kontrollpunkte sollten zuerst umgesetzt sein.
+- **Grundlage für n weitere Kontrollpunkte** – wer diese Empfehlung umsetzt, schafft die Basis für weitere Verbesserungen; die Regel-Engine zieht sie deshalb vor.
+
+Die vollständige Liste steht in der [Katalog-Übersicht](/projekt/fragenkatalog/katalog-v1-uebersicht/) in der Spalte *Voraussetzung*.
 
 Kontrollpunkte desselben Kernbereichs und derselben Ebene werden zu einer Empfehlung gebündelt. Es gibt höchstens **10 kurzfristige und 10 langfristige** Empfehlungen.
 
@@ -74,6 +83,15 @@ Jede Empfehlung hat (für Assessoren) diese Felder; Änderungen werden sofort ge
 | **Bearbeiten** | Titel und Beschreibung anpassen; die Empfehlung wird als *bearbeitet* markiert, der Regeltext bleibt einsehbar |
 
 Über **Anzeigen → Maßnahmenplan** sind nur angenommene, begonnene und erledigte Empfehlungen zu sehen. Derselbe Plan steht im [Bericht](/handbuch/bericht-und-benchmark/) im Abschnitt **Maßnahmenplan** (auch im Ausdruck).
+
+### Exportieren
+
+| Schaltfläche | Inhalt |
+|---|---|
+| **Maßnahmenplan exportieren (CSV)** – auf der Empfehlungsseite und im Bericht | angenommene, begonnene und erledigte Empfehlungen |
+| **Alle Empfehlungen exportieren (CSV)** – auf der Empfehlungsseite | alle, auch vorgeschlagene und abgelehnte |
+
+Die Datei (z. B. `massnahmenplan-Projekt-2026-11-14.csv`) öffnet sich direkt in Excel oder LibreOffice: Semikolon als Trennzeichen, UTF-8, Spaltenköpfe und Werte in der Sprache der Oberfläche. Spalten: Horizont, Priorität, Status, Titel, Beschreibung, Kernbereich, Kontrollpunkte, Voraussetzungen, Aufwand, Verantwortlich, Termin, Nächster Schritt, Nutzen, Messgröße, Rolle, Herkunft, KI-Modul, Modell, Bearbeitet, Erstellt, Geändert. Exportieren darf jeder, der die Empfehlungen lesen darf. Zellen, die mit `=`, `+`, `-` oder `@` beginnen, werden mit einem vorangestellten `'` entschärft, damit die Tabellenkalkulation keine Formel ausführt.
 
 Ändert jemand anderes dieselbe Empfehlung gleichzeitig, erscheint ein Hinweis und die aktuelle Fassung wird geladen. Annehmen, Ablehnen und alle Änderungen stehen in der [Änderungshistorie](/handbuch/assessments-und-fragebogen/).
 

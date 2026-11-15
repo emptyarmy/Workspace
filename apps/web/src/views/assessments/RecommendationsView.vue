@@ -139,6 +139,17 @@ const selectedModule = computed(() => modules.value.find((m) => m.id === moduleI
 const usesAi = computed(() => !!selectedModule.value && selectedModule.value.mode !== 'rules');
 
 const areaName = (id: string) => catalog.keyAreas.find((k) => k.id === id)?.name[lang.value] ?? id;
+const cpById = new Map(catalog.keyAreas.flatMap((a) => a.checkpoints.map((c) => [c.id, c] as const)));
+/** Voraussetzungen (dependsOn) der Kontrollpunkte einer Empfehlung, ohne die eigenen. */
+const prerequisites = (r: Rec) =>
+  [...new Set(r.checkpointIds.flatMap((id) => cpById.get(id)?.dependsOn ?? []))].filter(
+    (d) => !r.checkpointIds.includes(d),
+  );
+/** Kontrollpunkte, die auf denen dieser Empfehlung aufbauen. */
+const dependents = (r: Rec) =>
+  [...cpById.values()]
+    .filter((c) => !r.checkpointIds.includes(c.id) && c.dependsOn?.some((d) => r.checkpointIds.includes(d)))
+    .map((c) => c.id);
 const visible = computed(() =>
   (data.value?.items ?? []).filter((r) =>
     filter.value === 'plan'
@@ -255,6 +266,10 @@ async function saveEdit(r: Rec) {
   if (await patch(r, { title: draft.title.trim(), text: draft.text.trim() })) editing.value = null;
 }
 
+/** CSV-Export (Maßnahmenplan bzw. alle Empfehlungen) in der Sprache der Oberfläche. */
+const exportUrl = (scope: 'plan' | 'all') =>
+  `/api/assessments/${props.id}/recommendations.csv?scope=${scope}&lang=${lang.value}`;
+
 const aiLabel = (r: Rec) =>
   t('recommendations.aiGenerated', {
     model: [r.aiModuleName, r.aiModel].filter(Boolean).join(' · '),
@@ -311,6 +326,18 @@ const aiLabel = (r: Rec) =>
         {{ t('recommendations.openHint', { n: result.openCount }) }}
       </p>
 
+      <div v-if="data.items.length" class="export" data-testid="recs-export">
+        <a
+          class="btn btn-ghost btn-small"
+          :href="exportUrl('plan')"
+          download
+          data-testid="recs-export-plan"
+          >{{ t('recommendations.export.plan') }}</a
+        >
+        <a class="btn btn-ghost btn-small" :href="exportUrl('all')" download data-testid="recs-export-all">{{
+          t('recommendations.export.all')
+        }}</a>
+      </div>
       <div v-if="data.items.length" class="filter">
         <label for="rec-filter">{{ t('recommendations.filter.label') }}</label>
         <select id="rec-filter" v-model="filter" data-testid="recs-filter">
@@ -413,6 +440,15 @@ const aiLabel = (r: Rec) =>
               <template v-if="r.benchmarkGap !== null && r.benchmarkGap > 0">
                 · {{ t('recommendations.gap', { n: r.benchmarkGap.toLocaleString(locale) }) }}
               </template>
+            </p>
+            <p v-if="prerequisites(r).length || dependents(r).length" class="refs" data-testid="rec-deps">
+              <template v-if="prerequisites(r).length">{{
+                t('recommendations.requires', { ids: prerequisites(r).join(', ') })
+              }}</template>
+              <template v-if="prerequisites(r).length && dependents(r).length"> · </template>
+              <template v-if="dependents(r).length">{{
+                t('recommendations.enables', { n: dependents(r).length })
+              }}</template>
             </p>
             <details v-if="r.origin === 'ai' || r.edited" class="rule-text">
               <summary>{{ t('recommendations.ruleText') }}</summary>
@@ -571,6 +607,11 @@ h1 {
 }
 .generate select {
   width: 100%;
+}
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .filter {
   display: flex;

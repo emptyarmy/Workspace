@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import {
   expect,
   request as pwRequest,
@@ -63,7 +64,7 @@ async function aiModule(o: Org, info: TestInfo, name: string, scenario: string, 
 const llmCalls = async (token: string) =>
   ((await (await admin.get(`/api/test/llm-calls/${token}`)).json()) as { calls: number }).calls;
 
-test('TC-REC-001/002/008 regelbasierte Empfehlungen erzeugen, annehmen, bearbeiten, Verantwortliche setzen', async ({
+test('TC-REC-001/002/008/013 regelbasierte Empfehlungen erzeugen, annehmen, bearbeiten, Verantwortliche setzen', async ({
   browser,
 }, info) => {
   const t = await filled(browser, info);
@@ -89,6 +90,13 @@ test('TC-REC-001/002/008 regelbasierte Empfehlungen erzeugen, annehmen, bearbeit
   await expect(long.locator('[data-checkpoints="KB01.O.02"]')).toBeVisible();
   await expect(short.locator('[data-checkpoints="KB01.O.02"]')).toHaveCount(0);
   await expect(page.getByTestId('rec-rule').first()).toHaveText('Regelbasiert');
+  // Abhängigkeiten aus dem Katalog: KB01.K.03 setzt KB01.K.02 voraus; KB01.K.01 ist Grundlage für weitere KP
+  await expect(short.locator('[data-checkpoints="KB01.K.03"]').getByTestId('rec-deps')).toContainText(
+    'Setzt voraus: KB01.K.02',
+  );
+  await expect(short.locator('[data-checkpoints="KB01.K.01"]').getByTestId('rec-deps')).toContainText(
+    'Grundlage für',
+  );
 
   // TC-REC-008: annehmen, Verantwortliche, Termin, Text bearbeiten
   const card = short.locator('[data-checkpoints="KB01.K.01"]');
@@ -124,11 +132,27 @@ test('TC-REC-001/002/008 regelbasierte Empfehlungen erzeugen, annehmen, bearbeit
   await expect(page.getByTestId('plan-row')).toContainText('Product Owner verbindlich benennen');
   await expect(page.getByTestId('plan-row')).toContainText('Eva Entwicklung');
 
+  // TC-REC-013: Maßnahmenplan als CSV aus dem Bericht und aus der Empfehlungsseite herunterladen
+  const fromReport = page.waitForEvent('download');
+  await page.getByTestId('plan-export').click();
+  const reportCsv = await fromReport;
+  expect(reportCsv.suggestedFilename()).toMatch(/^massnahmenplan-.*\.csv$/);
+  const csv = readFileSync((await reportCsv.path())!, 'utf8');
+  expect(csv.split('\r\n')[0]).toContain('"Horizont";"Priorität";"Status";"Titel"');
+  expect(csv).toContain('"Product Owner verbindlich benennen"');
+  expect(csv).toContain('"Eva Entwicklung"');
+
   // Neu erzeugen: angenommene Empfehlung bleibt erhalten und wird nicht doppelt vorgeschlagen
   await page.goto(`/assessments/${t.asm}/empfehlungen`);
   await page.getByTestId('recs-start').click();
   await expect(page.getByTestId('recs-notice')).toContainText('3 Empfehlungen erzeugt');
   await expect(page.getByTestId('recs-short').locator('[data-checkpoints="KB01.K.01"]')).toHaveCount(1);
+  const allDl = page.waitForEvent('download');
+  await page.getByTestId('recs-export-all').click();
+  const all = readFileSync((await (await allDl).path())!, 'utf8')
+    .trim()
+    .split('\r\n');
+  expect(all.length).toBe(1 + 4); // Kopfzeile + 1 angenommene + 3 neue Vorschläge
 });
 
 test('TC-REC-003/007/010/011 KI-Modul wählen, Datenschutz-Vorschau, ablehnen ohne Aufruf, KI-Kennzeichnung', async ({

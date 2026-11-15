@@ -21,7 +21,8 @@ Alle Befehle im **Projektordner** ausführen.
 | `npm run test:planned` | Platzhalter-Tests für noch nicht automatisierte Katalogfälle neu erzeugen (`tests/e2e/geplant/`) |
 | `npm run db:generate` | Migration aus `schema.ts` erzeugen |
 | `npm run db:migrate` | Migrationen ausführen + Stammdaten (löscht keine Daten; zum Zurücksetzen siehe [Anwendung zurücksetzen](/entwicklung/zuruecksetzen/)) |
-| `npm run catalog:validate` | Fragenkatalog gegen das Schema prüfen (Python) |
+| `npm run catalog:validate` | Fragenkatalog prüfen (Python, ohne Zusatzpakete; Schema mit `jsonschema` oder sonst Node/ajv): JSON-Schema, eindeutige IDs, Zuordnung aller 108 Agile-TPI-Punkte, Sicht P/T/O bei allen Kontrollpunkten, Voraussetzungen (`dependsOn`: Ebene, Umfang, Zyklen). Das Python-Paket `jsonschema` ist optional; ohne es übernimmt `npm run test:unit` die Schema-Prüfung |
+| `python3 tools/catalog/build_overview.py` | Katalog-Übersicht `docs/03_fragenkatalog/05_katalog-v1-uebersicht.md` neu erzeugen (mit Sicht und Voraussetzungen) |
 | `npm run docs:dev` | Dokumentation mit Neuladen (Port 4321) |
 | `npm run docs:build` | Dokumentation als statische Seite (`apps/docs/dist`) |
 | `npm run docs:preview` | gebaute Dokumentation ansehen |

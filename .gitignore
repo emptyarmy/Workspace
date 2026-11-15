@@ -22,3 +22,6 @@ packages/catalog/sources/
 
 # Backup
 AI_TPI.zip
+
+# Python-Umgebung (optional, z. B. für tools/catalog/validate.py)
+.venv/

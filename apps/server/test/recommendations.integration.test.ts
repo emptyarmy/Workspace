@@ -427,6 +427,56 @@ describe.skipIf(!url)('Phase 7: Handlungsempfehlungen (DB)', () => {
     expect(forK01[0]).toMatchObject({ id: rec.id, status: 'accepted' });
   });
 
+  it('TC-REC-013 Export des Maßnahmenplans bzw. aller Empfehlungen als CSV (DE/EN), auch für Leser', async () => {
+    const plan = await req('GET', `${A()}/recommendations.csv`, c.lena);
+    expect(plan.statusCode).toBe(200);
+    expect(plan.headers['content-type']).toContain('text/csv');
+    expect(plan.headers['content-disposition']).toMatch(
+      /attachment; filename="massnahmenplan-Empfehlungen-2026-\d{4}-\d{2}-\d{2}\.csv"/,
+    );
+    expect(plan.body.charCodeAt(0)).toBe(0xfeff);
+    const lines = plan.body.slice(1).trim().split('\r\n');
+    expect(lines[0]).toMatch(/^"Horizont";"Priorität";"Status";"Titel"/);
+    expect(lines).toHaveLength(2); // nur die angenommene Empfehlung
+    expect(lines[1]).toContain('"Angenommen"');
+    expect(lines[1]).toContain('"PO verbindlich benennen"');
+    expect(lines[1]).toContain('"Eva Entwicklung"');
+    expect(lines[1]).toContain('"2026-12-15"');
+    expect(lines[1]).toContain('"KB01 Engagement der Stakeholder"');
+
+    const all = await req('GET', `${A()}/recommendations.csv?scope=all&lang=en`, c.assessor);
+    const rows = all.body.slice(1).trim().split('\r\n');
+    expect(rows[0]).toMatch(/^"Horizon";"Priority";"Status";"Title"/);
+    expect(rows.length).toBeGreaterThan(2);
+    expect(all.headers['content-disposition']).toContain('filename="recommendations-');
+    // Voraussetzungen aus dem Katalog (KB01.K.03 setzt KB01.K.02 voraus)
+    expect(rows.find((r) => r.includes('"KB01.K.03"'))).toContain('"KB01.K.02"');
+    expect((await req('GET', `${A()}/recommendations.csv`, c.admin)).statusCode).toBe(200);
+  });
+
+  it('TC-REC-014 CSV-Export: Formel-Injektion entschärft, ungültige Parameter 400, fremdes Assessment 404', async () => {
+    const items = (await req('GET', `${A()}/recommendations`, c.assessor)).json().items as Rec[];
+    const rec = items.find((x) => x.status === 'accepted')!;
+    await req('PATCH', `${A()}/recommendations/${rec.id}`, c.assessor, {
+      version: rec.version,
+      title: '=HYPERLINK("http://boese.example")',
+    });
+    const body = (await req('GET', `${A()}/recommendations.csv`, c.assessor)).body;
+    expect(body).toContain(`"'=HYPERLINK(""http://boese.example"")"`);
+    expect((await req('GET', `${A()}/recommendations.csv?scope=alles`, c.assessor)).statusCode).toBe(400);
+    expect((await req('GET', `${A()}/recommendations.csv?lang=fr`, c.assessor)).statusCode).toBe(400);
+    expect(
+      (
+        await req(
+          'GET',
+          '/api/assessments/00000000-0000-0000-0000-000000000000/recommendations.csv',
+          c.assessor,
+        )
+      ).statusCode,
+    ).toBe(404);
+    expect((await req('GET', `${A()}/recommendations.csv`, '')).statusCode).toBe(401);
+  });
+
   it('fremdes Assessment / unbekannte Empfehlung → 404, ungültiges Modul → 400', async () => {
     expect(
       (await req('GET', '/api/assessments/00000000-0000-0000-0000-000000000000/recommendations', c.assessor))

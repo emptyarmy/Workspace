@@ -17,12 +17,12 @@ Im Assessment auf **Bericht** klicken. Den Bericht sehen alle Team-Mitglieder un
 | **Management Summary** | Gesamtindex, KI-Index, niedrigste und mittlere erreichte Ebene, Fortschritt, Anzahl erfüllt / teilweise / nicht erfüllt / n. a., je drei Stärken und Handlungsfelder |
 | **Reifegradmatrix** | Kernbereiche × Ebenen, ein farbiges Feld je Kontrollpunkt. **Antippen** zeigt Text, Antwort, Begründung und Kommentare. Rechts die erreichte Ebene. |
 | **Erfüllungsgrad je Kernbereich** | Netzdiagramm, darunter als Tabelle aufklappbar |
-| **Antworten nach Ebene und Sicht** | Balken gesamt, je Ebene und je Sicht Professional / Team / Organization – wie im Excel-Tool |
+| **Antworten nach Ebene und Sicht** | Balken gesamt, je Ebene und je Sicht Professional / Team / Organization – wie im Excel-Tool. Alle Kontrollpunkte haben eine Sicht und zählen mit (aus Agile TPI übernommen oder fachlich zugeordnet, siehe [Katalog-Übersicht](/projekt/fragenkatalog/katalog-v1-uebersicht/)) |
 | **Erreichte Ebene je Kernbereich** | Treppe mit drei Stufen |
 | **KI-Reifegrad** | KI-Index und Netz der KI-Kernbereiche KB17–KB19 |
 | **Benchmark** | Vergleich mit Branche und allen Firmen (siehe unten) |
 | **Konsenslücken** | Kontrollpunkte, bei denen die Abteilungen unterschiedlich geantwortet haben. Befragte sehen diesen Abschnitt nicht, weil er Antworten anderer Abteilungen zeigt. |
-| **Maßnahmenplan** | Angenommene, begonnene und erledigte [Empfehlungen](/handbuch/empfehlungen/) mit Horizont, Kontrollpunkten, Status, Verantwortlichen und Termin |
+| **Maßnahmenplan** | Angenommene, begonnene und erledigte [Empfehlungen](/handbuch/empfehlungen/) mit Horizont, Kontrollpunkten, Status, Verantwortlichen und Termin; **Maßnahmenplan exportieren (CSV)** lädt ihn als Tabelle herunter |
 | **Anhang** | Alle Kontrollpunkte mit Antwort, Begründung und Kommentaren sowie die Berechnungsregeln |
 
 Farben: **Erfüllt** grün ✔, **Teilweise** gelb ◐, **Nicht erfüllt** rot ✖, **Nicht anwendbar** grau schraffiert –, **Offen** weiß mit gestricheltem Rahmen.

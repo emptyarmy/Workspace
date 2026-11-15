@@ -222,6 +222,9 @@
             "de": "Verfolgen Sie zugesagte Ressourcen (Personen, Umgebungen, Daten) nach und eskalieren Sie Abweichungen frühzeitig.",
             "en": "Track committed resources (people, environments, data) and escalate deviations early."
           },
+          "dependsOn": [
+            "KB01.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -240,6 +243,9 @@
             "de": "Übertragen Sie dem Auftraggeber bzw. Product Owner die Verantwortung für die Produktrisikoanalyse und dokumentieren Sie das Ergebnis.",
             "en": "Make the principal or Product Owner owner of the product risk analysis and document its result."
           },
+          "dependsOn": [
+            "KB01.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -261,6 +267,9 @@
             "de": "Erstellen Sie eine Stakeholder-Übersicht mit Interessen und Ansprechpartnern und teilen Sie sie mit dem Team.",
             "en": "Create a stakeholder overview with interests and contacts and share it with the team."
           },
+          "dependsOn": [
+            "KB01.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -282,6 +291,9 @@
             "de": "Stellen Sie den Stakeholdern regelmäßig Qualitätsinformationen bereit (z. B. Dashboard, Sprint-Review).",
             "en": "Provide stakeholders with regular quality information (e.g. dashboard, sprint review)."
           },
+          "dependsOn": [
+            "KB01.E.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -303,6 +315,9 @@
             "de": "Vereinbaren Sie, dass Änderungen an Lieferplan oder Umfang dem Testmanagement unaufgefordert und frühzeitig mitgeteilt werden.",
             "en": "Agree that changes to delivery plan or scope are communicated to test management early and unprompted."
           },
+          "dependsOn": [
+            "KB01.E.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "P",
@@ -321,6 +336,9 @@
             "de": "Klären Sie mit dem Product Owner seine Qualitätsaufgaben (Abnahmekriterien, Risikoentscheidungen) und reflektieren Sie sie in der Retrospektive.",
             "en": "Clarify the Product Owner’s quality duties (acceptance criteria, risk decisions) and reflect on them in the retrospective."
           },
+          "dependsOn": [
+            "KB01.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -403,6 +421,9 @@
             "de": "Bewerten Sie die Zusammenarbeit regelmäßig gemeinsam (z. B. halbjährlicher Review) und leiten Sie Maßnahmen ab.",
             "en": "Evaluate the collaboration jointly on a regular basis (e.g. semi-annual review) and derive actions."
           },
+          "dependsOn": [
+            "KB01.O.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -536,6 +557,9 @@
             "de": "Verlagern Sie Risikoanalyse und Testfallentwurf in das Refinement bzw. den Sprintbeginn.",
             "en": "Move risk analysis and test case design into refinement or the start of the sprint."
           },
+          "dependsOn": [
+            "KB02.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -598,6 +622,9 @@
             "de": "Lassen Sie Tester an der Formulierung von Anforderungen und Akzeptanzkriterien mitwirken (z. B. Three Amigos).",
             "en": "Let testers help formulate requirements and acceptance criteria (e.g. Three Amigos)."
           },
+          "dependsOn": [
+            "KB02.K.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -710,6 +737,9 @@
             "de": "Dokumentieren Sie die Teststrategie kompakt (1–2 Seiten) und lassen Sie sie vom Auftraggeber freigeben.",
             "en": "Document the test strategy concisely (1–2 pages) and have it approved by the principal."
           },
+          "dependsOn": [
+            "KB01.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -731,6 +761,9 @@
             "de": "Führen Sie eine Produktrisikoanalyse ein, z. B. als 30-minütiges Risk Poker im Refinement.",
             "en": "Introduce a product risk analysis, e.g. a 30-minute risk poker in refinement."
           },
+          "dependsOn": [
+            "KB01.K.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -752,6 +785,9 @@
             "de": "Ordnen Sie jedem Risiko-Level eine Testintensität und Teststufe zu (Risiko-Test-Matrix).",
             "en": "Assign a test depth and test level to each risk class (risk–test matrix)."
           },
+          "dependsOn": [
+            "KB03.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -773,6 +809,9 @@
             "de": "Legen Sie fest, welche Regressionstests bei welcher Änderung laufen, abgeleitet aus den Produktrisiken.",
             "en": "Define which regression tests run for which change, derived from the product risks."
           },
+          "dependsOn": [
+            "KB03.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -794,6 +833,9 @@
             "de": "Stimmen Sie die Teststrategie mit allen relevanten Stakeholdern ab (z. B. Review-Termin).",
             "en": "Align the test strategy with all relevant stakeholders (e.g. review meeting)."
           },
+          "dependsOn": [
+            "KB03.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -812,6 +854,9 @@
             "de": "Erstellen Sie eine Übersicht der Testabdeckung je Teststufe und Team und stimmen Sie Integrationstests teamübergreifend ab.",
             "en": "Create an overview of test coverage per test level and team and coordinate integration tests across teams."
           },
+          "dependsOn": [
+            "KB03.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -833,6 +878,9 @@
             "de": "Ordnen Sie in der Teststrategie Risikoklassen konkrete Testentwurfsverfahren zu.",
             "en": "Assign concrete test design techniques to risk classes in the test strategy."
           },
+          "dependsOn": [
+            "KB03.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -854,6 +902,9 @@
             "de": "Prüfen Sie die Teststrategie zu jedem Release bzw. in jeder Retrospektive auf Aktualität.",
             "en": "Check the test strategy for relevance at every release or retrospective."
           },
+          "dependsOn": [
+            "KB03.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -877,6 +928,9 @@
             "de": "Ergänzen Sie die Teststrategie um einen Abschnitt „KI-Einsatz“ mit Einsatzbereichen und Prüfschritten.",
             "en": "Add an “AI usage” section to the test strategy with areas of use and verification steps."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -918,6 +972,9 @@
             "de": "Erfassen Sie Produktionsstörungen mit Ursache und Teststufe und werten Sie sie quartalsweise für die Strategie aus.",
             "en": "Record production incidents with cause and test level and evaluate them quarterly for the strategy."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -939,6 +996,10 @@
             "de": "Bereiten Sie historische Fehler- und Änderungsdaten auf und erproben Sie eine KI-gestützte Risikovorhersage.",
             "en": "Prepare historical defect and change data and trial an AI-based risk prediction."
           },
+          "dependsOn": [
+            "KB03.K.02",
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -1091,6 +1152,9 @@
             "de": "Planen Sie Testkapazitäten projektübergreifend und verfolgen Sie Zusagen nach.",
             "en": "Plan test capacity across projects and track commitments."
           },
+          "dependsOn": [
+            "KB04.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -1127,6 +1191,9 @@
             "de": "Erstellen bzw. aktualisieren Sie eine Testrichtlinie und prüfen Sie stichprobenartig ihre Einhaltung.",
             "en": "Create or update a test policy and check compliance by sampling."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -1168,6 +1235,9 @@
             "de": "Führen Sie eine jährliche Bewertung des Leistungskatalogs mit Kunden der Testorganisation durch.",
             "en": "Run an annual review of the service catalogue with the test organisation’s customers."
           },
+          "dependsOn": [
+            "KB04.K.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1210,6 +1280,9 @@
             "de": "Nutzen Sie den Benchmark dieser Anwendung bzw. Branchenvergleiche, um die Leistung einzuordnen.",
             "en": "Use this application’s benchmark or industry comparisons to put performance into context."
           },
+          "dependsOn": [
+            "KB04.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -1358,6 +1431,9 @@
             "de": "Erstellen Sie eine einfache Kommunikationsmatrix (wer erhält was, wann, wie).",
             "en": "Create a simple communication matrix (who receives what, when, how)."
           },
+          "dependsOn": [
+            "KB05.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -1436,6 +1512,9 @@
             "de": "Erstellen Sie Nutzungsregeln für Kommunikationswerkzeuge und prüfen Sie sie jährlich.",
             "en": "Create usage rules for communication tools and review them annually."
           },
+          "dependsOn": [
+            "KB05.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -1525,6 +1604,9 @@
             "de": "Legen Sie fest, welche Berichte schriftlich erfolgen, und archivieren Sie sie zentral.",
             "en": "Define which reports are written and archive them centrally."
           },
+          "dependsOn": [
+            "KB06.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1567,6 +1649,9 @@
             "de": "Ergänzen Sie Berichte um Trendgrafiken und konkrete Empfehlungen.",
             "en": "Add trend charts and concrete recommendations to reports."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1588,6 +1673,9 @@
             "de": "Berichten Sie Risikoabdeckung und Qualitätstrends je Produktrisiko.",
             "en": "Report risk coverage and quality trends per product risk."
           },
+          "dependsOn": [
+            "KB03.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1609,6 +1697,9 @@
             "de": "Legen Sie fest, wer KI-erzeugte Berichtstexte vor dem Versand prüft und freigibt.",
             "en": "Define who reviews and approves AI-generated report texts before sending."
           },
+          "dependsOn": [
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -1629,6 +1720,9 @@
             "de": "Leiten Sie aus Berichtsdaten jährlich Verbesserungsmaßnahmen ab (z. B. mit dieser Anwendung).",
             "en": "Derive improvement actions from report data annually (e.g. using this application)."
           },
+          "dependsOn": [
+            "KB09.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1650,6 +1744,9 @@
             "de": "Nehmen Sie die Übergabe der Messdaten in die Projektabschluss-Checkliste auf.",
             "en": "Add the handover of measurement data to the project closure checklist."
           },
+          "dependsOn": [
+            "KB06.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -1715,6 +1812,9 @@
             "de": "Lassen Sie den Testplan bzw. die Testanteile der Sprintplanung vom Product Owner bestätigen.",
             "en": "Have the test plan or test parts of sprint planning confirmed by the Product Owner."
           },
+          "dependsOn": [
+            "KB07.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1757,6 +1857,9 @@
             "de": "Stimmen Sie Testplan bzw. Definition of Done in einem kurzen Review mit allen relevanten Stakeholdern ab.",
             "en": "Align the test plan or Definition of Done with all relevant stakeholders in a short review."
           },
+          "dependsOn": [
+            "KB07.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1801,6 +1904,9 @@
             "de": "Machen Sie Planabweichungen zum festen Punkt im Refinement bzw. in Statusrunden.",
             "en": "Make plan deviations a fixed item in refinement or status meetings."
           },
+          "dependsOn": [
+            "KB07.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1822,6 +1928,9 @@
             "de": "Führen Sie eine Änderungshistorie für den Testplan.",
             "en": "Keep a change history for the test plan."
           },
+          "dependsOn": [
+            "KB07.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -1995,6 +2104,9 @@
             "de": "Stellen Sie die Testschätzung dem Auftraggeber vor und dokumentieren Sie seine Zustimmung.",
             "en": "Present the test estimate to the principal and record their agreement."
           },
+          "dependsOn": [
+            "KB08.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2013,6 +2125,9 @@
             "de": "Ergänzen Sie die bestehende Schätzung um eine zweite Technik (z. B. Analogieschätzung).",
             "en": "Add a second technique to the existing estimate (e.g. analogy estimation)."
           },
+          "dependsOn": [
+            "KB08.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2031,6 +2146,9 @@
             "de": "Führen Sie eine formale Schätztechnik ein (z. B. Testpunktanalyse).",
             "en": "Introduce a formal estimating technique (e.g. test point analysis)."
           },
+          "dependsOn": [
+            "KB08.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2049,6 +2167,9 @@
             "de": "Nutzen Sie Velocity und Burndown für die Planung von Testanteilen.",
             "en": "Use velocity and burndown to plan testing work."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2088,6 +2209,9 @@
             "de": "Erfassen Sie Zeitersparnis bzw. Mehraufwand durch KI-Werkzeuge und berücksichtigen Sie sie in der Schätzung.",
             "en": "Record time saved or extra effort due to AI tools and factor it into estimates."
           },
+          "dependsOn": [
+            "KB08.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2144,6 +2268,9 @@
             "de": "Sammeln Sie Ist-Aufwände projektübergreifend und leiten Sie Kennzahlen ab.",
             "en": "Collect actual effort across projects and derive key figures."
           },
+          "dependsOn": [
+            "KB08.O.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -2162,6 +2289,9 @@
             "de": "Vergleichen Sie in der Retrospektive Schätzung und Ist-Aufwand für Testaufgaben.",
             "en": "Compare estimated and actual effort for test tasks in the retrospective."
           },
+          "dependsOn": [
+            "KB08.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -2232,6 +2362,9 @@
             "de": "Dokumentieren Sie Datenquelle, Berechnung und Ablage jeder Metrik.",
             "en": "Document data source, calculation and storage for each metric."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2253,6 +2386,9 @@
             "de": "Führen Sie Plausibilitätsprüfungen der Metrikdaten ein.",
             "en": "Introduce plausibility checks for metric data."
           },
+          "dependsOn": [
+            "KB09.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2271,6 +2407,9 @@
             "de": "Erfassen Sie Testaufwände und Testfallzahlen je Sprint im Werkzeug.",
             "en": "Record test effort and test case counts per sprint in the tool."
           },
+          "dependsOn": [
+            "KB09.K.02"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -2294,6 +2433,9 @@
             "de": "Erfassen Sie, wie viele KI-Vorschläge übernommen, angepasst oder verworfen werden.",
             "en": "Record how many AI suggestions are adopted, adapted or rejected."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2314,6 +2456,9 @@
             "de": "Prüfen Sie jede Metrik jährlich auf Nutzen und streichen Sie ungenutzte.",
             "en": "Review every metric annually for usefulness and drop unused ones."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2353,6 +2498,9 @@
             "de": "Ergänzen Sie Effizienzmetriken (z. B. Fehlerfindungsrate, Testaufwand je Fehler).",
             "en": "Add efficiency metrics (e.g. defect detection rate, test effort per defect)."
           },
+          "dependsOn": [
+            "KB09.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2371,6 +2519,9 @@
             "de": "Nutzen Sie Metriken als Input für jede Retrospektive.",
             "en": "Use metrics as input for every retrospective."
           },
+          "dependsOn": [
+            "KB09.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2392,6 +2543,9 @@
             "de": "Befragen Sie die Empfänger regelmäßig zum Nutzen der Metriken.",
             "en": "Regularly ask recipients about the usefulness of the metrics."
           },
+          "dependsOn": [
+            "KB09.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -2410,6 +2564,9 @@
             "de": "Etablieren Sie einen einfachen Änderungsprozess für Metriken.",
             "en": "Establish a simple change process for metrics."
           },
+          "dependsOn": [
+            "KB09.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -2428,6 +2585,10 @@
             "de": "Bewerten Sie KI-Artefakte stichprobenartig nach festen Qualitätskriterien.",
             "en": "Assess AI artefacts by sampling against fixed quality criteria."
           },
+          "dependsOn": [
+            "KB09.K.AI1",
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2495,6 +2656,9 @@
             "de": "Machen Sie diese Attribute im Fehlerformular zu Pflichtfeldern.",
             "en": "Make these attributes mandatory fields in the defect form."
           },
+          "dependsOn": [
+            "KB10.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2516,6 +2680,9 @@
             "de": "Legen Sie fest, wer Fehler priorisiert, zuweist und schließt.",
             "en": "Define who prioritises, assigns and closes defects."
           },
+          "dependsOn": [
+            "KB10.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2558,6 +2725,9 @@
             "de": "Konfigurieren Sie Berechtigungen für Statusübergänge im Werkzeug.",
             "en": "Configure permissions for status transitions in the tool."
           },
+          "dependsOn": [
+            "KB10.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2597,6 +2767,9 @@
             "de": "Richten Sie Standardberichte und Filter für Fehler ein.",
             "en": "Set up standard reports and filters for defects."
           },
+          "dependsOn": [
+            "KB10.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2615,6 +2788,9 @@
             "de": "Ergänzen Sie Ursachen- und Versionsfelder und werten Sie Trends monatlich aus.",
             "en": "Add root cause and version fields and analyse trends monthly."
           },
+          "dependsOn": [
+            "KB10.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2636,6 +2812,9 @@
             "de": "Vereinbaren Sie, gefundene Fehler bevorzugt im laufenden Sprint zu beheben.",
             "en": "Agree to fix defects found preferably within the current sprint."
           },
+          "dependsOn": [
+            "KB10.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -2682,6 +2861,9 @@
             "de": "Nehmen Sie eine kurze Fehleranalyse in jede Retrospektive auf.",
             "en": "Include a short defect analysis in every retrospective."
           },
+          "dependsOn": [
+            "KB10.K.02"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -2705,6 +2887,10 @@
             "de": "Erproben Sie KI-gestützte Duplikaterkennung im Fehlerwerkzeug.",
             "en": "Trial AI-based duplicate detection in the defect tool."
           },
+          "dependsOn": [
+            "KB10.K.02",
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2761,6 +2947,9 @@
             "de": "Führen Sie quartalsweise Ursachenanalysen durch und verfolgen Sie die abgeleiteten Maßnahmen.",
             "en": "Run quarterly root cause analyses and track the derived actions."
           },
+          "dependsOn": [
+            "KB10.E.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2782,6 +2971,10 @@
             "de": "Nutzen Sie die Fehlerhistorie für KI-gestützte Ursachen- und Vorhersageanalysen.",
             "en": "Use defect history for AI-based root cause and prediction analyses."
           },
+          "dependsOn": [
+            "KB10.E.04",
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2852,6 +3045,9 @@
             "de": "Verknüpfen Sie jeden Testfall mit der zugehörigen Anforderung bzw. User Story.",
             "en": "Link every test case to its requirement or user story."
           },
+          "dependsOn": [
+            "KB11.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "P",
@@ -2912,6 +3108,10 @@
             "de": "Kennzeichnen Sie KI-generierte Testfälle bzw. Skripte mit einem Attribut oder Tag.",
             "en": "Mark AI-generated test cases or scripts with an attribute or tag."
           },
+          "dependsOn": [
+            "KB11.K.01",
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -2932,6 +3132,9 @@
             "de": "Führen Sie eindeutige, teamübergreifende Namens- und Versionskonventionen ein.",
             "en": "Introduce unique cross-team naming and versioning conventions."
           },
+          "dependsOn": [
+            "KB11.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -2950,6 +3153,9 @@
             "de": "Nutzen Sie Verknüpfungen bzw. eine Traceability-Matrix zwischen Anforderungen und Testfällen.",
             "en": "Use links or a traceability matrix between requirements and test cases."
           },
+          "dependsOn": [
+            "KB11.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -2971,6 +3177,9 @@
             "de": "Richten Sie ein Rollen- und Berechtigungskonzept für Testware ein.",
             "en": "Set up a role and permission concept for testware."
           },
+          "dependsOn": [
+            "KB11.K.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -3007,6 +3216,9 @@
             "de": "Erstellen Sie eine Richtlinie zur Testware-Konservierung und messen Sie die Wiederverwendung.",
             "en": "Create a guideline for testware conservation and measure reuse."
           },
+          "dependsOn": [
+            "KB11.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3028,6 +3240,9 @@
             "de": "Kennzeichnen Sie Testware nach Wartungsstatus und definieren Sie ein Übergabeverfahren.",
             "en": "Tag testware by maintenance status and define a handover procedure."
           },
+          "dependsOn": [
+            "KB11.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3099,6 +3314,9 @@
             "de": "Gleichen Sie die Testmethode mit dem Vorgehensmodell (z. B. Scrum) ab.",
             "en": "Align the test method with the process model (e.g. Scrum)."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -3117,6 +3335,9 @@
             "de": "Holen Sie regelmäßig Feedback der Teams zur Testmethode ein.",
             "en": "Regularly collect team feedback on the test method."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3138,6 +3359,9 @@
             "de": "Ergänzen Sie die Methode um eine Aktivitätenübersicht mit Ziel, Rolle und Vorbedingungen.",
             "en": "Add an activity overview with goal, role and preconditions to the method."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3159,6 +3383,9 @@
             "de": "Stellen Sie Vorlagen für Testplan, Testfall, Fehler und Bericht bereit.",
             "en": "Provide templates for test plan, test case, defect and report."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3180,6 +3407,9 @@
             "de": "Kennzeichnen Sie Methodenelemente als Pflicht, bedingt oder optional.",
             "en": "Mark method elements as mandatory, conditional or optional."
           },
+          "dependsOn": [
+            "KB12.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3201,6 +3431,9 @@
             "de": "Prüfen Sie die Anwendung der Pflichtelemente stichprobenartig.",
             "en": "Check the application of mandatory elements by sampling."
           },
+          "dependsOn": [
+            "KB12.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -3219,6 +3452,10 @@
             "de": "Ergänzen Sie die Testmethode um KI-gestützte Aktivitäten mit Freigabepunkten.",
             "en": "Add AI-supported activities with approval points to the test method."
           },
+          "dependsOn": [
+            "KB12.K.01",
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -3239,6 +3476,9 @@
             "de": "Richten Sie einen Feedbackkanal (z. B. Formular, Retro-Thema) zur Testmethode ein.",
             "en": "Set up a feedback channel (e.g. form, retro topic) for the test method."
           },
+          "dependsOn": [
+            "KB12.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -3257,6 +3497,9 @@
             "de": "Planen Sie eine jährliche Überarbeitung der Testmethode.",
             "en": "Plan an annual revision of the test method."
           },
+          "dependsOn": [
+            "KB12.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3328,6 +3571,9 @@
             "de": "Führen Sie eine kurze Methodeneinführung für alle Teammitglieder durch.",
             "en": "Run a short method introduction for all team members."
           },
+          "dependsOn": [
+            "KB13.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3391,6 +3637,9 @@
             "de": "Bieten Sie eine kurze Einführung in generative KI für das Testen an.",
             "en": "Offer a short introduction to generative AI for testing."
           },
+          "dependsOn": [
+            "KB17.K.04"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -3411,6 +3660,9 @@
             "de": "Ermöglichen Sie Zertifizierungen (z. B. ISTQB Foundation) mit Budget und Lernzeit.",
             "en": "Enable certifications (e.g. ISTQB Foundation) with budget and study time."
           },
+          "dependsOn": [
+            "KB13.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3432,6 +3684,9 @@
             "de": "Üben Sie Testentwurfsverfahren in Workshops an echten Beispielen.",
             "en": "Practise test design techniques in workshops using real examples."
           },
+          "dependsOn": [
+            "KB13.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "P",
@@ -3509,6 +3764,9 @@
             "de": "Ermöglichen Sie ausgewählten Testern eine KI-Zertifizierung.",
             "en": "Enable selected testers to obtain an AI certification."
           },
+          "dependsOn": [
+            "KB13.K.AI1"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -3615,6 +3873,9 @@
             "de": "Legen Sie fest, welche Testfälle dokumentiert werden, und nutzen Sie eine einheitliche Vorlage.",
             "en": "Decide which test cases are documented and use a uniform template."
           },
+          "dependsOn": [
+            "KB03.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3696,6 +3957,9 @@
             "de": "Weisen Sie die Anforderungsüberdeckung im Testwerkzeug aus.",
             "en": "Show requirements coverage in the test tool."
           },
+          "dependsOn": [
+            "KB14.K.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3717,6 +3981,9 @@
             "de": "Wenden Sie z. B. Äquivalenzklassen und Grenzwertanalyse verbindlich an.",
             "en": "Apply e.g. equivalence partitioning and boundary value analysis as standard."
           },
+          "dependsOn": [
+            "KB03.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "P",
@@ -3756,6 +4023,10 @@
             "de": "Erproben Sie KI-generierte Testfallvorschläge mit festem Review-Schritt.",
             "en": "Trial AI-generated test case suggestions with a fixed review step."
           },
+          "dependsOn": [
+            "KB14.E.03",
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -3776,6 +4047,9 @@
             "de": "Ergänzen Sie für jeden Produktionsfehler einen Regressionstestfall und prüfen Sie die Ursache der Lücke.",
             "en": "Add a regression test for every production defect and examine why it was missed."
           },
+          "dependsOn": [
+            "KB10.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3815,6 +4089,9 @@
             "de": "Pflegen Sie eine gemeinsame Sammlung bewährter Techniken und Checklisten.",
             "en": "Maintain a shared collection of proven techniques and checklists."
           },
+          "dependsOn": [
+            "KB14.E.03"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3836,6 +4113,9 @@
             "de": "Lassen Sie den Testfallbestand KI-gestützt auf Lücken und Dubletten analysieren.",
             "en": "Have the test case inventory analysed with AI support for gaps and duplicates."
           },
+          "dependsOn": [
+            "KB14.E.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -3903,6 +4183,9 @@
             "de": "Bieten Sie Werkzeugschulungen an und dokumentieren Sie Kurzanleitungen.",
             "en": "Offer tool training and document quick guides."
           },
+          "dependsOn": [
+            "KB15.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -3942,6 +4225,9 @@
             "de": "Automatisieren Sie die wichtigsten Regressionstests (z. B. mit Playwright) und lassen Sie sie in der CI laufen.",
             "en": "Automate the most important regression tests (e.g. with Playwright) and run them in CI."
           },
+          "dependsOn": [
+            "KB15.K.01"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -3988,6 +4274,9 @@
             "de": "Führen Sie eine Liste freigegebener KI-Testwerkzeuge mit Bewertung.",
             "en": "Keep a list of approved AI test tools with assessments."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4050,6 +4339,9 @@
             "de": "Erstellen Sie für neue Werkzeuge einen kurzen Business Case.",
             "en": "Create a short business case for new tools."
           },
+          "dependsOn": [
+            "KB15.E.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -4068,6 +4360,9 @@
             "de": "Beschreiben Sie Werkzeugeinsatz je Testaktivität in der Testmethode.",
             "en": "Describe tool use per test activity in the test method."
           },
+          "dependsOn": [
+            "KB15.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -4086,6 +4381,10 @@
             "de": "Nutzen Sie KI-Assistenten für Testskripte und machen Sie Code-Reviews verpflichtend.",
             "en": "Use AI assistants for test scripts and make code reviews mandatory."
           },
+          "dependsOn": [
+            "KB15.K.01",
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4106,6 +4405,9 @@
             "de": "Erproben Sie Self-Healing bzw. KI-Wartungsvorschläge in einem Pilotprojekt.",
             "en": "Trial self-healing or AI maintenance suggestions in a pilot project."
           },
+          "dependsOn": [
+            "KB15.E.AI1"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4165,6 +4467,10 @@
             "de": "Führen Sie eine jährliche Werkzeugbewertung durch.",
             "en": "Run an annual tool evaluation."
           },
+          "dependsOn": [
+            "KB15.E.03",
+            "KB15.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -4183,6 +4489,10 @@
             "de": "Führen Sie ein begrenztes Experiment mit KI-Testagenten durch und bewerten Sie die Ergebnisse.",
             "en": "Run a limited experiment with AI test agents and evaluate the results."
           },
+          "dependsOn": [
+            "KB15.K.AI1",
+            "KB17.E.03"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4274,6 +4584,9 @@
             "de": "Messen Sie die Verfügbarkeit der Testumgebung und eskalieren Sie Ausfälle.",
             "en": "Measure test environment availability and escalate outages."
           },
+          "dependsOn": [
+            "KB16.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "T",
@@ -4292,6 +4605,9 @@
             "de": "Führen Sie einen Änderungskalender für Testumgebungen.",
             "en": "Maintain a change calendar for test environments."
           },
+          "dependsOn": [
+            "KB16.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "P",
@@ -4310,6 +4626,9 @@
             "de": "Erstellen Sie eine Abnahme-Checkliste bzw. automatisierte Smoke-Tests für die Umgebung.",
             "en": "Create an acceptance checklist or automated smoke tests for the environment."
           },
+          "dependsOn": [
+            "KB16.K.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -4352,6 +4671,9 @@
             "de": "Fordern Sie einen technischen Entwurf vom Lieferanten an und nehmen Sie ihn formal ab.",
             "en": "Request a technical design from the supplier and formally accept it."
           },
+          "dependsOn": [
+            "KB16.E.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "agileRefs": [
@@ -4373,6 +4695,9 @@
             "de": "Überführen Sie Umgebungsvereinbarungen in SLAs mit messbaren Kennzahlen.",
             "en": "Turn environment agreements into SLAs with measurable indicators."
           },
+          "dependsOn": [
+            "KB16.K.02"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -4391,6 +4716,9 @@
             "de": "Parametrisieren Sie automatisierte Tests für alle Zielumgebungen.",
             "en": "Parameterise automated tests for all target environments."
           },
+          "dependsOn": [
+            "KB15.AG.11"
+          ],
           "source": "AGILE_TPI_EN",
           "tags": [
             "agile"
@@ -4414,6 +4742,10 @@
             "de": "Erproben Sie die KI-gestützte Erzeugung synthetischer Testdaten.",
             "en": "Trial AI-based generation of synthetic test data."
           },
+          "dependsOn": [
+            "KB16.K.01",
+            "KB17.K.03"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4455,6 +4787,9 @@
             "de": "Erstellen Sie einen Standardvertrag für die Nutzung von Testumgebungen.",
             "en": "Create a standard contract for using test environments."
           },
+          "dependsOn": [
+            "KB16.E.04"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -4473,6 +4808,9 @@
             "de": "Erstellen Sie ein Leistungsverzeichnis für Testumgebungs-Services.",
             "en": "Create a service catalogue for test environment services."
           },
+          "dependsOn": [
+            "KB16.O.01"
+          ],
           "source": "TPI_NEXT_DE",
           "tags": [],
           "view": "O",
@@ -4491,6 +4829,9 @@
             "de": "Lassen Sie Testumgebungs-Logs KI-gestützt auf Anomalien auswerten.",
             "en": "Have test environment logs analysed for anomalies with AI support."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4580,6 +4921,9 @@
             "de": "Sensibilisieren Sie alle Mitarbeitenden und sperren Sie nicht freigegebene KI-Dienste technisch, wo möglich.",
             "en": "Raise awareness among all staff and technically block non-approved AI services where possible."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4600,6 +4944,9 @@
             "de": "Führen Sie eine verpflichtende KI-Grundschulung durch (auch im Hinblick auf den EU AI Act).",
             "en": "Run mandatory basic AI training (also with regard to the EU AI Act)."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4620,6 +4967,9 @@
             "de": "Definieren Sie je Artefakttyp, wer KI-Ergebnisse prüft und freigibt.",
             "en": "Define per artefact type who reviews and approves AI results."
           },
+          "dependsOn": [
+            "KB17.K.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4640,6 +4990,9 @@
             "de": "Führen Sie eine Kennzeichnungspflicht und Metadaten für KI-Artefakte ein.",
             "en": "Introduce mandatory labelling and metadata for AI artefacts."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4660,6 +5013,9 @@
             "de": "Nutzen Sie eine Checkliste zur Bewertung neuer KI-Anwendungsfälle.",
             "en": "Use a checklist to assess new AI use cases."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4680,6 +5036,9 @@
             "de": "Klären Sie mit Rechtsabteilung bzw. Einkauf die Nutzungsbedingungen der KI-Werkzeuge.",
             "en": "Clarify the terms of use of AI tools with legal or purchasing."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4700,6 +5059,9 @@
             "de": "Planen Sie eine halbjährliche Neubewertung der KI-Werkzeuge ein.",
             "en": "Plan a semi-annual reassessment of AI tools."
           },
+          "dependsOn": [
+            "KB17.E.03"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4720,6 +5082,9 @@
             "de": "Richten Sie eine zentrale Prompt- und Erfahrungsbibliothek ein.",
             "en": "Set up a central prompt and experience library."
           },
+          "dependsOn": [
+            "KB17.K.04"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4740,6 +5105,9 @@
             "de": "Erheben Sie Zeitersparnis und Kosten des KI-Einsatzes und berichten Sie sie quartalsweise.",
             "en": "Measure time savings and costs of AI use and report them quarterly."
           },
+          "dependsOn": [
+            "KB17.O.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4809,6 +5177,10 @@
             "de": "Lassen Sie neue User Stories vor dem Refinement KI-gestützt prüfen und besprechen Sie die Hinweise.",
             "en": "Have new user stories checked with AI before refinement and discuss the findings."
           },
+          "dependsOn": [
+            "KB18.K.01",
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4829,6 +5201,9 @@
             "de": "Ergänzen Sie die Definition of Ready um eine KI-gestützte Testbarkeitsprüfung.",
             "en": "Add an AI-supported testability check to the Definition of Ready."
           },
+          "dependsOn": [
+            "KB18.K.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4849,6 +5224,10 @@
             "de": "Nutzen Sie KI-Vorschläge für Akzeptanzkriterien als Diskussionsgrundlage im Refinement.",
             "en": "Use AI suggestions for acceptance criteria as a basis for discussion in refinement."
           },
+          "dependsOn": [
+            "KB18.K.01",
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4869,6 +5248,10 @@
             "de": "Lassen Sie die Traceability KI-gestützt auf fehlende Verknüpfungen prüfen.",
             "en": "Have traceability checked for missing links with AI support."
           },
+          "dependsOn": [
+            "KB18.K.01",
+            "KB11.E.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4889,6 +5272,9 @@
             "de": "Erproben Sie KI-gestützte Auswirkungsanalysen für Änderungsanforderungen.",
             "en": "Trial AI-supported impact analysis for change requests."
           },
+          "dependsOn": [
+            "KB18.E.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4909,6 +5295,9 @@
             "de": "Erfassen Sie früh gefundene Anforderungsmängel und vergleichen Sie sie mit späteren Fehlern.",
             "en": "Record requirement defects found early and compare them with later defects."
           },
+          "dependsOn": [
+            "KB18.K.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4929,6 +5318,9 @@
             "de": "Überarbeiten Sie Prompts und Prüfkriterien regelmäßig anhand der Ergebnisse.",
             "en": "Regularly revise prompts and review criteria based on results."
           },
+          "dependsOn": [
+            "KB18.O.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4978,6 +5370,9 @@
             "de": "Geben Sie KI-Code-Assistenten mit geprüften Datenschutzeinstellungen zentral frei.",
             "en": "Centrally approve AI coding assistants with verified privacy settings."
           },
+          "dependsOn": [
+            "KB17.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -4998,6 +5393,9 @@
             "de": "Stellen Sie sicher, dass die CI-Qualitätstore ohne Ausnahme für KI-Code gelten.",
             "en": "Ensure CI quality gates apply to AI code without exception."
           },
+          "dependsOn": [
+            "KB19.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5018,6 +5416,9 @@
             "de": "Prüfen Sie KI-generierte Unit-Tests im Review gezielt auf fachliche Assertions.",
             "en": "Check AI-generated unit tests in review specifically for meaningful assertions."
           },
+          "dependsOn": [
+            "KB19.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5038,6 +5439,9 @@
             "de": "Legen Sie eine AGENTS.md mit Projektregeln und Konventionen im Repository an.",
             "en": "Create an AGENTS.md with project rules and conventions in the repository."
           },
+          "dependsOn": [
+            "KB19.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5058,6 +5462,9 @@
             "de": "Erzeugen Sie Dokumentationsentwürfe KI-gestützt und legen Sie einen Freigabeschritt fest.",
             "en": "Generate documentation drafts with AI and define an approval step."
           },
+          "dependsOn": [
+            "KB17.E.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5078,6 +5485,9 @@
             "de": "Richten Sie eine automatische Prüfung auf veraltete Dokumentation ein.",
             "en": "Set up an automatic check for outdated documentation."
           },
+          "dependsOn": [
+            "KB19.E.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5098,6 +5508,9 @@
             "de": "Ergänzen Sie Secret-Scanning, Abhängigkeitsprüfung und Schulung zu Prompt-Injection.",
             "en": "Add secret scanning, dependency checks and training on prompt injection."
           },
+          "dependsOn": [
+            "KB19.K.01"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5118,6 +5531,9 @@
             "de": "Vergleichen Sie Durchlaufzeit und Fehlerdichte von KI-unterstützten und anderen Änderungen.",
             "en": "Compare lead time and defect density of AI-assisted and other changes."
           },
+          "dependsOn": [
+            "KB19.K.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5138,6 +5554,11 @@
             "de": "Erproben Sie agentische Pull Requests mit definierten Leitplanken und Pflicht-Review.",
             "en": "Trial agentic pull requests with defined guardrails and mandatory review."
           },
+          "dependsOn": [
+            "KB19.E.01",
+            "KB19.K.02",
+            "KB19.E.04"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"
@@ -5158,6 +5579,9 @@
             "de": "Bauen Sie eine KI-gestützte Wissensbasis über Projektdokumentation und Entscheidungen auf.",
             "en": "Build an AI-supported knowledge base over project documentation and decisions."
           },
+          "dependsOn": [
+            "KB19.E.02"
+          ],
           "source": "AI_EXT",
           "tags": [
             "AI"

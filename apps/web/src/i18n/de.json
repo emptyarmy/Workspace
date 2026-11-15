@@ -941,6 +941,12 @@
       "admin_read_only": "Keine Berechtigung: Admins haben auf Empfehlungen nur Lesezugriff. Erzeugen und bearbeiten können nur die Assessoren dieses Assessments.",
       "role_read_only": "Keine Berechtigung: Mit der Rolle „{role}“ können Sie Empfehlungen nur lesen. Erzeugen, KI-Modul wählen und bearbeiten können nur die Assessoren dieses Assessments.",
       "not_assessor": "Keine Berechtigung: Nur Assessoren, die zum Team dieses Assessments gehören, können Empfehlungen erzeugen oder bearbeiten. Bitte wenden Sie sich an den Assessor."
+    },
+    "requires": "Setzt voraus: {ids}",
+    "enables": "Grundlage für {n} weitere Kontrollpunkte",
+    "export": {
+      "plan": "Maßnahmenplan exportieren (CSV)",
+      "all": "Alle Empfehlungen exportieren (CSV)"
     }
   }
 }

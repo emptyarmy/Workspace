@@ -23,7 +23,7 @@ L.append(f'| davon neue agile Kontrollpunkte (Agile TPI) | {n["AGILE_TPI_EN"]} |
 L.append(f'| davon KI-Kontrollpunkte (KB17–19 + Ergänzungen) | {n["AI_EXT"]} |')
 L.append(f'| Agile-TPI-Punkte als Zusatzinformation an TPI-NEXT-Punkten | {sum(len(x.get("agileRefs",[])) for x in cps if x["source"]!="AGILE_TPI_EN")} von 108 |')
 L.append(f'| Aufwand S (kurzfristig < 1 Monat) / M (1–3 Monate) / L (> 3 Monate) | {eff["S"]} / {eff["M"]} / {eff["L"]} |')
-L.append('\n**Legende:** Ebene K = Kontrolliert, E = Effizient, O = Optimierend · Aufw. = Umsetzungsaufwand bei Nichterfüllung · Sicht P/T/O und Cluster A–G aus Agile TPI (* = Sicht ohne Agile-Gegenstück fachlich zugeordnet, kein Cluster) · 🤖 = KI-Kontrollpunkt · 🔄 = neuer agiler Kontrollpunkt · ⚠️ = rekonstruiert, bitte besonders prüfen\n')
+L.append('\n**Legende:** Ebene K = Kontrolliert, E = Effizient, O = Optimierend · Aufw. = Umsetzungsaufwand bei Nichterfüllung · Sicht P/T/O und Cluster A–G aus Agile TPI (* = Sicht ohne Agile-Gegenstück fachlich zugeordnet, kein Cluster) · Voraussetzung = Kontrollpunkte, die zuerst erfüllt sein sollten (`dependsOn`; die Regel-Engine der Empfehlungen zieht sie vor) · 🤖 = KI-Kontrollpunkt · 🔄 = neuer agiler Kontrollpunkt · ⚠️ = rekonstruiert, bitte besonders prüfen\n')
 L.append('## 2. Hinweise zur Bereinigung\n')
 L.append('- Tippfehler korrigiert (z. B. „einen einfache“, „de Testprozesses“, „lieft“, „übern“, „abziehen“ → „abzielen“, „Widerverwendung“).')
 L.append('- Projektspezifische Bewertungstexte (firmenspezifische Einschätzungen, Projekt B2B, aqua, NTT Data, DSC) entfernt – sie können als Demo-Assessment dienen (F-18).')
@@ -36,12 +36,13 @@ for a in c['keyAreas']:
     L.append(f'*{a["description"]["de"]}*  \n*{a["description"]["en"]}*\n')
     for lv in ('controlled','efficient','optimizing'):
         L.append(f'**{LVN[lv]}** – {a["levels"][lv]["de"]}\n')
-        L.append('| ID | Kontrollpunkt (DE) / Checkpoint (EN) | Aufw. | Agile | Empfehlung (DE) |\n|---|---|:-:|---|---|')
+        L.append('| ID | Kontrollpunkt (DE) / Checkpoint (EN) | Aufw. | Agile | Voraussetzung | Empfehlung (DE) |\n|---|---|:-:|---|---|---|')
         for x in a['checkpoints']:
             if x['level']!=lv: continue
             mark=('🤖 ' if 'AI' in x['tags'] else '')+('🔄 ' if 'agile' in x['tags'] else '')+('⚠️ ' if 'reconstructed' in x['tags'] else '')
             ag=(f'{x["view"]}/{x["cluster"]} ({", ".join(x["agileRefs"])})' if x.get('agileRefs') else (f'{x["view"]}*' if x.get('view') else '–'))
-            L.append(f'| `{x["id"]}` | {mark}{x["text"]["de"]}<br>*{x["text"]["en"]}* | {x["effort"]} | {ag} | {x["recommendation"]["de"]} |')
+            dep=', '.join(f'`{d}`' for d in x.get('dependsOn',[])) or '–'
+            L.append(f'| `{x["id"]}` | {mark}{x["text"]["de"]}<br>*{x["text"]["en"]}* | {x["effort"]} | {ag} | {dep} | {x["recommendation"]["de"]} |')
         L.append('')
 L.append('## 4. Zuordnung aller 108 Agile-TPI-Kontrollpunkte\n')
 L.append('| Agile-ID | Cluster | Original (EN) | → Katalog-ID | Art |\n|---|:-:|---|---|---|')

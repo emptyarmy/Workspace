@@ -72,3 +72,18 @@ sidebar:
 | `rationale_required` | 400 | Begründung fehlt (Abweichung vom Vorschlag oder uneinige Abteilungen); `suggestion` in der Antwort |
 | `invalid_format` | 400 | Importdatei ist keine AI_TPI-Exportdatei oder hat einen ungültigen Aufbau |
 | `unsupported_version` | 400 | Importdatei hat eine unbekannte `schemaVersion` (steht in der Antwort) |
+
+## Empfehlungen und Maßnahmenplan
+
+| Code | HTTP | Bedeutung | Meldung in der Oberfläche |
+|---|---|---|---|
+| `forbidden` mit `reason: admin_read_only` | 403 | Admin will Empfehlungen erzeugen, das KI-Modul wählen oder bearbeiten (nur Lesezugriff, S-11) | „Keine Berechtigung: Admins haben auf Empfehlungen nur Lesezugriff …“ |
+| `forbidden` mit `reason: role_read_only` | 403 | Befragter oder Leser versucht dasselbe; `role` steht in der Antwort | „Keine Berechtigung: Mit der Rolle „Leser“ können Sie Empfehlungen nur lesen …“ |
+| `forbidden` mit `reason: not_assessor` | 403 | sonstige fehlende Schreibrechte im Assessment | „Keine Berechtigung: Nur Assessoren, die zum Team dieses Assessments gehören …“ |
+| `consent_required` | 400 | KI-Modul gewählt, aber keine Zustimmung zur Datenübertragung – es wurde nichts gesendet | (wird von der Oberfläche durch den Datenschutz-Dialog verhindert) |
+| `invalid_module` | 400 | KI-Modul gehört nicht zur Firma oder existiert nicht | „Die Empfehlungen konnten nicht erzeugt werden …“ |
+| `invalid_owner` | 400 | Verantwortliche Person gehört nicht zum Team des Assessments | „Die Änderung konnte nicht gespeichert werden.“ |
+| `version_conflict` | 409 | Empfehlung wurde inzwischen geändert; `current` enthält den aktuellen Stand | „Die Empfehlung wurde inzwischen von jemand anderem geändert …“ |
+| `invalid_input` | 400 | CSV-Export mit ungültigem `scope` (nur `plan`, `all`) oder `lang` (nur `de`, `en`) | – |
+
+Fehler des KI-Dienstes sind **keine** HTTP-Fehler: Die Antwort ist 200 mit den regelbasierten Empfehlungen und `notice` (`ai_timeout`, `ai_unreachable`, `ai_auth_failed`, `ai_http_error`, `ai_invalid_response`), siehe [API](/referenz/api/#empfehlungen-phase-7).

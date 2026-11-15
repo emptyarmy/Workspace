@@ -40,4 +40,51 @@ describe('Fragenkatalog', () => {
     (broken.keyAreas[1]!.checkpoints[0] as { effort: string }).effort = 'XL';
     expect(validate(broken)).toBe(false);
   });
+
+  it('Sicht P/T/O ist bei allen Kontrollpunkten gesetzt; „assigned“ nur ohne Agile-Gegenstück', () => {
+    for (const cp of allCheckpoints()) {
+      expect(cp.view, cp.id).toBeDefined();
+      expect(cp.viewSource === 'assigned', cp.id).toBe(!cp.agileRefs?.length);
+    }
+  });
+
+  describe('Abhängigkeiten (dependsOn)', () => {
+    const cps = allCheckpoints();
+    const byId = new Map(cps.map((c) => [c.id, c]));
+    const rank = { controlled: 1, efficient: 2, optimizing: 3 } as const;
+    const aiArea = new Map(catalog.keyAreas.map((a) => [a.id, a.isAiArea]));
+    const isAi = (c: (typeof cps)[number]) => aiArea.get(c.keyArea) || c.tags.includes('AI');
+
+    it('sind gepflegt und verweisen nur auf bekannte KP gleicher oder niedrigerer Ebene', () => {
+      expect(cps.filter((c) => c.dependsOn?.length).length).toBeGreaterThan(100);
+      for (const c of cps)
+        for (const d of c.dependsOn ?? []) {
+          const p = byId.get(d);
+          expect(p, `${c.id} → ${d}`).toBeDefined();
+          expect(rank[p!.level], `${c.id} → ${d}`).toBeLessThanOrEqual(rank[c.level]);
+          expect(d).not.toBe(c.id);
+        }
+    });
+
+    it('fallen nicht durch den Umfang weg (agil im klassischen Modell, KI bei „KI aus“)', () => {
+      for (const c of cps)
+        for (const d of c.dependsOn ?? []) {
+          const p = byId.get(d)!;
+          if (p.tags.includes('agile')) expect(c.tags.includes('agile'), `${c.id} → ${d}`).toBe(true);
+          if (isAi(p)) expect(isAi(c), `${c.id} → ${d}`).toBe(true);
+        }
+    });
+
+    it('enthalten keine Zyklen', () => {
+      const state = new Map<string, 1 | 2>();
+      const visit = (id: string, path: string[]): void => {
+        if (state.get(id) === 1) throw new Error(`Zyklus: ${[...path, id].join(' → ')}`);
+        if (state.get(id) === 2) return;
+        state.set(id, 1);
+        for (const d of byId.get(id)?.dependsOn ?? []) visit(d, [...path, id]);
+        state.set(id, 2);
+      };
+      expect(() => cps.forEach((c) => visit(c.id, []))).not.toThrow();
+    });
+  });
 });

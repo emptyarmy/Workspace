@@ -16,7 +16,9 @@ Die vollständige, verbindliche Fassung steht in `AGENTS.md` im Projektordner. B
 
 ## Inhalte und Texte
 
-- Fragen, Reifegrade und Empfehlungsbausteine nur in `packages/catalog/catalog.v1.json`; danach `npm run catalog:validate`.
+- Fragen, Reifegrade, Empfehlungsbausteine, Sicht P/T/O und Voraussetzungen (`dependsOn`) nur in `packages/catalog/catalog.v1.json`; danach `npm run catalog:validate` und `python3 tools/catalog/build_overview.py` (erzeugt die [Katalog-Übersicht](/projekt/fragenkatalog/katalog-v1-uebersicht/)).
+- Jeder Kontrollpunkt hat eine Sicht. Stammt sie nicht aus Agile TPI, steht `viewSource: "assigned"` daneben.
+- `dependsOn` nennt Kontrollpunkte, die zuerst erfüllt sein sollten: nur bekannte IDs auf gleicher oder niedrigerer Ebene, keine Zyklen, keine Abhängigkeit von agilen bzw. KI-Kontrollpunkten, die je nach Umfang wegfallen. `catalog:validate` und `npm run test:unit` prüfen das.
 - Jeder Oberflächentext in **DE und EN**, keine festen Texte in Komponenten.
 
 ## Sicherheit
