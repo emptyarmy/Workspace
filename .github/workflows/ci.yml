@@ -4,7 +4,8 @@
 #   pruefungen  Format, Lint, Typecheck, Katalog, Testfallkatalog vollständig, npm audit, Dokumentation bauen
 #   unit        Vitest: Unit-, API- und Datenbanktests gegen PostgreSQL 16
 #   e2e         Playwright gegen den Produktions-Build (E2E_PROD=1), je Browser-Engine ein Job
-#   container   Image bauen und Rauchtest (Migrationen, CSP, Nutzer ≠ root, ai-tpi-setup, Anmeldung)
+#   container   Image bauen, Rauchtest (Migrationen, CSP, Nutzer ≠ root, ai-tpi-setup, Anmeldung) und
+#               Selbsttest der Betriebsskripte (docker-compose.prod.yml, Sicherung, Wiederherstellung)
 name: CI
 
 on:
@@ -164,6 +165,8 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Rauchtest
         run: tools/docker/smoke-test.sh ai-tpi:ci postgres://ai_tpi:ai_tpi@127.0.0.1:5432/ai_tpi_smoke
+      - name: Betriebsskripte (Compose-Start, Ersteinrichtung, Sicherung, Wiederherstellung)
+        run: tools/ops/selftest.sh ai-tpi:ci
       - name: Compose-Datei prüfen
         run: |
           cp .env.production.example .env.ci

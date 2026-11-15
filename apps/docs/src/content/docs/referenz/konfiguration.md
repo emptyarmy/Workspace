@@ -64,7 +64,9 @@ Für den Betrieb mit Docker Compose liegt die Vorlage `.env.production.example` 
 | `POSTGRES_USER` / `POSTGRES_DB` | `ai_tpi` / `ai_tpi` | Nutzer und Datenbank |
 | `APP_PORT` | `3000` | Port auf dem Host, nur an `127.0.0.1` gebunden – Ziel des Reverse Proxys |
 | `RUN_MIGRATIONS` | `true` | Migrationen beim Start des Containers ausführen |
-| `NODE_IMAGE` / `POSTGRES_IMAGE` / `APP_IMAGE` | `node:22-bookworm-slim` / `postgres:16-alpine` / `ai-tpi:latest` | Eigene Images, z. B. aus einem Firmen-Spiegel |
+| `APP_IMAGE` | `ai-tpi:latest` | Name des gebauten Images; bei Updates die Version eintragen (`ai-tpi:v1.1.0`), damit das vorige für einen Rollback bleibt |
+| `NODE_IMAGE` / `POSTGRES_IMAGE` | `node:22-bookworm-slim` / `postgres:16-alpine` | Basis-Images, z. B. aus einem Firmen-Spiegel |
+| `BACKUP_DIR` / `KEEP` | `./backups` / `14` | Nur für `tools/ops/backup.sh`: Zielordner und Anzahl aufbewahrter Sicherungen ([Backup](/betrieb/backup-und-wiederherstellung/)) |
 | `SETUP_COMPANY_NAME`, `SETUP_COMPANY_SLUG`, `SETUP_INDUSTRY_CODE`, `SETUP_ADMIN_NAME`, `SETUP_ADMIN_EMAIL`, `SETUP_ADMIN_PASSWORD` | – | Nur für `ai-tpi-setup`: Werte der Ersteinrichtung ohne Rückfragen (automatisierte Installation) |
 
 Im Container sind `NODE_ENV=production`, `SERVER_HOST=0.0.0.0`, `SERVER_PORT=3000` und `WEB_DIST_DIR=/app/web` fest gesetzt. Siehe [Installation mit Docker](/betrieb/installation-mit-docker/).

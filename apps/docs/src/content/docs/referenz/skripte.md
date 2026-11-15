@@ -51,4 +51,9 @@ Aufruf z. B. mit `npm run start -w @ai-tpi/server`.
 | `docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build` | Anwendung mit Datenbank starten |
 | `docker compose -f docker-compose.prod.yml --env-file .env.production exec app ai-tpi-setup` | Ersteinrichtung im Container (erster Admin und erste Firma) |
 
-Details: [Installation mit Docker](/betrieb/installation-mit-docker/).
+| `tools/ops/backup.sh` | Datenbank sichern (prüft die Sicherung, behält die neuesten 14) |
+| `tools/ops/restore.sh <datei>` | Sicherung einspielen – ersetzt die Datenbank, mit Rückfrage |
+| `tools/ops/selftest.sh [image]` | Betriebsablauf in einem getrennten Compose-Projekt prüfen |
+| `tools/docker/smoke-test.sh <image> <datenbank-url>` | Rauchtest des Images gegen eine leere Datenbank |
+
+Details: [Installation mit Docker](/betrieb/installation-mit-docker/), [Backup und Wiederherstellung](/betrieb/backup-und-wiederherstellung/), [Update und Rollback](/betrieb/update-und-rollback/).

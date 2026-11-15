@@ -1,4 +1,4 @@
-# AI_TPI – Produktions-Container (Phase 8c, docs/06_betrieb).
+# AI_TPI – Produktions-Container (Phase 8c; Doku: Starlight „Betrieb → Installation mit Docker“, ADR-008).
 # Ein Container: Der Node-Server liefert API und gebaute Weboberfläche aus, führt beim Start die
 # Datenbank-Migrationen aus und läuft als unprivilegierter Nutzer „node“.
 #

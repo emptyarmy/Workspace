@@ -6,7 +6,7 @@
 | Umfang | Server (`apps/server`), Weboberfläche (`apps/web`), Abhängigkeiten, Konfiguration, Mandantentrennung |
 | Grundlage | OWASP Top 10 (2021), Anforderungen NFA/S-Punkte, Architektur `04_architektur/06_authentifizierung-und-sicherheit.md` |
 | Methode | Code-Review aller Endpunkte, `npm audit`, automatisierte Negativtests (Rechte, Mandanten, CSRF, Header, Rate-Limits, SSRF) |
-| Ergebnis | **Keine kritischen oder hohen Befunde offen.** 9 Befunde behoben (siehe Abschnitt 2), Restrisiken für den Betrieb in Abschnitt 3 |
+| Ergebnis | **Keine kritischen oder hohen Befunde offen.** 11 Befunde behoben (F-10/F-11 mit dem Container, 8c) (siehe Abschnitt 2), Restrisiken für den Betrieb in Abschnitt 3 |
 
 ## 1. Prüfung nach OWASP Top 10 (2021)
 

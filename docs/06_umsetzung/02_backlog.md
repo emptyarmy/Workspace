@@ -88,8 +88,9 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Produktions-Build und Container (8c, 15.11.2026; ADR-008): Server liefert die gebaute Oberfläche mit CSP aus (`WEB_DIST_DIR`), Server mit esbuild gebündelt (kein tsx im Betrieb), `Dockerfile` (mehrstufig, Nutzer `node`, Migrationen beim Start, Healthcheck), `docker-compose.prod.yml` (gehärtet), Ersteinrichtung im Container mit `ai-tpi-setup`; E2E-Lauf gegen den Produktions-Build (`E2E_PROD=1`, TC-OPS-001/002)
 - ☑ CI-Pipeline (8d, 15.11.2026; GitHub Actions, R-13): Prüfungen (Prettier, ESLint, Typecheck, Katalog, Testfallkatalog vollständig, npm audit, Doku-Build), Vitest mit PostgreSQL, Playwright gegen den Produktions-Build je Browser-Engine (Chromium, Firefox, WebKit), Container-Build mit Rauchtest (`tools/docker/smoke-test.sh`) und Prüfung von `docker-compose.prod.yml`; kein automatisches Deployment (Zielumgebung interner Server)
 - ☑ Security-Review (OWASP Top 10, Mandantentrennung), A11y-Prüfung – `05_test/03_security-review.md`: 9 Befunde behoben (u. a. Ersteinrichtung hinter Proxy, Rate-Limits, Protokoll in production, SSRF-Sperre, Sicherheits-Header, `npm audit` 0), keine kritischen offen (8b, 15.11.2026)
-- ☐ Betriebsdokumentation (Installation, Backup, Konfiguration)
-- ☐ Benutzerhilfe, Abnahme
+- ☑ Betriebsdokumentation (8c/8e, 16.11.2026): Starlight „Betrieb“ – Installation mit Docker, Backup und Wiederherstellung, Update und Rollback, Laufender Betrieb; Skripte `tools/ops/backup.sh`, `restore.sh`, `selftest.sh` (Selbsttest läuft in der CI-Pipeline); `CHANGELOG.md`
+- ☑ Benutzerhilfe (8e): Handbuch-Seite „Erste Schritte nach Rolle“ als Einstieg für Admin, Assessor, Befragte, Leser
+- ◐ Abnahme: Checkliste `05_test/04_abnahme-checkliste.md` erstellt; offen sind das erste Pipeline-Ergebnis (A-5/A-6), die fachliche Abnahme (Teil B, u. a. Freigabe des Fragenkatalogs) und die Betriebsbereitschaft (Teil C)
 
 ## Phase 4a – erledigt (09.11.2026)
 - ☑ Admin: Benutzer anlegen (Domain-Prüfung, Einladung), Name/E-Mail/Rolle ändern, aktiv/inaktiv, löschen mit Bestätigungsdialog (pseudonymisiert), Passwort zurücksetzen, Schutz eigener Account und letzter Admin

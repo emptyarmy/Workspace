@@ -28,7 +28,7 @@ sidebar:
 | Bericht | Kennzahlen, Reifegradmatrix, Netz- und Balkendiagramme, KI-Reifegrad, Konsenslücken, Druck/PDF | umgesetzt (Phase 6) |
 | Benchmark | Anonymer Vergleich mit Branche und allen Firmen (Median, Quartile, ab 5 Firmen) | umgesetzt (Phase 6) |
 | Empfehlungen | Regelbasiert oder mit KI-Modul der Firma, kurzfristig (< 1 Monat) und langfristig (≥ 1 Monat), Datenschutz-Dialog, Maßnahmenplan mit CSV-Export, Voraussetzungen je Kontrollpunkt | umgesetzt (Phase 7) |
-| Abschluss | CI/CD, Security-Review, Betriebsdokumentation, Abnahme | geplant (Phase 8) |
+| Abschluss | CI/CD, Security-Review, Betriebsdokumentation, Abnahme | umgesetzt (16.11.2026); Abnahme offen – [Checkliste](/projekt/test/abnahme-checkliste/) |
 
 ## Technischer Aufbau
 

@@ -47,7 +47,7 @@ gantt
 | MS-5 | Erfassung & Zusammenführung (☑ 13.11.2026) | Testfälle ASM, ANS, COM, SRC, I18N, MU, CONS, HIST, TEN grün |
 | MS-6 | Bericht & Benchmark (☑ 14.11.2026) | Testfälle REP, IO, BM grün |
 | MS-7 | Empfehlungen (☑ 14.11.2026, Testfälle im Container auf Chrome und Samsung grün) | Testfälle REC, ADM-KI grün |
-| MS-8 | Release 1.0 | alle Tests grün (lokal **und** in der CI/CD-Pipeline), Security-Review ohne kritische Befunde, A11y ok, Abnahme |
+| MS-8 | Release 1.0 (◐ 16.11.2026: Umsetzung 8a–8e fertig; Abnahme offen, siehe `05_test/04_abnahme-checkliste.md`) | alle Tests grün (lokal **und** in der CI/CD-Pipeline), Security-Review ohne kritische Befunde, A11y ok, Abnahme |
 
 ## Release-Schnitt
 

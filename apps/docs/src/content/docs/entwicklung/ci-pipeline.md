@@ -22,7 +22,7 @@ flowchart LR
 | **Prüfungen** | Prettier, ESLint, Typecheck, Fragenkatalog, Testfallkatalog vollständig automatisiert (keine Platzhalter in `tests/e2e/geplant`), `npm audit` (ab „moderate“), Dokumentation bauen | `npm run format:check && npm run lint && npm run typecheck && npm run catalog:validate && npm run test:planned && npm audit --audit-level=moderate && npm run docs:build` |
 | **Unit + DB** | Vitest: Unit-, API- und Datenbanktests gegen PostgreSQL 16 (Service-Container) | `TEST_DATABASE_URL=… npm run test:unit` |
 | **E2E** (3 Jobs) | Playwright gegen den **Produktions-Build** (`E2E_PROD=1`), aufgeteilt nach Browser-Engine: Chromium (Desktop Chrome, kleiner Laptop, Galaxy S24), Firefox (Desktop), WebKit (Desktop Safari, iPad, iPhone) | `npm run build && E2E_PROD=1 npm run test:e2e` |
-| **Container** | Image bauen (mit Build-Cache), Rauchtest, `docker-compose.prod.yml` auf Gültigkeit prüfen | `docker build -t ai-tpi . && tools/docker/smoke-test.sh ai-tpi postgres://…/leere_db` |
+| **Container** | Image bauen (mit Build-Cache), Rauchtest, Selbsttest der Betriebsskripte (Start mit `docker-compose.prod.yml`, Ersteinrichtung, Sicherung, Wiederherstellung) | `docker build -t ai-tpi . && tools/docker/smoke-test.sh ai-tpi postgres://…/leere_db && tools/ops/selftest.sh` |
 
 Die E2E-Jobs laufen mit `CI=true`: zwei Worker, bis zu zwei Wiederholungen bei Fehlschlag, `test.only` verboten. Bericht und Traces liegen 14 Tage als Artefakt `playwright-report-<engine>` am Durchgang (auch bei Erfolg).
 

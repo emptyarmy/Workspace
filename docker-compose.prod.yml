@@ -1,4 +1,4 @@
-# AI_TPI – Betrieb mit Docker Compose (Phase 8c, docs/06_betrieb/01_installation.md).
+# AI_TPI – Betrieb mit Docker Compose (Phase 8c; Doku: Starlight „Betrieb“ – Installation, Backup, Update).
 #
 #   cp .env.production.example .env.production   # Werte eintragen (Geheimnisse!)
 #   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
