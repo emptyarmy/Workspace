@@ -42,13 +42,15 @@ async function save() {
     return;
   }
   const key =
-    res.error === 'invalid_token'
-      ? 'password.invalidToken'
-      : res.error === 'password_reused'
-        ? 'password.reused'
-        : res.error === 'password_policy'
-          ? 'password.strength.tooWeak'
-          : 'login.errors.generic';
+    res.error === 'rate_limited'
+      ? 'common.rateLimited'
+      : res.error === 'invalid_token'
+        ? 'password.invalidToken'
+        : res.error === 'password_reused'
+          ? 'password.reused'
+          : res.error === 'password_policy'
+            ? 'password.strength.tooWeak'
+            : 'login.errors.generic';
   message.value = { kind: 'error', text: t(key) };
 }
 </script>

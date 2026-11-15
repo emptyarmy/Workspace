@@ -27,6 +27,7 @@ sidebar:
 | `password_mismatch` | 400 | Wiederholung stimmt nicht überein |
 | `password_reused` | 400 | neues Passwort entspricht dem bisherigen |
 | `domain_blocked` | 400 | Freemail-Domain bei der Ersteinrichtung |
+| `rate_limited` | 429 | Zu viele Anfragen von dieser Client-Adresse an Anmeldung, „Passwort vergessen“, Passwort setzen oder Ersteinrichtung (`AUTH_RATE_LIMIT_PER_MIN`); `Retry-After` nennt die Wartezeit in Sekunden. Oberfläche: „Zu viele Anfragen in kurzer Zeit …“ |
 
 ## Benutzer und Firmen
 

@@ -146,3 +146,16 @@ Technik:
 | Geheimnisse | SMTP-Passwort und KI-API-Schlüssel AES-256-GCM-verschlüsselt (`SECRET_ENCRYPTION_KEY`, Format `v1.<iv>.<tag>.<daten>`); Antworten enthalten nur `hasPassword` bzw. `hasApiKey` + `••••<letzte 4>`. |
 | KI-Verbindungstest | nur über den Server, höchstens 15 s, keine Weiterleitungen; Ergebnis `ok` / `unreachable` / `timeout` / `auth_failed` / `http_error`. Hinweis: Die Basis-URL ist bewusst auch für `localhost` und interne Adressen erlaubt (lokale Modelle wie Ollama). Da nur Admins sie setzen können und nur Status/Antwortzeit zurückgegeben werden, ist das Risiko einer Server-Side-Request-Forgery begrenzt. |
 | Audit-Log | Ansicht zeigt Einträge mit `company_id` **oder** `target_company_id` der eigenen Firma (Aktionen fremder Admins sind gekennzeichnet); CSV mit `;`, UTF-8-BOM (Excel) und Schutz vor Formel-Injektion (`=`, `+`, `-`, `@` werden mit `'` entschärft). |
+
+## Härtung nach dem Security-Review (Phase 8b)
+
+Ergebnis und Befunde: `05_test/03_security-review.md`. Ergänzt wurden:
+
+- **Rate-Limit je Client-Adresse** für Anmeldung, „Passwort vergessen“, Passwort setzen und Ersteinrichtung (`AUTH_RATE_LIMIT_PER_MIN`, Standard 30/min), zusätzlich zur Kontosperre; höchstens 3 Reset-Mails je Adresse in 15 min (`RESET_MAILS_PER_15_MIN`). Antwort `429 rate_limited` mit `Retry-After`.
+- **„Passwort vergessen“** versendet die Mail im Hintergrund – gleiche Antwort und gleiche Antwortzeit für bekannte und unbekannte Adressen.
+- **Ersteinrichtung** nur bei direkter lokaler Verbindung: Socket-Adresse localhost **und** keine Weiterleitungs-Header eines Proxys.
+- **Reverse Proxy:** `TRUST_PROXY=true` übernimmt die Client-Adresse aus `X-Forwarded-For` (Rate-Limit, Audit-Log); die Ersteinrichtung bleibt davon unberührt.
+- **Cookie** `Secure` und **HSTS** in production standardmäßig an; Sicherheits-Header inkl. CSP für alle API-Antworten.
+- **Protokoll** als JSON auf stdout auch in production, Geheimnisse geschwärzt.
+- **SSRF-Schutz:** KI-Aufrufe zu link-lokalen Adressen und Cloud-Metadaten-Diensten werden abgewiesen.
+

@@ -86,7 +86,7 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 ## Phase 8 – Abschluss
 - ☑ Alle 250 Testfälle aus `05_test/02_testfallkatalog.md` automatisiert (8a, 15.11.2026; neu: `tests/e2e/rechte-und-mandanten.spec.ts`; TC-RST-006 nach R-07 neu gefasst)
 - ☐ CI/CD-Pipeline (Lint, Typecheck, Unit/API, Playwright, Container-Build)
-- ☐ Security-Review (OWASP, Mandantentrennung), A11y-Prüfung
+- ☑ Security-Review (OWASP Top 10, Mandantentrennung), A11y-Prüfung – `05_test/03_security-review.md`: 9 Befunde behoben (u. a. Ersteinrichtung hinter Proxy, Rate-Limits, Protokoll in production, SSRF-Sperre, Sicherheits-Header, `npm audit` 0), keine kritischen offen (8b, 15.11.2026)
 - ☐ Betriebsdokumentation (Installation, Backup, Konfiguration)
 - ☐ Benutzerhilfe, Abnahme
 

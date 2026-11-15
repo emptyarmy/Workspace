@@ -41,14 +41,22 @@ describe.skipIf(!url)('Phase 4b: firmenübergreifende Administration und Konfigu
     payload?: object,
   ) => app.inject({ method, url: u, payload, headers: { ...H, cookie }, remoteAddress: '127.0.0.1' });
   const mailsTo = (to: string) => mailer.outbox!.filter((m) => m.to === to);
-  const tokenFor = (to: string) => {
-    const m = [...mailer.outbox!].reverse().find((x) => x.to === to && x.text.includes('token='));
-    return m ? new URL(m.text.match(/https?:\/\/\S+token=\S+/)![0]).searchParams.get('token')! : null;
+  /** Mails gehen seit dem Security-Review im Hintergrund raus – kurz warten (max. 2 s). */
+  const tokenFor = async (to: string, since = 0) => {
+    for (let i = 0; i < 40; i++) {
+      const m = [...mailer.outbox!.slice(since)]
+        .reverse()
+        .find((x) => x.to === to && x.text.includes('token='));
+      if (m) return new URL(m.text.match(/https?:\/\/\S+token=\S+/)![0]).searchParams.get('token')!;
+      await new Promise((r) => setTimeout(r, 50));
+    }
+    return null;
   };
   /** Eingeladenen Nutzer aktivieren: Passwort vergessen → Einmal-Link → Passwort setzen → Login. */
   async function activate(email: string, password = USER_PW): Promise<string> {
+    const sent = mailer.outbox!.length;
     await req('POST', '/api/auth/password-reset', '', { email });
-    const token = tokenFor(email)!;
+    const token = (await tokenFor(email, sent))!;
     const set = await req('POST', '/api/auth/password', '', { token, password, passwordRepeat: password });
     expect(set.statusCode).toBe(200);
     const login = await req('POST', '/api/auth/login', '', { email, password });

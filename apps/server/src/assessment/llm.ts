@@ -4,6 +4,7 @@
  * Unterstützt dieselben Anbieter wie der Verbindungstest (admin/ai-test.ts).
  */
 import { z } from 'zod';
+import { assertAllowedTarget } from '../security/outbound';
 import type { AiProvider } from '../admin/ai-test';
 
 export type AiFailure = 'timeout' | 'unreachable' | 'auth_failed' | 'http_error' | 'invalid_response';
@@ -130,6 +131,11 @@ export function llmText(provider: string, json: unknown): string {
 
 export async function callLlm(m: LlmModule, apiKey: string | null, msg: LlmMessages): Promise<string> {
   const req = llmRequest(m, apiKey, msg);
+  try {
+    await assertAllowedTarget(req.url);
+  } catch {
+    throw new AiError('unreachable', undefined, 'blocked_address');
+  }
   let res: Response;
   try {
     res = await fetch(req.url, {

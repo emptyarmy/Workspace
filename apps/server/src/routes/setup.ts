@@ -28,13 +28,25 @@ const setupBody = z.object({
 
 /**
  * Ersteinrichtung (R-06): Der erste Nutzer, der sich über localhost registriert, wird Admin und legt seine Firma an.
- * Nur solange kein Nutzer existiert, nur über localhost (Socket-Adresse), abschaltbar per SETUP_ENABLED.
+ * Nur solange kein Nutzer existiert, nur über localhost (Socket-Adresse, ohne Weiterleitungs-Header eines Proxys),
+ * abschaltbar per SETUP_ENABLED.
  * In allen anderen Fällen 404, damit die Funktion von außen unsichtbar ist.
  */
+const FORWARD_HEADERS = [
+  'x-forwarded-for',
+  'x-forwarded-host',
+  'x-forwarded-proto',
+  'forwarded',
+  'x-real-ip',
+];
+
 export const setupRoutes: FastifyPluginAsync = async (app) => {
   async function setupAllowed(req: FastifyRequest): Promise<boolean> {
     if (!app.deps.config.SETUP_ENABLED) return false;
     if (!isLoopbackAddress(req.socket.remoteAddress)) return false;
+    // Über einen Reverse Proxy auf demselben Rechner kämen auch Anfragen von außen „von localhost“.
+    // Proxys setzen Weiterleitungs-Header – solche Anfragen sind keine direkte lokale Einrichtung (Security-Review 8b).
+    if (FORWARD_HEADERS.some((h) => req.headers[h] !== undefined)) return false;
     if (!app.deps.db) return true;
     const [row] = await app.deps.db.db.select({ n: count() }).from(users);
     return (row?.n ?? 0) === 0;

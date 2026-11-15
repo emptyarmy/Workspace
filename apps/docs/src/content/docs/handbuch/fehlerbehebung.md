@@ -59,6 +59,8 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | Problem | Lösung |
 |---|---|
 | Einladung oder Einmal-Link kommt nicht an | Lokal landen alle Mails in **Mailpit**: `http://localhost:8025`. Bei eigenem SMTP-Server der Firma: Reiter *E-Mail* → **Test-Mail an mich senden**. |
+| *Zu viele Anfragen in kurzer Zeit …* bei Anmeldung oder „Passwort vergessen“ | Schutz gegen das Durchprobieren von Passwörtern: höchstens 30 Anfragen je Minute und Adresse (`AUTH_RATE_LIMIT_PER_MIN`). Eine Minute warten. Hängen viele Nutzer hinter einem Reverse Proxy, muss `TRUST_PROXY=true` gesetzt sein, sonst teilen sich alle ein Kontingent. |
+| „Passwort vergessen“: es kommt keine weitere Mail | Je Adresse gehen höchstens 3 Mails in 15 Minuten raus (`RESET_MAILS_PER_15_MIN`); den zuletzt erhaltenen Link verwenden oder 15 Minuten warten. |
 | *Link abgelaufen oder bereits verwendet* | Einmal-Links gelten 30 Minuten und nur einmal; über „Passwort vergessen?“ einen neuen anfordern. |
 | Konto gesperrt | Nach 5 Fehlversuchen 15 Minuten warten oder einen Admin das Passwort zurücksetzen lassen. |
 | Passwort erfüllt alle Regeln, wird aber abgelehnt | Die Stärke ist „schwach“ (z. B. Wort + Jahreszahl). Ein längeres, weniger vorhersagbares Passwort wählen. |
@@ -67,6 +69,8 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 
 | Problem | Lösung |
 |---|---|
+| KI-Verbindungstest: *Diese Adresse ist gesperrt* | Link-lokale Adressen und Cloud-Metadaten-Dienste (z. B. `169.254.169.254`) sind als Ziel gesperrt (Schutz vor SSRF). Die Adresse des KI-Dienstes eintragen; `localhost` und interne Netze sind erlaubt. |
+| Ersteinrichtung über die öffentliche Adresse: *nicht verfügbar* | Gewollt: Die Einrichtung geht nur direkt auf dem Server über `localhost`, nicht über einen Reverse Proxy (Security-Review F-04). Auf dem Server z. B. per SSH-Tunnel `ssh -L 3000:127.0.0.1:3000 server` und dann lokal öffnen. |
 | *Keine Berechtigung …* beim Erzeugen oder Speichern | Nur Assessoren im Team des Assessments dürfen Empfehlungen erzeugen und bearbeiten; Admins, Befragte und Leser lesen nur. Details: [Empfehlungen – Meldungen](/handbuch/empfehlungen/#meldungen-keine-berechtigung). |
 | *Der KI-Dienst hat nicht rechtzeitig geantwortet* | Timeout des KI-Moduls erhöhen (5–300 s). Es werden die regelbasierten Empfehlungen angezeigt. |
 | *… hat die Anmeldung abgelehnt (HTTP 401)* | API-Schlüssel im Reiter *KI-Konfiguration* erneuern, dann **Verbindung testen**. |

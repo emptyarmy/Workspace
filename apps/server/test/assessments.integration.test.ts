@@ -37,16 +37,24 @@ describe.skipIf(!url)('Phase 5: Erfassung (DB)', () => {
     cookie = '',
     payload?: object,
   ) => app.inject({ method, url: u, payload, headers: { ...H, cookie }, remoteAddress: '127.0.0.1' });
-  const tokenFor = (to: string) => {
-    const m = [...mailer.outbox!].reverse().find((x) => x.to === to && x.text.includes('token='));
-    return new URL(m!.text.match(/https?:\/\/\S+token=\S+/)![0]).searchParams.get('token')!;
+  /** Mails gehen seit dem Security-Review im Hintergrund raus – kurz warten (max. 2 s). */
+  const tokenFor = async (to: string, since = 0) => {
+    for (let i = 0; i < 40; i++) {
+      const m = [...mailer.outbox!.slice(since)]
+        .reverse()
+        .find((x) => x.to === to && x.text.includes('token='));
+      if (m) return new URL(m.text.match(/https?:\/\/\S+token=\S+/)![0]).searchParams.get('token')!;
+      await new Promise((r) => setTimeout(r, 50));
+    }
+    return null;
   };
   async function user(cookie: string, name: string, email: string, role: string, departmentId?: string) {
     const r = await req('POST', '/api/admin/users', cookie, { name, email, role, departmentId });
     expect(r.statusCode).toBe(201);
+    const sent = mailer.outbox!.length;
     await req('POST', '/api/auth/password-reset', '', { email });
     await req('POST', '/api/auth/password', '', {
-      token: tokenFor(email),
+      token: await tokenFor(email, sent),
       password: USER_PW,
       passwordRepeat: USER_PW,
     });
@@ -99,9 +107,10 @@ describe.skipIf(!url)('Phase 5: Erfassung (DB)', () => {
       admin: { name: 'Bodo Beta', email: 'bodo@beta.de' },
     });
     expect(other.statusCode).toBe(201);
+    const sent = mailer.outbox!.length;
     await req('POST', '/api/auth/password-reset', '', { email: 'bodo@beta.de' });
     await req('POST', '/api/auth/password', '', {
-      token: tokenFor('bodo@beta.de'),
+      token: await tokenFor('bodo@beta.de', sent),
       password: USER_PW,
       passwordRepeat: USER_PW,
     });

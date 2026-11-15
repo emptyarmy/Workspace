@@ -1,3 +1,5 @@
+import { assertAllowedTarget } from '../security/outbound';
+
 /** Verbindungstest für KI-Module (Admin-Bereich, Reiter „KI-Konfiguration“). Alle KI-Aufrufe laufen über den Server. */
 export const AI_PROVIDERS = [
   'anthropic',
@@ -13,7 +15,7 @@ export interface AiTestResult {
   ok: boolean;
   ms: number;
   status?: number;
-  error?: 'unreachable' | 'timeout' | 'auth_failed' | 'http_error';
+  error?: 'unreachable' | 'timeout' | 'auth_failed' | 'http_error' | 'blocked_address';
 }
 
 export function aiProbe(
@@ -49,6 +51,11 @@ export async function testAiConnection(m: {
   if (m.mode === 'rules') return { ok: true, ms: 0 };
   if (!m.baseUrl) return { ok: false, ms: 0, error: 'unreachable' };
   const probe = aiProbe(m.provider as AiProvider, m.baseUrl, m.apiKey);
+  try {
+    await assertAllowedTarget(probe.url);
+  } catch {
+    return { ok: false, ms: 0, error: 'blocked_address' };
+  }
   const started = Date.now();
   try {
     const res = await fetch(probe.url, {

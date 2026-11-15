@@ -17,7 +17,12 @@ async function submit() {
       ? undefined
       : t('login.errors.emailInvalid');
   if (error.value) return;
-  await apiPost('/api/auth/password-reset', { email: form.email });
+  const res = await apiPost('/api/auth/password-reset', { email: form.email });
+  // Zu viele Anfragen von dieser Adresse: nicht „gesendet“ behaupten (Security-Review 8b).
+  if (res.status === 429) {
+    error.value = t('common.rateLimited');
+    return;
+  }
   sent.value = true;
 }
 </script>

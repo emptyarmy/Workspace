@@ -44,4 +44,4 @@ Weitere Felder: Modell, API-Schlüssel, Temperatur (0–1), Timeout (5–300 s),
 | Basis-URL | Pflicht außer bei „regelbasiert“; nur `http://` oder `https://` |
 | Bezeichnung | je Firma eindeutig |
 | Standard | Das erste Modul wird automatisch Standard. Es gibt immer genau eines; wird es gelöscht, rückt ein anderes nach. |
-| **Verbindung testen** | Der Server ruft die Modell-Liste des Anbieters ab und meldet *erfolgreich (… ms)*, *nicht erreichbar*, *Zeitüberschreitung*, *Anmeldung abgelehnt* oder *unerwartete Antwort*. |
+| **Verbindung testen** | Der Server ruft die Modell-Liste des Anbieters ab und meldet *erfolgreich (… ms)*, *nicht erreichbar*, *Zeitüberschreitung*, *Anmeldung abgelehnt*, *unerwartete Antwort* oder *Adresse gesperrt* (link-lokale Adressen und Cloud-Metadaten-Dienste wie `169.254.169.254` sind als Ziel nicht erlaubt; `localhost` und interne Netze schon). |

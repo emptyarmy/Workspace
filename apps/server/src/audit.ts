@@ -15,5 +15,5 @@ export async function audit(
     details?: Record<string, unknown>;
   },
 ): Promise<void> {
-  await db.insert(auditLog).values({ ...entry, ip: req.socket.remoteAddress ?? null });
+  await db.insert(auditLog).values({ ...entry, ip: req.ip ?? req.socket.remoteAddress ?? null });
 }

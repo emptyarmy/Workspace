@@ -114,7 +114,8 @@
     "close": "Schließen",
     "loading": "Wird geladen …",
     "none": "–",
-    "retry": "Erneut versuchen"
+    "retry": "Erneut versuchen",
+    "rateLimited": "Zu viele Anfragen in kurzer Zeit. Bitte warten Sie eine Minute und versuchen Sie es dann erneut."
   },
   "setup": {
     "heading": "Ersteinrichtung",
@@ -348,7 +349,8 @@
         "unreachable": "Server nicht erreichbar.",
         "timeout": "Zeitüberschreitung.",
         "auth_failed": "Anmeldung abgelehnt – API-Schlüssel prüfen.",
-        "http_error": "Unerwartete Antwort des Servers (HTTP {status})."
+        "http_error": "Unerwartete Antwort des Servers (HTTP {status}).",
+        "blocked_address": "Diese Adresse ist gesperrt (link-lokale Adresse bzw. Cloud-Metadaten-Dienst). Bitte die Adresse des KI-Dienstes eintragen."
       },
       "modes": {
         "rules": "Regelbasiert (ohne KI)",

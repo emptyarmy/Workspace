@@ -9,6 +9,7 @@ import { createSession, destroyAllSessions, destroySession, SESSION_COOKIE } fro
 import { consumeToken, findValidToken, issuePasswordToken } from '../auth/tokens';
 import { companies, users } from '../db/schema';
 import { passwordLinkMail } from '../mail/templates';
+import { RateLimiter } from '../security/rate-limit';
 import { requireAuth, setSessionCookie } from '../plugins/auth';
 
 const resetBody = z.object({ email: emailSchema });
@@ -23,6 +24,7 @@ export const MAX_FAILED_LOGINS = 5;
 export const LOCK_MS = 15 * 60 * 1000;
 
 export const authRoutes: FastifyPluginAsync = async (app) => {
+  const resetMailLimiter = new RateLimiter(app.deps.config.RESET_MAILS_PER_15_MIN, 15 * 60_000);
   const db = () => {
     if (!app.deps.db) throw Object.assign(new Error('db_unavailable'), { statusCode: 503 });
     return app.deps.db.db;
@@ -92,15 +94,18 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
         and(sql`lower(${users.email}) = ${parsed.data.email}`, inArray(users.status, ['active', 'invited'])),
       )
       .limit(1);
-    if (u) {
-      try {
+    // Höchstens RESET_MAILS_PER_15_MIN Mails je Adresse (Schutz vor Mail-Flut); darüber still nichts senden,
+    // damit die Antwort nicht verrät, ob die Adresse existiert.
+    const limited = resetMailLimiter.hit(parsed.data.email) > 0;
+    if (u && !limited) {
+      // Versand im Hintergrund: Die Antwortzeit ist für bekannte und unbekannte Adressen gleich (OWASP A07).
+      const send = async () => {
         const token = await issuePasswordToken(db(), u.id);
         const link = `${app.deps.config.PUBLIC_BASE_URL}/passwort-festlegen?token=${token}`;
         await sendCompanyMail(app, u.companyId, passwordLinkMail({ to: u.email, name: u.name, link }));
         await audit(db(), req, { action: 'auth.password_link_sent', userId: u.id, companyId: u.companyId });
-      } catch (err) {
-        req.log.error({ err }, 'password reset mail failed');
-      }
+      };
+      send().catch((err) => req.log.error({ err }, 'password reset mail failed'));
     }
     return reply.status(202).send({ status: 'accepted' });
   });

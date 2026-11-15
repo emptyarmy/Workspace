@@ -22,6 +22,7 @@ import { reportRoutes } from './routes/report';
 import { transferRoutes } from './routes/transfer';
 import { setupRoutes } from './routes/setup';
 import { testSupportRoutes } from './routes/test-support';
+import { RateLimiter } from './security/rate-limit';
 import { recommendationRoutes } from './routes/recommendations';
 
 export interface AppDeps {
@@ -38,21 +39,65 @@ declare module 'fastify' {
 }
 
 export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
+  const cfg = deps.config;
+  const level = cfg.LOG_LEVEL ?? (cfg.NODE_ENV === 'test' ? 'silent' : 'info');
   const app = Fastify({
-    logger: deps.config.NODE_ENV === 'development' ? { level: 'info' } : false,
-    // Kein trustProxy: Die Client-Adresse stammt immer aus dem Socket (R-06).
-    trustProxy: false,
+    // JSON-Protokoll auf stdout (auch in production, OWASP A09); Geheimnisse werden geschwärzt.
+    logger:
+      level === 'silent'
+        ? false
+        : {
+            level,
+            redact: {
+              paths: [
+                'req.headers.cookie',
+                'req.headers.authorization',
+                'req.headers["x-api-key"]',
+                'req.headers["api-key"]',
+                'res.headers["set-cookie"]',
+              ],
+              censor: '[geschwärzt]',
+            },
+          },
+    // Standard: Client-Adresse aus dem Socket. Hinter einem Reverse Proxy TRUST_PROXY=true (X-Forwarded-For).
+    // Die Ersteinrichtung (R-06) prüft unabhängig davon immer die Socket-Adresse.
+    trustProxy: cfg.TRUST_PROXY,
   });
   app.decorate('deps', deps);
   // Live-Aktualisierung je Assessment; offene Ströme beim Herunterfahren beenden.
   app.decorate('live', new LiveHub());
   app.addHook('onClose', async () => app.live.closeAll());
 
-  app.addHook('onSend', async (_req, reply) => {
+  // Sicherheits-Header (Security-Review 8b, OWASP A05). Die API liefert nur JSON/CSV/SSE:
+  // Die Content-Security-Policy verbietet deshalb alles; HTML-Seiten bekommen ihre eigene CSP (siehe static.ts).
+  app.addHook('onSend', async (req, reply) => {
     reply.header('X-Content-Type-Options', 'nosniff');
     reply.header('Referrer-Policy', 'same-origin');
     reply.header('X-Frame-Options', 'DENY');
-    reply.header('Cache-Control', 'no-store');
+    reply.header('Cross-Origin-Opener-Policy', 'same-origin');
+    reply.header('Cross-Origin-Resource-Policy', 'same-origin');
+    reply.header('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+    if (cfg.COOKIE_SECURE) reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    if (req.url.startsWith('/api/')) {
+      reply.header('Cache-Control', 'no-store');
+      reply.header('Content-Security-Policy', "default-src 'none'; frame-ancestors 'none'");
+    }
+  });
+
+  // Rate-Limit für Anmeldung, „Passwort vergessen“, Passwort setzen und Ersteinrichtung (OWASP A07).
+  // Ergänzt die Kontosperre nach 5 Fehlversuchen um eine Grenze je Client-Adresse (Schutz vor Credential Stuffing).
+  const authLimiter = new RateLimiter(cfg.AUTH_RATE_LIMIT_PER_MIN, 60_000);
+  const LIMITED = new Set([
+    '/api/auth/login',
+    '/api/auth/password-reset',
+    '/api/auth/password',
+    '/api/setup',
+  ]);
+  app.addHook('onRequest', async (req, reply) => {
+    if (req.method !== 'POST' || !LIMITED.has(req.url.split('?')[0]!)) return;
+    const wait = authLimiter.hit(req.ip);
+    if (wait > 0)
+      return reply.status(429).header('Retry-After', String(wait)).send({ error: 'rate_limited' });
   });
 
   // Keine internen Fehlerdetails an den Client (NFA-09); eindeutige DB-Konflikte → 409.

@@ -55,9 +55,11 @@ async function submit() {
     text:
       res.status === 401
         ? t('login.errors.invalidCredentials')
-        : res.status === 429
-          ? t('login.errors.locked')
-          : t('login.errors.generic'),
+        : res.error === 'rate_limited'
+          ? t('common.rateLimited')
+          : res.status === 429
+            ? t('login.errors.locked')
+            : t('login.errors.generic'),
   };
 }
 </script>

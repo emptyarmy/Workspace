@@ -15,10 +15,14 @@ Die Konfiguration steht in `.env` im Projektordner (Vorlage: `.env.example`). We
 | `SERVER_HOST` | `127.0.0.1` | Adresse, auf der der Server lauscht |
 | `SERVER_PORT` | `3000` | Port des API-Servers. Die Weboberfläche nutzt denselben Wert für ihren Proxy. Die Vorlage `.env.example` setzt `3001`, weil 3000 oft belegt ist. Ist der Port belegt, bricht der Server mit einer Meldung ab. |
 | `DATABASE_URL` | – | PostgreSQL, z. B. `postgres://ai_tpi:ai_tpi@localhost:5432/ai_tpi`. Ohne Angabe laufen nur Katalog und Health. |
-| `SETUP_ENABLED` | `true` | Ersteinrichtung erlauben (zusätzlich nur über localhost und nur ohne Nutzer) |
+| `SETUP_ENABLED` | `true` | Ersteinrichtung erlauben (zusätzlich nur direkt über localhost – nicht über einen Proxy – und nur ohne Nutzer) |
 | `SECRET_ENCRYPTION_KEY` | – | Schlüssel (≥ 32 Zeichen) für SMTP-Passwörter und KI-API-Schlüssel. **Pflicht bei `production`**; leer = Entwicklungsschlüssel |
 | `PUBLIC_BASE_URL` | `http://localhost:5173` | Basis für Links in E-Mails (Einladung, Einmal-Link) |
-| `COOKIE_SECURE` | `false` | Sitzungs-Cookie nur über HTTPS (in Produktion `true`) |
+| `COOKIE_SECURE` | `production`: `true`, sonst `false` | Sitzungs-Cookie nur über HTTPS; wenn aktiv, sendet der Server auch HSTS. Nur für ein Intranet ohne HTTPS bewusst auf `false` setzen |
+| `TRUST_PROXY` | `false` | Hinter einem Reverse Proxy `true`: Client-Adresse aus `X-Forwarded-For` (für Rate-Limits und Audit-Log). Die Ersteinrichtung prüft unabhängig davon die Socket-Adresse |
+| `LOG_LEVEL` | `info` (Tests: aus) | Protokollstufe des JSON-Protokolls auf stdout: `fatal`, `error`, `warn`, `info`, `debug`, `trace`, `silent`. Cookies und Schlüssel werden geschwärzt |
+| `AUTH_RATE_LIMIT_PER_MIN` | `30` (Tests: `0`) | Anfragen je Minute und Client-Adresse an Anmeldung, „Passwort vergessen“, Passwort setzen und Ersteinrichtung; darüber 429 `rate_limited`. `0` = aus |
+| `RESET_MAILS_PER_15_MIN` | `3` (Tests: `0`) | „Passwort vergessen“-Mails je E-Mail-Adresse in 15 Minuten; darüber wird still nichts versendet (die Antwort bleibt gleich). `0` = aus |
 | `MAIL_TRANSPORT` | `smtp` | Standard-Mailversand: `smtp`, `sendmail` (Betriebssystem) oder `memory` (nur Tests) |
 | `SMTP_HOST` / `SMTP_PORT` | `localhost` / `1025` | SMTP-Server für `MAIL_TRANSPORT=smtp` (lokal Mailpit) |
 | `MAIL_FROM` | `AI_TPI <no-reply@ai-tpi.local>` | Standard-Absender |
@@ -50,7 +54,8 @@ Firmen können Mailserver und KI-Module zusätzlich im Admin-Bereich festlegen (
 
 ## Empfehlungen für den Produktivbetrieb
 
-- `NODE_ENV=production`, `COOKIE_SECURE=true`, `PUBLIC_BASE_URL=https://…`
+- `NODE_ENV=production` (setzt `COOKIE_SECURE`, Rate-Limits und Protokoll automatisch), `PUBLIC_BASE_URL=https://…`
 - `SECRET_ENCRYPTION_KEY` setzen und sicher aufbewahren
 - Nach der Ersteinrichtung `SETUP_ENABLED=false`
-- Betrieb hinter einem Reverse Proxy mit HTTPS
+- Betrieb hinter einem Reverse Proxy mit HTTPS, dann `TRUST_PROXY=true`
+- Auflagen aus dem [Security-Review](/projekt/test/security-review/) beachten

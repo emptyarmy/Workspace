@@ -114,7 +114,8 @@
     "close": "Close",
     "loading": "Loading …",
     "none": "–",
-    "retry": "Try again"
+    "retry": "Try again",
+    "rateLimited": "Too many requests in a short time. Please wait a minute and try again."
   },
   "setup": {
     "heading": "Initial setup",
@@ -348,7 +349,8 @@
         "unreachable": "Server not reachable.",
         "timeout": "Timeout.",
         "auth_failed": "Authentication rejected – check the API key.",
-        "http_error": "Unexpected server response (HTTP {status})."
+        "http_error": "Unexpected server response (HTTP {status}).",
+        "blocked_address": "This address is blocked (link-local address or cloud metadata service). Please enter the address of the AI service."
       },
       "modes": {
         "rules": "Rule-based (no AI)",
