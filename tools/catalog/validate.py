@@ -14,7 +14,10 @@ except ImportError:
 ROOT = pathlib.Path(__file__).resolve().parents[2] / 'packages' / 'catalog'
 cat = json.loads((ROOT / 'catalog.v1.json').read_text(encoding='utf-8'))
 schema = json.loads((ROOT / 'catalog.schema.json').read_text(encoding='utf-8'))
-agile = json.loads((ROOT / 'sources' / 'agile-tpi-2.5.json').read_text(encoding='utf-8'))['checkpoints']
+# Die Originalquelle (packages/catalog/sources/) wird nicht eingecheckt. Fehlt sie (CI, frischer Checkout),
+# entfällt nur der Abgleich „jeder Agile-Punkt der Quelle ist zugeordnet“; alle übrigen Prüfungen laufen.
+_src = ROOT / 'sources' / 'agile-tpi-2.5.json'
+agile = json.loads(_src.read_text(encoding='utf-8'))['checkpoints'] if _src.exists() else None
 def schema_errors_node():
     """Schema-Prüfung über Node/ajv; None, wenn Node oder ajv nicht verfügbar sind."""
     node = shutil.which('node')
@@ -47,8 +50,10 @@ for a in cat['keyAreas']:
     for c in a['checkpoints']:
         if c['keyArea'] != a['id']: errors.append(f"{c['id']}: keyArea passt nicht zu {a['id']}")
 used = collections.Counter(r for c in cps for r in c.get('agileRefs', []))
-for x in agile:
+for x in agile or []:
     if used[x['id']] != 1: errors.append(f"Agile-Punkt {x['id']} ist {used[x['id']]}x zugeordnet (erwartet: 1x)")
+for r, n in used.items():
+    if n > 1 and agile is None: errors.append(f"Agile-Punkt {r} ist {n}x zugeordnet (erwartet: 1x)")
 # Sicht P/T/O: jeder KP hat eine Sicht; 'assigned' genau dann, wenn es kein Agile-Gegenstück gibt (Analyse, Empfehlung 2).
 for c in cps:
     if 'view' not in c: errors.append(f"{c['id']}: Sicht (view) fehlt")
@@ -80,7 +85,9 @@ def visit(i, path):
 for c in cps: visit(c['id'], [])
 if errors:
     print('\n'.join(errors)); print(f'FEHLER: {len(errors)}'); sys.exit(1)
-print(f'OK – {len(cat["keyAreas"])} Kernbereiche, {len(cps)} Kontrollpunkte, alle {len(agile)} Agile-Punkte genau einmal zugeordnet, Sicht P/T/O vollständig '
+agile_info = (f'alle {len(agile)} Agile-Punkte genau einmal zugeordnet' if agile is not None else
+              f'{len(used)} Agile-Punkte je einmal zugeordnet (Abgleich mit der Originalquelle übersprungen: nicht vorhanden)')
+print(f'OK – {len(cat["keyAreas"])} Kernbereiche, {len(cps)} Kontrollpunkte, {agile_info}, Sicht P/T/O vollständig '
       f'({sum(1 for c in cps if c.get("viewSource") == "assigned")} davon zugeordnet ohne Agile-Gegenstück), '
       f'{sum(len(c.get("dependsOn", [])) for c in cps)} Abhängigkeiten ohne Zyklen'
       f'{f", Schema geprüft mit {schema_by}" if schema_by else ""}.')
