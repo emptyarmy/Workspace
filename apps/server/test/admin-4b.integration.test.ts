@@ -441,6 +441,24 @@ describe.skipIf(!url)('Phase 4b: firmenübergreifende Administration und Konfigu
       const test = await req('POST', '/api/admin/mail-config/test', cookies.a);
       expect(test.json()).toMatchObject({ status: 'sent', to: 'anna@alpha.de' });
       expect(mailsTo('anna@alpha.de').at(-1)!.via).toBe('smtp:mail.alpha.de:2525');
+      // Fehlschlag nennt den Grund (ohne Rohmeldung des Mailservers).
+      await req('PUT', '/api/admin/mail-config', cookies.a, {
+        transport: 'smtp',
+        host: 'mail.alpha.invalid',
+        port: 2525,
+      });
+      const failed = await req('POST', '/api/admin/mail-config/test', cookies.a);
+      expect(failed.statusCode).toBe(502);
+      expect(failed.json()).toEqual({
+        error: 'mail_failed',
+        reason: 'unreachable',
+        via: 'SMTP mail.alpha.invalid:2525',
+      });
+      await req('PUT', '/api/admin/mail-config', cookies.a, {
+        transport: 'smtp',
+        host: 'mail.alpha.de',
+        port: 2525,
+      });
       await req('POST', '/api/admin/users', cookies.a, {
         name: 'Sven Smtp',
         email: 'sven@alpha.de',

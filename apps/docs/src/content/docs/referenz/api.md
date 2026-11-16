@@ -65,7 +65,7 @@ Alle Endpunkte unter `/api/admin/*` nur für die Rolle **Admin**.
 | POST / DELETE | `/api/admin/company/domains[/:domain]` | Domains (`domain_invalid`, `domain_blocked`, `domain_taken`, `domain_in_use`, `last_domain`) |
 | GET / POST / PATCH / DELETE | `/api/admin/departments[/:id]` | Abteilungen (`name_taken`, `department_in_use`) |
 | GET / PUT | `/api/admin/mail-config` | Mailserver; Passwort nur als `hasPassword` |
-| POST | `/api/admin/mail-config/test` | Test-Mail an mich (**502** `mail_failed`) |
+| POST | `/api/admin/mail-config/test` | Test-Mail an mich (**502** `mail_failed` mit `reason`: `unreachable`, `timeout`, `auth_failed`, `tls`, `rejected`, `other`) |
 | GET / POST / PATCH / DELETE | `/api/admin/ai-modules[/:id]` | KI-Module; Schlüssel nur maskiert (`name_taken`, `default_required`) |
 | POST | `/api/admin/ai-modules/:id/test` | Verbindungstest → `{ ok, ms, status?, error? }` |
 | GET / POST / PATCH / DELETE | `/api/admin/industries[/:code]` | gemeinsame Branchenliste (`code_taken`, `name_de_taken`, `name_en_taken`, `industry_in_use`, `standard_industry`) |

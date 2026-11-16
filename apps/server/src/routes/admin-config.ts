@@ -7,6 +7,7 @@ import { audit } from '../audit';
 import { maskSecret, SecretBox } from '../auth/secrets';
 import { aiModules, companyMailConfig, departments, users } from '../db/schema';
 import { companySmtp } from '../mail/company';
+import { classifyMailError } from '../mail/mailer';
 import { testMail } from '../mail/templates';
 import { requireAuth } from '../plugins/auth';
 
@@ -257,7 +258,8 @@ export const adminConfigRoutes: FastifyPluginAsync = async (app) => {
         companyId: u.companyId,
         details: { via },
       });
-      return fail(reply, 502, 'mail_failed');
+      // Grund für die Anzeige (ohne Rohmeldung): nicht erreichbar, Zeitüberschreitung, Anmeldung, TLS, abgelehnt
+      return reply.status(502).send({ error: 'mail_failed', reason: classifyMailError(err), via });
     }
     await audit(db(), req, {
       action: 'admin.mail_test_sent',

@@ -51,7 +51,7 @@ sidebar:
 | `name_taken` | 409 | Abteilung bzw. KI-Modul mit diesem Namen existiert |
 | `department_in_use` | 409 | Abteilung hat noch Nutzer |
 | `default_required` | 409 | Standard-KI-Modul kann nicht abgewählt werden |
-| `mail_failed` | 502 | Test-Mail konnte nicht versendet werden |
+| `mail_failed` | 502 | Test-Mail konnte nicht versendet werden. Das Feld `reason` nennt den Grund: `unreachable` (Server/Port nicht erreichbar, z. B. Mailpit läuft nicht), `timeout`, `auth_failed` (Anmeldung abgelehnt), `tls` (Verschlüsselung passt nicht zum Port), `rejected` (Nachricht abgelehnt), `other`. Die Rohmeldung steht nur im Protokoll („test mail failed“) |
 | `code_taken` | 409 | Branchencode vergeben |
 | `name_de_taken` / `name_en_taken` | 409 | Branchenbezeichnung (DE/EN) vergeben |
 | `industry_in_use` | 409 | Branche ist einer Firma zugeordnet |

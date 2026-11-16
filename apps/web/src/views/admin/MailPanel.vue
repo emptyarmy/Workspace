@@ -16,7 +16,7 @@ interface MailConfig {
   systemTransport: 'sendmail' | 'smtp';
 }
 
-const { t } = useI18n();
+const { t, te } = useI18n();
 const { notice, info, error, clear } = useNotice('admin.mail.errors');
 const cfg = ref<MailConfig | null>(null);
 const form = reactive({
@@ -87,10 +87,19 @@ async function save() {
 async function sendTest() {
   clear();
   testing.value = true;
-  const res = await apiPost<{ to: string; via: string }>('/api/admin/mail-config/test');
+  const res = await apiPost<{ to: string; via: string; reason?: string }>('/api/admin/mail-config/test');
   testing.value = false;
-  if (res.ok && res.data) info(t('admin.mail.testSent', { to: res.data.to, via: res.data.via }));
-  else error(res.error);
+  if (res.ok && res.data) return info(t('admin.mail.testSent', { to: res.data.to, via: res.data.via }));
+  // Der Server nennt den Grund (nicht erreichbar, Anmeldung, TLS …) – damit ist klar, was zu prüfen ist.
+  const reason = res.status === 502 ? res.data?.reason : undefined;
+  if (reason && te(`admin.mail.reasons.${reason}`)) {
+    notice.value = {
+      kind: 'error',
+      text: `${t('admin.mail.testFailed', { via: res.data?.via ?? '' })} ${t(`admin.mail.reasons.${reason}`)}${
+        form.transport === 'system' ? ` ${t('admin.mail.systemHint')}` : ''
+      }`,
+    };
+  } else error(res.error);
 }
 </script>
 

@@ -307,6 +307,16 @@
       "test": "Test-Mail an mich senden",
       "testHint": "Die Test-Mail verwendet die gespeicherte Einstellung. Speichern Sie Änderungen vorher.",
       "testSent": "Test-Mail an {to} über {via} versendet.",
+      "testFailed": "Die Test-Mail über {via} konnte nicht versendet werden.",
+      "systemHint": "Der Standard der Installation verbindet sich ohne Anmeldung und ohne Verschlüsselung mit dem in der Server-Konfiguration eingetragenen Mailserver (SMTP_HOST, SMTP_PORT; lokal Mailpit). Für einen echten Mailserver mit Zugangsdaten wählen Sie „Eigener SMTP-Server“.",
+      "reasons": {
+        "unreachable": "Grund: Der Mailserver ist unter dieser Adresse nicht erreichbar. Bitte Servername und Port prüfen – und ob der Mailserver läuft.",
+        "timeout": "Grund: Der Mailserver hat nicht rechtzeitig geantwortet. Häufig ist der Port falsch oder von einer Firewall gesperrt.",
+        "auth_failed": "Grund: Der Mailserver hat die Anmeldung abgelehnt. Bitte Benutzername und Passwort prüfen; manche Anbieter verlangen ein eigenes App-Passwort.",
+        "tls": "Grund: Die verschlüsselte Verbindung kam nicht zustande. Meist passt die Option „TLS-Verbindung von Beginn an“ nicht zum Port: Port 465 mit, Port 587 ohne diese Option.",
+        "rejected": "Grund: Der Mailserver hat die Nachricht abgelehnt, häufig wegen der Absenderadresse. Bitte den Absender prüfen.",
+        "other": "Bitte Server, Port und Zugangsdaten prüfen. Die technische Meldung steht im Protokoll des Servers („test mail failed“)."
+      },
       "errors": {
         "port": "Bitte einen Port zwischen 1 und 65535 angeben.",
         "from": "Bitte eine gültige Absenderadresse angeben, z. B. qs{'@'}firma.de oder QS-Team <qs{'@'}firma.de>.",

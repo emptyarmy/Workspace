@@ -347,6 +347,8 @@ test.describe('Benachrichtigungen und Mailfehler (isolierte Testfirma)', () => {
     await expect(page.getByTestId('mail-notice')).toContainText('Gespeichert');
     await page.getByTestId('mail-test').click();
     await expect(page.getByTestId('mail-notice')).toContainText('konnte nicht versendet werden');
+    // Der Grund wird genannt, damit klar ist, was zu prüfen ist
+    await expect(page.getByTestId('mail-notice')).toContainText('nicht erreichbar');
     await page.reload();
     await expect(page.getByTestId('mail-transport-smtp')).toBeChecked();
     await expect(page.getByTestId('mail-host')).toHaveValue('smtp.kaputt.invalid');

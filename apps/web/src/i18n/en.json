@@ -307,6 +307,16 @@
       "test": "Send test email to me",
       "testHint": "The test email uses the saved settings. Save your changes first.",
       "testSent": "Test email sent to {to} via {via}.",
+      "testFailed": "The test email could not be sent via {via}.",
+      "systemHint": "The installation default connects without login and without encryption to the mail server set in the server configuration (SMTP_HOST, SMTP_PORT; locally Mailpit). For a real mail server with credentials, choose “Own SMTP server”.",
+      "reasons": {
+        "unreachable": "Reason: the mail server cannot be reached at this address. Please check server name and port – and whether the mail server is running.",
+        "timeout": "Reason: the mail server did not answer in time. Often the port is wrong or blocked by a firewall.",
+        "auth_failed": "Reason: the mail server rejected the login. Please check user name and password; some providers require a separate app password.",
+        "tls": "Reason: the encrypted connection could not be established. Usually the option “TLS connection from the start” does not match the port: port 465 with, port 587 without this option.",
+        "rejected": "Reason: the mail server rejected the message, often because of the sender address. Please check the sender.",
+        "other": "Please check server, port and credentials. The technical message is in the server log (“test mail failed”)."
+      },
       "errors": {
         "port": "Please enter a port between 1 and 65535.",
         "from": "Please enter a valid sender address, e.g. qa{'@'}company.com or QA team <qa{'@'}company.com>.",

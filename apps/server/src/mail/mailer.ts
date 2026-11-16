@@ -78,3 +78,29 @@ export function createMailer(config: AppConfig): Mailer {
     },
   };
 }
+
+export type MailFailure = 'unreachable' | 'timeout' | 'auth_failed' | 'tls' | 'rejected' | 'other';
+
+/**
+ * Ordnet einen Versandfehler (nodemailer/Node) einem Grund zu, den die Oberfläche verständlich anzeigen kann.
+ * Die Rohmeldung geht nur ins Protokoll – sie kann Hostnamen und Serverantworten enthalten.
+ */
+export function classifyMailError(err: unknown): MailFailure {
+  const e = (err ?? {}) as { code?: string; command?: string; responseCode?: number; message?: string };
+  const code = String(e.code ?? '');
+  const msg = String(e.message ?? '');
+  if (code === 'EAUTH' || e.responseCode === 535 || e.responseCode === 534 || e.responseCode === 530)
+    return 'auth_failed';
+  if (/wrong version number|certificate|self.signed|SSL routines|ERR_TLS|ETLS/i.test(`${code} ${msg}`))
+    return 'tls';
+  if (code === 'ETIMEDOUT' || /timed? ?out|Greeting never received/i.test(msg)) return 'timeout';
+  if (
+    ['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'EDNS', 'EHOSTUNREACH', 'ENETUNREACH', 'ECONNRESET'].includes(
+      code,
+    ) ||
+    /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|EHOSTUNREACH|ENETUNREACH/.test(msg)
+  )
+    return 'unreachable';
+  if (code === 'EENVELOPE' || code === 'EMESSAGE' || (e.responseCode ?? 0) >= 500) return 'rejected';
+  return 'other';
+}
