@@ -453,6 +453,7 @@ describe.skipIf(!url)('Phase 4b: firmenübergreifende Administration und Konfigu
         error: 'mail_failed',
         reason: 'unreachable',
         via: 'SMTP mail.alpha.invalid:2525',
+        system: false,
       });
       await req('PUT', '/api/admin/mail-config', cookies.a, {
         transport: 'smtp',

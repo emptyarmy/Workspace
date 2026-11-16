@@ -87,7 +87,9 @@ async function save() {
 async function sendTest() {
   clear();
   testing.value = true;
-  const res = await apiPost<{ to: string; via: string; reason?: string }>('/api/admin/mail-config/test');
+  const res = await apiPost<{ to: string; via: string; reason?: string; system?: boolean }>(
+    '/api/admin/mail-config/test',
+  );
   testing.value = false;
   if (res.ok && res.data) return info(t('admin.mail.testSent', { to: res.data.to, via: res.data.via }));
   // Der Server nennt den Grund (nicht erreichbar, Anmeldung, TLS …) – damit ist klar, was zu prüfen ist.
@@ -96,7 +98,7 @@ async function sendTest() {
     notice.value = {
       kind: 'error',
       text: `${t('admin.mail.testFailed', { via: res.data?.via ?? '' })} ${t(`admin.mail.reasons.${reason}`)}${
-        form.transport === 'system' ? ` ${t('admin.mail.systemHint')}` : ''
+        res.data?.system ? ` ${t('admin.mail.systemHint')}` : ''
       }`,
     };
   } else error(res.error);

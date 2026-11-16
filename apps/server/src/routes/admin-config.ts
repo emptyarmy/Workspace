@@ -259,7 +259,9 @@ export const adminConfigRoutes: FastifyPluginAsync = async (app) => {
         details: { via },
       });
       // Grund für die Anzeige (ohne Rohmeldung): nicht erreichbar, Zeitüberschreitung, Anmeldung, TLS, abgelehnt
-      return reply.status(502).send({ error: 'mail_failed', reason: classifyMailError(err), via });
+      return reply
+        .status(502)
+        .send({ error: 'mail_failed', reason: classifyMailError(err), via, system: !smtp });
     }
     await audit(db(), req, {
       action: 'admin.mail_test_sent',

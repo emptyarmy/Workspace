@@ -349,6 +349,8 @@ test.describe('Benachrichtigungen und Mailfehler (isolierte Testfirma)', () => {
     await expect(page.getByTestId('mail-notice')).toContainText('konnte nicht versendet werden');
     // Der Grund wird genannt, damit klar ist, was zu prüfen ist
     await expect(page.getByTestId('mail-notice')).toContainText('nicht erreichbar');
+    // Der Hinweis zum Standard der Installation gehört nicht zu einem eigenen SMTP-Server
+    await expect(page.getByTestId('mail-notice')).not.toContainText('Standard der Installation');
     await page.reload();
     await expect(page.getByTestId('mail-transport-smtp')).toBeChecked();
     await expect(page.getByTestId('mail-host')).toHaveValue('smtp.kaputt.invalid');
