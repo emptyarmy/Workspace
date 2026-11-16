@@ -29,3 +29,7 @@ AI_TPI.zip
 
 # Datensicherungen (tools/ops/backup.sh)
 backups/
+
+# Gesprächsverläufe – bleiben lokal, nicht ins Repository
+chatverlauf/
+sprachverlauf/
