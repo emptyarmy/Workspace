@@ -71,7 +71,11 @@ Befragte brauchen eine **Abteilung**. Die Abteilung vergibt ein Admin unter *Adm
 
 ### Abgeben
 
-**Abteilung abgeben** am Ende des Fragebogens. Danach sind die Antworten der Abteilung gesperrt, bis der Assessor die Abgabe wieder öffnet.
+Am Ende des Fragebogens steht der Kasten **Abgabe Ihrer Abteilung**:
+
+- **Zwischenstand:** Jede Antwort wird sofort gespeichert. Sie können den Fragebogen jederzeit verlassen (**Später fortsetzen**) und an einem anderen Tag oder Gerät weitermachen; der Kasten zeigt, wie viele Kontrollpunkte Ihrer Abteilung schon beantwortet sind.
+- **Abteilung abgeben** ist erst möglich, wenn zu **jedem** Kontrollpunkt der zugewiesenen Kernbereiche eine Angabe vorliegt. „Nicht anwendbar“ zählt als Angabe, „offen“ nicht. Solange etwas fehlt, ist die Schaltfläche gesperrt und der Kasten nennt die Kernbereiche mit der Zahl offener Punkte – ein Klick führt dorthin; der Filter „nur offene“ zeigt die fehlenden Punkte.
+- Nach der Abgabe sind die Antworten der Abteilung gesperrt, bis der Assessor die Abgabe wieder öffnet.
 
 ## Kommentare und Quellen
 

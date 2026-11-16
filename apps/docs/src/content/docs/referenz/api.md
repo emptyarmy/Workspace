@@ -104,7 +104,7 @@ Alle Endpunkte brauchen eine Anmeldung. Fremde Firma oder unbekannte ID → **40
 | PUT | `/api/assessments/:id/assignments/:keyAreaId` | Assessor | `{ departmentIds: [] }` – Abteilungen eines Kernbereichs ersetzen |
 | GET | `/api/assessments/:id/answers?departmentId=` | Team, Admin | Abteilungsantworten; Befragte erhalten nur die eigene Abteilung |
 | PUT | `/api/assessments/:id/answers/:checkpointId` | Befragter, Assessor mit Abteilung | `{ value, version }`; `open` nimmt die Antwort zurück. Version veraltet → **409** `version_conflict` mit `current`; nicht zugewiesen → **403** `not_assigned`; abgegeben → **409** `submitted`; Status ≠ Erfassung → **409** `not_collecting`; nicht im Umfang → **404** |
-| POST | `/api/assessments/:id/submission` | Befragter, Assessor mit Abteilung | eigene Abteilung abgeben |
+| POST | `/api/assessments/:id/submission` | Befragter, Assessor mit Abteilung | eigene Abteilung abgeben; **409** `incomplete` mit `open` und `areas[{keyAreaId, open}]`, solange zugewiesene Kontrollpunkte ohne Angabe sind |
 | DELETE | `/api/assessments/:id/submissions/:departmentId` | Assessor | Abgabe wieder öffnen |
 | GET | `/api/assessments/:id/comments` | Team, Admin | Kommentare mit Verfasser, Abteilung, Quelle |
 | POST | `/api/assessments/:id/comments` | Assessor; Befragte in Kernbereichen ihrer Abteilung | `{ checkpointId, text (1–2000), sourceId? }`; deaktivierte Quelle → **400** |

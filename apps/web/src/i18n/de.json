@@ -536,7 +536,8 @@
       "name": "Bitte einen Namen angeben.",
       "invalid_format": "Die Datei ist keine gültige AI_TPI-Exportdatei.",
       "unsupported_version": "Diese Version der Exportdatei wird nicht unterstützt.",
-      "not_json": "Die Datei enthält kein gültiges JSON."
+      "not_json": "Die Datei enthält kein gültiges JSON.",
+      "incomplete": "Abgeben ist noch nicht möglich: Es sind noch nicht alle Kontrollpunkte Ihrer Abteilung beantwortet. Die Liste unten zeigt, wo noch Angaben fehlen."
     },
     "tabs": {
       "overview": "Überblick",
@@ -652,6 +653,16 @@
     "submitted": "Ihre Abteilung hat abgegeben. Änderungen sind erst nach Wiederöffnen durch den Assessor möglich.",
     "notCollecting": "Die Erfassung ist abgeschlossen.",
     "submit": "Abteilung abgeben",
+    "submitHeading": "Abgabe Ihrer Abteilung",
+    "ownProgress": "{done} von {total} Kontrollpunkten Ihrer Abteilung sind beantwortet.",
+    "draft": {
+      "saved": "Zwischenstand gespeichert. Jede Antwort wird sofort gespeichert – Sie können den Fragebogen jederzeit verlassen und später an derselben Stelle fortsetzen.",
+      "saving": "Zwischenstand wird gespeichert …",
+      "error": "Mindestens eine Antwort wurde nicht gespeichert. Bitte beim markierten Kontrollpunkt erneut versuchen, bevor Sie den Fragebogen verlassen."
+    },
+    "submitBlocked": "Abgeben ist erst möglich, wenn zu jedem Kontrollpunkt eine Angabe gemacht wurde (auch „Nicht anwendbar“ zählt). Noch offen:",
+    "openCount": "{n} offen | {n} offen",
+    "continueLater": "Später fortsetzen",
     "submitTitle": "Antworten abgeben?",
     "submitText": "Danach kann Ihre Abteilung nichts mehr ändern, bis der Assessor die Abgabe wieder öffnet.",
     "submittedOk": "Antworten abgegeben.",

@@ -119,6 +119,23 @@ const progressOf = (areaId: string) => {
 const progress = computed(() =>
   currentArea.value ? progressOf(currentArea.value.id) : { done: 0, total: 0 },
 );
+/** Stand der eigenen Abteilung über alle zugewiesenen Kernbereiche – Abgabe erst, wenn nichts mehr offen ist. */
+const ownProgress = computed(() => {
+  const areas = scopedAreas.value
+    .filter((x) => assigned(x.id, myDepartment.value))
+    .map((x) => ({ id: x.id, name: x.name[lang.value], ...progressOf(x.id) }));
+  return {
+    done: areas.reduce((n, x) => n + x.done, 0),
+    total: areas.reduce((n, x) => n + x.total, 0),
+    openAreas: areas.filter((x) => x.done < x.total).map((x) => ({ ...x, open: x.total - x.done })),
+  };
+});
+const complete = computed(() => ownProgress.value.openAreas.length === 0);
+/** Zwischenstand: jede Antwort wird sofort gespeichert; hier der Gesamtzustand für „später fortsetzen“. */
+const draftState = computed(() => {
+  const all = Object.values(state);
+  return all.includes('error') ? 'error' : all.includes('saving') ? 'saving' : 'saved';
+});
 const commentsOf = (cpId: string) => comments.value.filter((c) => c.checkpointId === cpId);
 
 async function loadAnswers() {
@@ -286,7 +303,11 @@ function retry(cpId: string) {
 async function submit() {
   confirmSubmit.value = false;
   const res = await apiPost(`/api/assessments/${props.id}/submission`);
-  if (!res.ok) return error(res.error);
+  if (!res.ok) {
+    // incomplete: inzwischen hat jemand eine Antwort zurückgenommen – Stand neu laden, die Liste zeigt, was fehlt
+    if (res.error === 'incomplete') await loadAnswers();
+    return error(res.error);
+  }
   info(t('questionnaire.submittedOk'));
   await load();
 }
@@ -577,16 +598,51 @@ function onKey(e: KeyboardEvent, cpId: string) {
               </article>
             </section>
 
-            <div v-if="a.me.canAnswer && ownView && !submitted" class="card-flat submit-box">
-              <button
-                type="button"
-                class="btn btn-primary-inline"
-                data-testid="department-submit"
-                @click="confirmSubmit = true"
-              >
-                {{ t('questionnaire.submit') }}
-              </button>
-            </div>
+            <section
+              v-if="a.me.canAnswer && ownView && !submitted"
+              class="card-flat submit-box"
+              data-testid="submit-box"
+              :aria-label="t('questionnaire.submitHeading')"
+            >
+              <h3>{{ t('questionnaire.submitHeading') }}</h3>
+              <p data-testid="own-progress">
+                {{ t('questionnaire.ownProgress', { done: ownProgress.done, total: ownProgress.total }) }}
+              </p>
+              <p class="hint" data-testid="draft-state" role="status">
+                {{ t(`questionnaire.draft.${draftState}`) }}
+              </p>
+              <div v-if="!complete" id="submit-open" data-testid="submit-open">
+                <p>{{ t('questionnaire.submitBlocked') }}</p>
+                <ul class="open-areas">
+                  <li v-for="x in ownProgress.openAreas" :key="x.id">
+                    <RouterLink
+                      :to="{ name: 'questionnaire', params: { id, area: x.id } }"
+                      :data-testid="`open-area-${x.id}`"
+                      >{{ x.id }} {{ x.name }}</RouterLink
+                    >
+                    – {{ t('questionnaire.openCount', { n: x.open }, x.open) }}
+                  </li>
+                </ul>
+              </div>
+              <div class="submit-actions">
+                <RouterLink
+                  :to="{ name: 'assessment', params: { id } }"
+                  class="btn btn-ghost"
+                  data-testid="continue-later"
+                  >{{ t('questionnaire.continueLater') }}</RouterLink
+                >
+                <button
+                  type="button"
+                  class="btn btn-primary-inline"
+                  data-testid="department-submit"
+                  :disabled="!complete"
+                  :aria-describedby="complete ? undefined : 'submit-open'"
+                  @click="confirmSubmit = true"
+                >
+                  {{ t('questionnaire.submit') }}
+                </button>
+              </div>
+            </section>
           </template>
         </div>
       </div>
@@ -866,5 +922,22 @@ function onKey(e: KeyboardEvent, cpId: string) {
 }
 .submit-box {
   margin-top: 1rem;
+}
+.submit-box h3 {
+  margin-top: 0;
+}
+.open-areas {
+  margin: 0.25rem 0 0.75rem;
+  padding-left: 1.25rem;
+}
+.open-areas a {
+  min-height: var(--touch);
+  display: inline-flex;
+  align-items: center;
+}
+.submit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 </style>

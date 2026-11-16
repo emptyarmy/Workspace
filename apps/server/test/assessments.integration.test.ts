@@ -7,6 +7,8 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { sql } from 'drizzle-orm';
 import type { FastifyInstance, LightMyRequestResponse } from 'fastify';
+import { catalog } from '@ai-tpi/catalog';
+import { checkpointInScope } from '@ai-tpi/shared';
 import { buildApp } from '../src/app';
 import { loadConfig } from '../src/config';
 import { createDb, type DbHandle } from '../src/db/client';
@@ -243,14 +245,60 @@ describe.skipIf(!url)('Phase 5: Erfassung (DB)', () => {
         (await req('PUT', `${A()}/answers/${KP}`, c.assessor, { value: 'yes', version: 0 })).statusCode,
       ).toBe(403);
     });
+    it('Abgabe erst, wenn alle zugewiesenen Kontrollpunkte beantwortet sind (TC-ANS-012)', async () => {
+      const detail = (await req('GET', A(), c.fritz)).json();
+      const kb01 = catalog.keyAreas.find((k) => k.id === 'KB01')!;
+      const cps = kb01.checkpoints.filter((cp) => checkpointInScope(cp, kb01, detail));
+      const mine = (
+        await req('GET', `${A()}/answers?departmentId=${ids.Fachbereich}`, c.fritz)
+      ).json() as Array<{
+        checkpointId: string;
+        version: number;
+      }>;
+      const open = cps.filter((cp) => !mine.some((m) => m.checkpointId === cp.id));
+      expect(open.length).toBeGreaterThan(1);
+      const early = await req('POST', `${A()}/submission`, c.fritz);
+      expect(early.statusCode).toBe(409);
+      expect(early.json()).toEqual({
+        error: 'incomplete',
+        open: open.length,
+        areas: [{ keyAreaId: 'KB01', open: open.length }],
+      });
+      // Nichts wurde gesperrt: Der Zwischenstand lässt sich weiter bearbeiten.
+      for (const cp of open.slice(1))
+        expect(
+          (await req('PUT', `${A()}/answers/${cp.id}`, c.fritz, { value: 'na', version: 0 })).statusCode,
+        ).toBe(200);
+      const almost = await req('POST', `${A()}/submission`, c.fritz);
+      expect(almost.json()).toMatchObject({ error: 'incomplete', open: 1 });
+      // Zurückgenommene Antwort („offen“) zählt nicht als Angabe.
+      expect(
+        (await req('PUT', `${A()}/answers/${open[0]!.id}`, c.fritz, { value: 'yes', version: 0 })).statusCode,
+      ).toBe(200);
+      expect(
+        (await req('PUT', `${A()}/answers/${open[0]!.id}`, c.fritz, { value: 'open', version: 1 }))
+          .statusCode,
+      ).toBe(200);
+      expect((await req('POST', `${A()}/submission`, c.fritz)).statusCode).toBe(409);
+      expect(
+        (await req('PUT', `${A()}/answers/${open[0]!.id}`, c.fritz, { value: 'no', version: 0 })).statusCode,
+      ).toBe(200);
+    });
     it('Abgabe sperrt die Abteilung; Assessor öffnet wieder', async () => {
       expect((await req('POST', `${A()}/submission`, c.fritz)).statusCode).toBe(201);
       const locked = await req('PUT', `${A()}/answers/KB01.K.03`, c.fritz, { value: 'yes', version: 0 });
       expect(locked.json().error).toBe('submitted');
       expect((await req('DELETE', `${A()}/submissions/${ids.Fachbereich}`, c.eva)).statusCode).toBe(403);
       expect((await req('DELETE', `${A()}/submissions/${ids.Fachbereich}`, c.assessor)).statusCode).toBe(204);
+      const k03 = (
+        (await req('GET', `${A()}/answers?departmentId=${ids.Fachbereich}`, c.fritz)).json() as Array<{
+          checkpointId: string;
+          version: number;
+        }>
+      ).find((x) => x.checkpointId === 'KB01.K.03')!;
       expect(
-        (await req('PUT', `${A()}/answers/KB01.K.03`, c.fritz, { value: 'yes', version: 0 })).statusCode,
+        (await req('PUT', `${A()}/answers/KB01.K.03`, c.fritz, { value: 'yes', version: k03.version }))
+          .statusCode,
       ).toBe(200);
     });
   });

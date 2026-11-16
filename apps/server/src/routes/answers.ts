@@ -216,6 +216,47 @@ export const answerRoutes: FastifyPluginAsync = async (app) => {
     if (!acc) return;
     if (!answerer(acc)) return fail(reply, 403, 'forbidden');
     if (acc.assessment.status !== 'collecting') return fail(reply, 409, 'not_collecting');
+    // Abgabe erst, wenn zu jedem Kontrollpunkt der zugewiesenen Kernbereiche eine Angabe vorliegt
+    // (Ja/Teilweise/Nein/Nicht anwendbar). Der Zwischenstand ist jederzeit gespeichert (TC-ANS-020).
+    const assignedAreas = new Set(
+      (
+        await db()
+          .select({ k: keyAreaAssignments.keyAreaId })
+          .from(keyAreaAssignments)
+          .where(
+            and(
+              eq(keyAreaAssignments.assessmentId, acc.assessment.id),
+              eq(keyAreaAssignments.departmentId, acc.departmentId),
+            ),
+          )
+      ).map((r) => r.k),
+    );
+    const answered = new Set(
+      (
+        await db()
+          .select({ c: departmentAnswers.checkpointId })
+          .from(departmentAnswers)
+          .where(
+            and(
+              eq(departmentAnswers.assessmentId, acc.assessment.id),
+              eq(departmentAnswers.departmentId, acc.departmentId),
+            ),
+          )
+      ).map((r) => r.c),
+    );
+    const openAreas = scopeOf(acc.assessment)
+      .filter((area) => assignedAreas.has(area.id))
+      .map((area) => ({
+        keyAreaId: area.id,
+        open: area.checkpoints.filter((cp) => !answered.has(cp.id)).length,
+      }))
+      .filter((x) => x.open > 0);
+    if (openAreas.length)
+      return reply.status(409).send({
+        error: 'incomplete',
+        open: openAreas.reduce((n, x) => n + x.open, 0),
+        areas: openAreas,
+      });
     const inserted = await db()
       .insert(departmentSubmissions)
       .values({

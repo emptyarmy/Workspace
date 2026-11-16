@@ -43,7 +43,8 @@ Als Admin sehen Sie alle Assessments, Berichte und Empfehlungen Ihrer Firma, än
 1. Unter **Assessments** das Assessment öffnen, zu dem Sie eingeladen wurden → **Fragebogen**.
 2. **Meine Kernbereiche** zeigt nur die Bereiche Ihrer Abteilung. Je Kontrollpunkt **Erfüllt**, **Teilweise**, **Nicht erfüllt** oder **Nicht anwendbar** wählen – jede Auswahl wird sofort gespeichert.
 3. Begründungen und Rückfragen als **Kommentar** am Kontrollpunkt hinterlassen.
-4. Sind alle Bereiche beantwortet: **Abteilung abgeben**. Danach sind die Antworten gesperrt; der Assessor kann die Abgabe wieder öffnen.
+4. Sie müssen nicht in einem Zug fertig werden: Jede Antwort ist sofort gespeichert, mit **Später fortsetzen** machen Sie ein andermal weiter.
+5. Sind alle Kontrollpunkte beantwortet („Nicht anwendbar“ zählt): **Abteilung abgeben** – vorher ist die Schaltfläche gesperrt und zeigt, was noch fehlt. Danach sind die Antworten gesperrt; der Assessor kann die Abgabe wieder öffnen.
 
 Arbeiten mehrere Personen gleichzeitig, zeigt der Fragebogen, wer gerade im selben Kernbereich ist; Änderungen der anderen erscheinen ohne Neuladen. → [Fragebogen beantworten](/handbuch/assessments-und-fragebogen/#fragebogen-beantworten)
 

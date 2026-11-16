@@ -6,6 +6,8 @@ import {
   type Browser,
   type TestInfo,
 } from '@playwright/test';
+import { catalog } from '@ai-tpi/catalog';
+import { checkpointInScope } from '@ai-tpi/shared';
 import { ADMIN_STATE, CSRF, E2E, loggedInContext, login, uniqueId } from './helpers';
 import {
   as,
@@ -315,24 +317,75 @@ test.describe('Fragebogen', () => {
     await t.assessorCtx.close();
   });
 
-  test('Abgabe der Abteilung sperrt die Antworten; Assessor öffnet wieder', async ({ browser }, info) => {
+  test('TC-ANS-012 TC-ANS-013 TC-ANS-014 Abgabe erst mit allen Antworten; Zwischenstand bleibt erhalten; Abgabe sperrt, Assessor öffnet wieder', async ({
+    browser,
+  }, info) => {
     const t = await team(browser, info);
     const { ctx, page } = await as(browser, t.fritz);
+    const detail = await (await ctx.request.get(`/api/assessments/${t.asm}`)).json();
+    const kb01 = catalog.keyAreas.find((k) => k.id === 'KB01')!;
+    const cps = kb01.checkpoints.filter((cp) =>
+      checkpointInScope(cp, kb01, { methodModel: detail.methodModel, includeAi: detail.includeAi }),
+    );
     await page.goto(`/assessments/${t.asm}/fragebogen/KB01`);
+
+    // TC-ANS-012 (negativ): nichts bzw. nur ein Teil beantwortet → Abgabe gesperrt, offene Punkte werden genannt
+    await expect(page.getByTestId('own-progress')).toContainText(`0 von ${cps.length}`);
+    await expect(page.getByTestId('department-submit')).toBeDisabled();
     await page.getByTestId(`cp-${KP}`).getByTestId('answer-yes').click();
     await expect(page.getByTestId(`cp-${KP}`).getByTestId('save-state')).toContainText('✓ gespeichert');
-    await page.getByTestId('department-submit').click();
-    await page.getByTestId('confirm-ok').click();
-    await expect(page.getByTestId('submitted-info')).toBeVisible();
-    await expect(page.getByTestId(`cp-${KP}`).getByTestId('answer-no')).toBeDisabled();
+    await expect(page.getByTestId('own-progress')).toContainText(`1 von ${cps.length}`);
+    await expect(page.getByTestId('department-submit')).toBeDisabled();
+    await expect(page.getByTestId('submit-open')).toContainText('erst möglich, wenn zu jedem Kontrollpunkt');
+    await expect(page.getByTestId('open-area-KB01')).toBeVisible();
+    await expect(page.getByTestId('submit-open')).toContainText(`${cps.length - 1} offen`);
+    // Umgehung der Oberfläche: Der Server lehnt die Abgabe ab und nennt, was fehlt
+    const early = await ctx.request.post(`/api/assessments/${t.asm}/submission`, { headers: CSRF });
+    expect(early.status()).toBe(409);
+    expect(await early.json()).toEqual({
+      error: 'incomplete',
+      open: cps.length - 1,
+      areas: [{ keyAreaId: 'KB01', open: cps.length - 1 }],
+    });
+
+    // TC-ANS-013: Zwischenstand – verlassen, neu anmelden, an derselben Stelle weitermachen
+    await expect(page.getByTestId('draft-state')).toContainText('Zwischenstand gespeichert');
+    await page.getByTestId('continue-later').click();
+    await expect(page).toHaveURL(new RegExp(`/assessments/${t.asm}$`));
+    await ctx.close();
+    const later = await as(browser, t.fritz);
+    await later.page.goto(`/assessments/${t.asm}/fragebogen/KB01`);
+    await expect(later.page.getByTestId(`cp-${KP}`).getByTestId('answer-yes')).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await expect(later.page.getByTestId('own-progress')).toContainText(`1 von ${cps.length}`);
+
+    // TC-ANS-014: alle beantwortet (auch „Nicht anwendbar“ zählt) → Abgabe möglich, sperrt die Antworten
+    for (const cp of cps.filter((x) => x.id !== KP))
+      expect(
+        (
+          await later.ctx.request.put(`/api/assessments/${t.asm}/answers/${cp.id}`, {
+            headers: CSRF,
+            data: { value: cp === cps.at(-1) ? 'na' : 'partial', version: 0 },
+          })
+        ).status(),
+      ).toBe(200);
+    await later.page.reload();
+    await expect(later.page.getByTestId('own-progress')).toContainText(`${cps.length} von ${cps.length}`);
+    await expect(later.page.getByTestId('submit-open')).toHaveCount(0);
+    await later.page.getByTestId('department-submit').click();
+    await later.page.getByTestId('confirm-ok').click();
+    await expect(later.page.getByTestId('submitted-info')).toBeVisible();
+    await expect(later.page.getByTestId(`cp-${KP}`).getByTestId('answer-no')).toBeDisabled();
 
     const ap = await t.assessorCtx.newPage();
     await ap.goto(`/assessments/${t.asm}?tab=team`);
     await ap.getByTestId(`submission-Fachbereich ${t.id}`).getByTestId('submission-reopen').click();
     await expect(ap.getByTestId('assessment-notice')).toContainText('wieder geöffnet');
-    await page.reload();
-    await expect(page.getByTestId(`cp-${KP}`).getByTestId('answer-no')).toBeEnabled();
-    await ctx.close();
+    await later.page.reload();
+    await expect(later.page.getByTestId(`cp-${KP}`).getByTestId('answer-no')).toBeEnabled();
+    await later.ctx.close();
     await t.assessorCtx.close();
   });
 });

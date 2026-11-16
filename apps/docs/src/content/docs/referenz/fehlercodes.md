@@ -67,6 +67,7 @@ sidebar:
 | `version_conflict` | 409 | Antwort wurde inzwischen geändert; `current` enthält den aktuellen Stand |
 | `not_assigned` | 403 | Kernbereich ist der eigenen Abteilung nicht zugewiesen |
 | `submitted` | 409 | Abteilung hat bereits abgegeben |
+| `incomplete` | 409 | Abgabe der Abteilung noch nicht möglich: zugewiesene Kontrollpunkte ohne Angabe (`open` = Anzahl, `areas` = Kernbereiche mit Anzahl) |
 | `not_collecting` | 409 | Assessment ist nicht im Status „Erfassung“ |
 | `duplicate` | 409 | Quelle mit gleichem Namen und gleicher Rolle existiert |
 | `in_use` | 409 | Quelle wird in Kommentaren verwendet – deaktivieren statt löschen |

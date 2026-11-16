@@ -12,7 +12,7 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 - Rollen Admin, Assessor, Befragter, Leser; Mandantentrennung je Firma
 - Admin-Bereich: Benutzer, Abteilungen, Firma mit Logo und Branche, Branchenliste, E-Mail, KI-Module, Audit-Log; Admins für andere Firmen
 - Fragenkatalog v1.0: 19 Kernbereiche, 223 Kontrollpunkte (TPI NEXT, agile Ergänzungen, KI), Deutsch und Englisch, mit Sichten und Abhängigkeiten
-- Assessments: Team und Zuweisung je Abteilung, Fragebogen mit Kommentaren und Quellen, Live-Aktualisierung und Anwesenheit, Zusammenführung, Änderungshistorie, Duplizieren, JSON-Export und -Import
+- Assessments: Team und Zuweisung je Abteilung, Fragebogen mit Kommentaren und Quellen, Zwischenstand jederzeit gespeichert, Abgabe je Abteilung erst mit vollständigen Angaben, Live-Aktualisierung und Anwesenheit, Zusammenführung, Änderungshistorie, Duplizieren, JSON-Export und -Import
 - Bericht mit Reifegraden und Diagrammen, Druck auf A4; anonymer Branchen-Benchmark (ab 5 Firmen, Opt-out)
 - Handlungsempfehlungen: Regel-Engine, optional KI (Anthropic, Azure OpenAI, Ollama, OpenAI-kompatibel) mit Einwilligung und Rückfall auf Regeln; Maßnahmenplan, CSV-Export
 
@@ -25,7 +25,7 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 
 ### Tests und Dokumentation
 
-- 252 Testfälle automatisiert (Playwright auf 7 Geräteprofilen, Vitest), Positiv- und Negativtests
+- 255 Testfälle automatisiert (Playwright auf 7 Geräteprofilen, Vitest), Positiv- und Negativtests
 - Dokumentation (Astro/Starlight): Handbuch mit „Erste Schritte nach Rolle“, Betrieb, Entwicklung, Referenz, Projektdokumentation; Abnahme-Checkliste
 
 ### Bekannte Grenzen

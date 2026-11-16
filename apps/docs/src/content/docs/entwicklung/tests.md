@@ -95,7 +95,7 @@ Statt Vite startet Playwright dann nur den **gebündelten Server** (`apps/server
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |
 | `sicherheit.spec.ts` | Phase 8b: Meldung bei Rate-Limit (429), Sicherheits-Header der API, CSRF-Schutz |
 | `produktion.spec.ts` | Phase 8c, nur mit `E2E_PROD=1`: Auslieferung der gebauten Oberfläche (CSP, Caching, gzip, Deep-Links, 404, Pfad-Traversal) und Hauptseiten ohne CSP-Verstoß |
-| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 252 Fälle sind automatisiert |
+| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 255 Fälle sind automatisiert |
 
 ### Barrierefreiheit
 

@@ -536,7 +536,8 @@
       "name": "Please enter a name.",
       "invalid_format": "The file is not a valid AI_TPI export file.",
       "unsupported_version": "This version of the export file is not supported.",
-      "not_json": "The file does not contain valid JSON."
+      "not_json": "The file does not contain valid JSON.",
+      "incomplete": "Submitting is not possible yet: not all checkpoints of your department are answered. The list below shows where answers are missing."
     },
     "tabs": {
       "overview": "Overview",
@@ -652,6 +653,16 @@
     "submitted": "Your department has submitted. Changes are only possible after the assessor reopens the submission.",
     "notCollecting": "Collection has been closed.",
     "submit": "Submit department",
+    "submitHeading": "Submission of your department",
+    "ownProgress": "{done} of {total} checkpoints of your department are answered.",
+    "draft": {
+      "saved": "Draft saved. Every answer is saved immediately – you can leave the questionnaire at any time and continue later where you left off.",
+      "saving": "Saving draft …",
+      "error": "At least one answer was not saved. Please retry at the marked checkpoint before leaving the questionnaire."
+    },
+    "submitBlocked": "Submitting is only possible once every checkpoint has an answer (“Not applicable” counts too). Still open:",
+    "openCount": "{n} open | {n} open",
+    "continueLater": "Continue later",
     "submitTitle": "Submit answers?",
     "submitText": "Afterwards your department cannot change anything until the assessor reopens the submission.",
     "submittedOk": "Answers submitted.",
