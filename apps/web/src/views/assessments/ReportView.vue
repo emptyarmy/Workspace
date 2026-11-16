@@ -553,7 +553,9 @@ const print = () => window.print();
 }
 .facts {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  /* Schmale Bildschirme, breite Schriften: Beschriftung höchstens 45 %, Werte dürfen umbrechen (kein Seitenscrollen) */
+  grid-template-columns: fit-content(45%) minmax(0, 1fr);
+  overflow-wrap: anywhere;
   gap: 0.25rem 1rem;
   margin: 0;
 }
@@ -762,6 +764,7 @@ const print = () => window.print();
 }
 .list-table th,
 .list-table td {
+  overflow-wrap: anywhere;
   text-align: left;
   vertical-align: top;
   padding: 0.35rem 0.5rem;
