@@ -1,5 +1,7 @@
 # AI_TPI – Kontinuierliche Testprozessverbesserung mit KI-Erweiterung
 
+[![CI](https://github.com/emptyarmy/Workspace/actions/workflows/ci.yml/badge.svg)](https://github.com/emptyarmy/Workspace/actions/workflows/ci.yml)
+
 Mandantenfähige Webanwendung (Vue 3 + TypeScript, Node.js, PostgreSQL) mit Anmeldung, Admin-Bereich, Abteilungs-Zusammenführung und Branchen-Benchmark zur Reifegradbewertung des Testprozesses in 19 Kernbereichen (TPI NEXT® mit agilen Ergänzungen aus Agile TPI) mit zusätzlichen Kernbereichen für den Einsatz von Künstlicher Intelligenz in Qualitätssicherung, Anforderungsprüfung, Testautomatisierung, Softwareentwicklung und Dokumentation.
 
 **Status:** Phase 4a abgeschlossen – Ersteinrichtung, Anmeldung, Einladung, Einmal-Link und Admin-Bereich der eigenen Firma lauffähig und getestet; als Nächstes Phase 4b (firmenübergreifende Admin-Funktionen, KI/Mail je Firma). Fragenkatalog v1.0 als Entwurf in `packages/catalog/`.
