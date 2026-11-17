@@ -18,7 +18,7 @@ Priorität: **M** = Muss, **S** = Soll, **K** = Kann. Mit ❓ markierte Punkte h
 | FA-2.1 | Navigation gegliedert nach Kernbereichen; innerhalb eines KB nach Ebenen K → E → O. | M |
 | FA-2.2 | Je Kontrollpunkt Antwort auswählen (Skala siehe `02_analyse/02_…`). | M |
 | FA-2.3 | Fortschrittsanzeige je KB und gesamt. | M |
-| FA-2.4 | Automatisches Speichern jeder Änderung auf dem Server; kein Datenverlust bei Neuladen. | M |
+| FA-2.4 | Automatisches Speichern jeder Änderung auf dem Server; kein Datenverlust bei Neuladen. Der **Zwischenstand** ist sichtbar; die Befragung kann jederzeit unterbrochen und später (auch auf einem anderen Gerät) fortgesetzt werden. | M |
 | FA-2.8 | Antworten anderer Nutzer erscheinen ohne Neuladen; Bearbeitungskonflikte werden erkannt und angezeigt. | M |
 | FA-2.9 | Antworthistorie je Kontrollpunkt (wer, wann, alt → neu). | S |
 | FA-2.10 | Filter „Meine Kernbereiche“ und „agile“ bzw. „KI“-Kontrollpunkte. | S |
@@ -113,7 +113,7 @@ Priorität: **M** = Muss, **S** = Soll, **K** = Kann. Mit ❓ markierte Punkte h
 ## FA-9 Zusammenführung der Abteilungsantworten (N-03)
 | ID | Anforderung | Prio |
 |---|---|---|
-| FA-9.1 | Jede zugewiesene Abteilung erfasst **eigene Antworten** je Kontrollpunkt und gibt sie ab. | M |
+| FA-9.1 | Jede zugewiesene Abteilung erfasst **eigene Antworten** je Kontrollpunkt und gibt sie ab. Die **Abgabe** ist erst möglich, wenn zu jedem Kontrollpunkt der zugewiesenen Kernbereiche eine Angabe vorliegt („Nicht anwendbar“ zählt, „offen“ nicht); fehlende Punkte werden je Kernbereich genannt. Der Server prüft dies ebenfalls. | M |
 | FA-9.2 | Vergleichsansicht für den Assessor: alle Abteilungsantworten + Kommentare je KP nebeneinander. | M |
 | FA-9.3 | Systemvorschlag für die konsolidierte Antwort; Assessor legt sie fest; Begründung bei Abweichung Pflicht (❓R-11). | M |
 | FA-9.4 | Bericht basiert ausschließlich auf konsolidierten Antworten; „Konsenslücken“ werden ausgewiesen. | M |

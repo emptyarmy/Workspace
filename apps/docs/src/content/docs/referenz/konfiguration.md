@@ -46,6 +46,7 @@ Firmen können Mailserver und KI-Module zusätzlich im Admin-Bereich festlegen (
 | `E2E_DATABASE_URL` | Datenbank für Playwright (muss auf `_e2e`/`_test` enden). Ohne Angabe: aus `DATABASE_URL` mit Datenbank `ai_tpi_e2e` |
 | `E2E_SERVER_PORT` / `E2E_WEB_PORT` | Ports der Testserver (Standard 3100 / 5180) |
 | `PW_SKIP_FIREFOX`, `PW_CHROMIUM_ONLY`, `PW_CHROMIUM_PATH` | Browserauswahl, siehe [Tests](/entwicklung/tests/) |
+| `SZENARIO_DATABASE_URL`, `SZENARIO_SERVER_PORT`, `SZENARIO_WEB_PORT`, `SZENARIO_SMTP_HOST`, `SZENARIO_SMTP_PORT`, `SZENARIO_MAILPIT_URL` | Szenario „Humani“ (`npm run test:szenario`): Datenbank (Standard: wie `DATABASE_URL`, Datenbank `ai_tpi_szenario_e2e`), Ports (3200, 5190), Mailpit (`localhost:1025`, `http://localhost:8025`) |
 | `E2E_PROD` | `1` = Tests gegen den Produktions-Build (gebündelter Server liefert die gebaute Oberfläche aus); vorher `npm run build` |
 
 ## Dokumentation

@@ -18,6 +18,7 @@ AI_TPI/
 │   │                         Assessment-Regeln, Bewertung (score.ts), Regel-Engine der Empfehlungen (recommend.ts)
 │   └── catalog/              Fragenkatalog catalog.v1.json + JSON-Schema + Tests
 ├── tests/e2e/                Playwright-Tests (7 Geräteprofile)
+├── tests/szenario/           Durchgängiges Szenario „Humani“ (npm run test:szenario)
 ├── docs/                     Projektdokumentation (Anforderungen, Architektur, Tests, ADRs)
 ├── tools/catalog/            Python-Werkzeuge zum Prüfen des Katalogs
 ├── tools/tests/              Erzeugt Platzhalter-Tests für noch nicht automatisierte Testfälle
@@ -28,6 +29,7 @@ AI_TPI/
 ├── Dockerfile                Produktions-Image (mehrstufig): API + gebaute Weboberfläche
 ├── docker-compose.prod.yml   Betrieb: App-Container + PostgreSQL (Vorlage .env.production.example)
 ├── playwright.config.ts      Geräteprofile, Testserver, Testdatenbank
+├── playwright.szenario.config.ts  Szenario: eigene Datenbank, eigene Ports, Versand an Mailpit
 ├── vitest.config.ts          Unit-, API- und Datenbanktests
 ├── AGENTS.md                 verbindliche Arbeitsregeln (auch für KI-Agenten)
 └── AI_TPI.code-workspace     VS-Code-Arbeitsbereich mit Einstellungen und Erweiterungen

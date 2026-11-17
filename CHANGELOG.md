@@ -16,6 +16,12 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 - Bericht mit Reifegraden und Diagrammen, Druck auf A4; anonymer Branchen-Benchmark (ab 5 Firmen, Opt-out)
 - Handlungsempfehlungen: Regel-Engine, optional KI (Anthropic, Azure OpenAI, Ollama, OpenAI-kompatibel) mit Einwilligung und Rückfall auf Regeln; Maßnahmenplan, CSV-Export
 
+### Nach der Erprobung ergänzt
+
+- Test-Mail: Grund des Fehlschlags in der Meldung (nicht erreichbar, Zeitüberschreitung, Anmeldung abgelehnt, TLS, Nachricht abgelehnt)
+- Fragebogen: Abgabe erst mit vollständigen Angaben, Zwischenstand sichtbar, „Später fortsetzen“
+- Bericht: kein seitliches Scrollen auf schmalen Bildschirmen mit breiter Schrift
+
 ### Betrieb und Sicherheit
 
 - Produktions-Build: ein Container liefert API und Weboberfläche aus (Content-Security-Policy, kein tsx zur Laufzeit), `docker-compose.prod.yml`, Ersteinrichtung mit `ai-tpi-setup` (ADR-008)
@@ -25,6 +31,7 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 
 ### Tests und Dokumentation
 
+- Durchgängiges Szenario „Humani“ von der leeren Datenbank bis zum Bericht, mit echtem Mailversand an Mailpit (`npm run test:szenario`)
 - 266 Testfälle automatisiert (Playwright auf 7 Geräteprofilen, Vitest), Positiv- und Negativtests
 - Dokumentation (Astro/Starlight): Handbuch mit „Erste Schritte nach Rolle“, Betrieb, Entwicklung, Referenz, Projektdokumentation; Abnahme-Checkliste
 

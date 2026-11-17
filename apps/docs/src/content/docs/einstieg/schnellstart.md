@@ -53,6 +53,7 @@ npx playwright install                                # einmalig: Browser für d
 docker compose exec db createdb -U ai_tpi ai_tpi_e2e  # einmalig: eigene Testdatenbank
 npm run test:unit                                     # Unit- und API-Tests
 npm run test:e2e                                      # Playwright auf 7 Geräteprofilen
+npm run test:szenario                                 # Szenario „Humani“: leere Datenbank bis Bericht (braucht Mailpit)
 ```
 
 Details unter [Tests](/entwicklung/tests/).

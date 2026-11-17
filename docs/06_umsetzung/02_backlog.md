@@ -90,6 +90,13 @@ Status: ☐ offen · ◐ in Arbeit · ☑ erledigt
 - ☑ Security-Review (OWASP Top 10, Mandantentrennung), A11y-Prüfung – `05_test/03_security-review.md`: 9 Befunde behoben (u. a. Ersteinrichtung hinter Proxy, Rate-Limits, Protokoll in production, SSRF-Sperre, Sicherheits-Header, `npm audit` 0), keine kritischen offen (8b, 15.11.2026)
 - ☑ Betriebsdokumentation (8c/8e, 16.11.2026): Starlight „Betrieb“ – Installation mit Docker, Backup und Wiederherstellung, Update und Rollback, Laufender Betrieb; Skripte `tools/ops/backup.sh`, `restore.sh`, `selftest.sh` (Selbsttest läuft in der CI-Pipeline); `CHANGELOG.md`
 - ☑ Benutzerhilfe (8e): Handbuch-Seite „Erste Schritte nach Rolle“ als Einstieg für Admin, Assessor, Befragte, Leser
+- ☑ Nach Rückmeldung aus der Erprobung (16./17.11.2026):
+  - Test-Mail nennt den Grund des Fehlschlags (nicht erreichbar, Zeitüberschreitung, Anmeldung, TLS, abgelehnt); Hinweis zum „Standard der Installation“ nur, wenn er verwendet wurde
+  - Fragebogen: Abgabe der Abteilung erst mit vollständigen Angaben (Oberfläche und Server, 409 `incomplete`), Zwischenstand sichtbar, „Später fortsetzen“ (TC-ANS-012 … 014)
+  - Bericht: kein seitliches Scrollen auf schmalen Bildschirmen mit breiter Systemschrift (Fund der CI auf Linux)
+  - Katalogprüfung läuft ohne die nicht eingecheckte Originalquelle (CI)
+  - Durchgängiges E2E-Szenario „Humani“ von der leeren Datenbank bis zum Bericht mit Mailpit (TC-SZ-001 … 011), auch als CI-Job
+  - Gesprächsverläufe aus Repository und Historie entfernt
 - ◐ Abnahme: Checkliste `05_test/04_abnahme-checkliste.md` erstellt; Pipeline grün (16.11.2026, A-5/A-6); offen sind die fachliche Abnahme (Teil B, u. a. Freigabe des Fragenkatalogs) und die Betriebsbereitschaft (Teil C)
 
 ## Phase 4a – erledigt (09.11.2026)

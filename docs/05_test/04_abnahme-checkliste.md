@@ -21,6 +21,7 @@ Status: ☑ erfüllt · ☐ offen · ◐ teilweise
 | A-9 | Barrierefreiheit geprüft (NFA-10) | `03_security-review.md`, Abschnitt 4: axe-core (WCAG 2.1 A/AA) für alle Seiten und Dialoge in `barrierefreiheit.spec.ts` | ☑ automatisiert (manuell: B-13) |
 | A-10 | Mandantentrennung | TC-TEN-*, `tests/e2e/rechte-und-mandanten.spec.ts`, API-Tests | ☑ |
 | A-11 | Dokumentation baut fehlerfrei | `npm run docs:build` (Teil der Pipeline) | ☑ |
+| A-12 | Durchgängiges Szenario „Humani“ grün (leere Datenbank → Ersteinrichtung → Einladung über Mailpit → Befragung zweier Abteilungen → Zusammenführung → Bericht) | `npm run test:szenario`: 11 bestanden (Mac, 17.11.2026); CI-Job „Szenario“ | ☑ lokal |
 
 Hinweis zu A-6: In der Entwicklungsumgebung ließ sich das Image nur auf einem Ersatz-Basisimage bauen (kein Zugriff auf Docker Hub). Der Bau auf `node:22-bookworm-slim` und der Start mit `docker compose` samt PostgreSQL-Container sind durch den grünen Pipeline-Lauf nachgewiesen; auf dem Zielserver stehen sie noch aus (Teil C).
 

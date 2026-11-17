@@ -28,10 +28,11 @@ Jede Person (E-Mail-Adresse) hat **genau eine** Rolle. Die Rolle vergibt ein Adm
 | Standard-KI-Modul der Firma festlegen | ✔ | – | – | – |
 | KI-Modul beim Erzeugen der Empfehlungen wählen, Empfehlungen erzeugen und Maßnahmenplan bearbeiten | – | ✔ | – | – |
 | Antworten der eigenen Abteilung erfassen | – | ✔ | ✔ | – |
+| Abteilung abgeben (erst wenn alle zugewiesenen Kontrollpunkte eine Angabe haben) | – | ✔ | ✔ | – |
 | Kommentieren | – | ✔ | ✔ | – |
 | Bericht ansehen (eigene Assessments; Admin: alle der Firma) | ✔ | ✔ | ✔¹ | ✔ |
 | Benchmark ansehen (nur Kennzahlen, anonym) | ✔ | ✔ | ✔ | ✔ |
-| Antworten zusammenführen, freigeben | – | ✔ | – | – |
+| Antworten zusammenführen, freigeben (Admin: nur lesen) | – | ✔ | – | – |
 | Bericht und Empfehlungen der **eigenen** Firma lesen, Maßnahmenplan als CSV exportieren | ✔ | ✔ | ✔ | ✔ |
 | Ergebnisse **anderer** Firmen | – | – | – | – |
 | Aggregierter Benchmark (Firma vs. Branche vs. alle) | ✔ | ✔ | ✔ | ✔ |

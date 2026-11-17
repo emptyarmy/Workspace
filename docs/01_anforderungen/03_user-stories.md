@@ -12,6 +12,10 @@
 - **US-2.2** Als Nutzer möchte ich sehen, wie viel ich bereits beantwortet habe.
 - **US-2.3** Als Nutzer möchte ich die Sprache wechseln, ohne meine Antworten zu verlieren.
 - **US-2.4** Als Nutzer auf dem Smartphone möchte ich mit dem Daumen schnell antworten können.
+- **US-2.6** Als Befragter möchte ich die Befragung unterbrechen und später an derselben Stelle fortsetzen, ohne etwas zu verlieren.
+  - AK: Jede Antwort ist sofort gespeichert; „Zwischenstand gespeichert“ und der Fortschritt der Abteilung sind sichtbar; Schaltfläche „Später fortsetzen“.
+- **US-2.7** Als Befragter darf ich meine Abteilung erst abgeben, wenn alle Kontrollpunkte beantwortet sind, damit der Assessor keine lückenhaften Rückmeldungen zusammenführen muss.
+  - AK: „Abteilung abgeben“ gesperrt, solange Punkte offen sind; die Kernbereiche mit offenen Punkten werden genannt; „Nicht anwendbar“ zählt als Angabe; der Server lehnt eine unvollständige Abgabe ab (409 `incomplete`).
 
 ## EP-3 Kommentare
 - **US-2.5** Als Befragter möchte ich sehen, wenn ein Kollege gerade denselben Kernbereich bearbeitet, und bei Konflikten gewarnt werden.

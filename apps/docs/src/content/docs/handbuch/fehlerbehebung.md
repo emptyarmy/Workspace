@@ -26,6 +26,19 @@ Ob es schon Nutzer gibt:
 docker compose exec db psql -U ai_tpi -d ai_tpi -c "select email, role, status from app_user;"
 ```
 
+### `Error: Port 5173 is already in use` bei `npm run dev`
+
+Ein Entwicklungsserver läuft noch, meist in einem anderen Terminal. Dort mit Strg+C beenden oder:
+
+```bash
+lsof -ti :5173 -ti :3000 | xargs kill
+npm run dev
+```
+
+### `[vite] http proxy error: … ECONNREFUSED 127.0.0.1:3000` direkt nach dem Start
+
+Harmlos, wenn danach `Server listening at …` folgt: Die Oberfläche war einen Moment vor dem Server bereit. Seite im Browser neu laden. Bleibt die Meldung, startet der Server nicht – siehe die folgenden Abschnitte.
+
 ### „Der Anwendungsserver ist nicht erreichbar“
 Der API-Server läuft nicht. Im Terminal von `npm run dev` nach Fehlern mit `[server]` suchen. Häufig: Port belegt (`EADDRINUSE`, siehe oben) oder Datenbank nicht erreichbar.
 
@@ -59,11 +72,21 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | Problem | Lösung |
 |---|---|
 | Einladung oder Einmal-Link kommt nicht an | Lokal landen alle Mails in **Mailpit**: `http://localhost:8025`. Bei eigenem SMTP-Server der Firma: Reiter *E-Mail* → **Test-Mail an mich senden**. |
+| *Die Test-Mail … konnte nicht versendet werden. Grund: …* | Der Grund sagt, was zu prüfen ist – Tabelle unter [E-Mail und KI → Wenn die Test-Mail fehlschlägt](/handbuch/e-mail-und-ki/#wenn-die-test-mail-fehlschlägt). Lokal mit „nicht erreichbar“: Mailpit läuft nicht (`docker compose up -d mailpit`). |
 | *Zu viele Anfragen in kurzer Zeit …* bei Anmeldung oder „Passwort vergessen“ | Schutz gegen das Durchprobieren von Passwörtern: höchstens 30 Anfragen je Minute und Adresse (`AUTH_RATE_LIMIT_PER_MIN`). Eine Minute warten. Hängen viele Nutzer hinter einem Reverse Proxy, muss `TRUST_PROXY=true` gesetzt sein, sonst teilen sich alle ein Kontingent. |
 | „Passwort vergessen“: es kommt keine weitere Mail | Je Adresse gehen höchstens 3 Mails in 15 Minuten raus (`RESET_MAILS_PER_15_MIN`); den zuletzt erhaltenen Link verwenden oder 15 Minuten warten. |
 | *Link abgelaufen oder bereits verwendet* | Einmal-Links gelten 30 Minuten und nur einmal; über „Passwort vergessen?“ einen neuen anfordern. |
 | Konto gesperrt | Nach 5 Fehlversuchen 15 Minuten warten oder einen Admin das Passwort zurücksetzen lassen. |
 | Passwort erfüllt alle Regeln, wird aber abgelehnt | Die Stärke ist „schwach“ (z. B. Wort + Jahreszahl). Ein längeres, weniger vorhersagbares Passwort wählen. |
+
+## Fragebogen
+
+| Problem | Lösung |
+|---|---|
+| **Abteilung abgeben** ist ausgegraut | Gewollt: Abgeben geht erst, wenn zu **jedem** Kontrollpunkt der Kernbereiche Ihrer Abteilung eine Angabe vorliegt („Nicht anwendbar“ zählt, „offen“ nicht). Der Kasten *Abgabe Ihrer Abteilung* nennt die Kernbereiche mit offenen Punkten; der Filter „nur offene“ zeigt sie. |
+| *Abgeben ist noch nicht möglich …* nach dem Klick | Inzwischen hat jemand aus Ihrer Abteilung eine Antwort auf „offen“ zurückgesetzt. Die Liste im Kasten ist aktualisiert. |
+| Ich muss die Befragung unterbrechen | Nichts zu tun: Jede Antwort ist sofort gespeichert. **Später fortsetzen** oder Seite schließen; beim nächsten Öffnen steht alles wie zuvor. |
+| *Mindestens eine Antwort wurde nicht gespeichert* | Verbindung kurz unterbrochen: Beim markierten Kontrollpunkt **Erneut versuchen**, bevor Sie die Seite verlassen. |
 
 ## Empfehlungen und KI
 
@@ -89,6 +112,9 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | `empfehlungen.spec.ts`: KI-Tests schlagen mit „nicht erreichbar“ fehl | Die Tests rufen den nachgebildeten KI-Dienst unter `http://127.0.0.1:<E2E_SERVER_PORT>/test-llm/…` auf. Der Testserver muss mit `TEST_ENDPOINTS=true` laufen (macht Playwright automatisch). |
 | Ab einem bestimmten Test schlagen **alle** weiteren mit `net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5180` fehl (macOS) | Der Vite-Testserver hat sich beendet, weil macOS einem Prozess standardmäßig nur 256 offene Dateien/Verbindungen erlaubt (`ulimit -n`) und bei vielen parallelen Tests jede Seite eine Live-Verbindung hält. Die Playwright-Konfiguration hebt die Grenze für beide Testserver inzwischen selbst auf 10 240 an. Tritt es trotzdem auf: vor dem Lauf `ulimit -n 10240` im selben Terminal ausführen oder weniger Worker nutzen (`npx playwright test --workers=4`). |
 | Ports 3100 oder 5180 belegt | Playwright nutzt eigene Ports; abweichend über `E2E_SERVER_PORT` und `E2E_WEB_PORT` setzen. |
+| `npm run test:szenario`: *Mailpit unter http://localhost:8025 nicht erreichbar* | `docker compose up -d mailpit`. Läuft Mailpit anderswo: `SZENARIO_MAILPIT_URL`, `SZENARIO_SMTP_HOST`, `SZENARIO_SMTP_PORT` setzen. |
+| `npm run test:szenario`: ab einem Fall *did not run* | Gewollt: Die Fälle bauen aufeinander auf. Den ersten fehlgeschlagenen Fall beheben; der nächste Lauf beginnt wieder beim Zurücksetzen (TC-SZ-001). |
+| Ports 3200 oder 5190 belegt (Szenario) | `SZENARIO_SERVER_PORT` und `SZENARIO_WEB_PORT` setzen. |
 
 ## Hinweise ohne Handlungsbedarf
 

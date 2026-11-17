@@ -8,6 +8,7 @@
 | Unit | Vitest | Scoring, Regel-Engine, Passwortregeln/-stärke, Validierung | ≥ 90 % Zweigabdeckung von `packages/shared` und Domäne |
 | API | Vitest + Supertest | alle Endpunkte inkl. Rollenprüfung (401/403/409) | jede Route positiv + negativ |
 | E2E / UI | **Playwright** | alle UI-Funktionen, positiv **und** negativ | 100 % der Testfälle aus `02_testfallkatalog.md` |
+| Szenario | Playwright (`npm run test:szenario`) | durchgängiger Ablauf ab leerer Datenbank: Ersteinrichtung, Stammdaten, Einladung und Passwort über echte Mails (Mailpit), Befragung, Zusammenführung, Bericht | alle Fälle TC-SZ-* grün |
 | Barrierefreiheit | @axe-core/playwright | alle Views | 0 kritische Verstöße |
 | Visuell (optional) | Playwright `toHaveScreenshot` | Bericht, Matrix je Gerät | stabile Darstellung |
 
