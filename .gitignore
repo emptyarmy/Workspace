@@ -2,7 +2,9 @@ node_modules/
 dist/
 coverage/
 playwright-report/
+playwright-report-szenario/
 test-results/
+test-results-szenario/
 blob-report/
 .env
 .env.*

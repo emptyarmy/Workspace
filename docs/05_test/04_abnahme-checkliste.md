@@ -10,7 +10,7 @@ Status: ☑ erfüllt · ☐ offen · ◐ teilweise
 
 | Nr. | Kriterium | Nachweis | Status |
 |---|---|---|---|
-| A-1 | Alle Testfälle des Testfallkatalogs sind automatisiert | 255 von 255 (`02_testfallkatalog.md`); die CI-Pipeline bricht ab, sobald ein Fall ohne Test dazukommt | ☑ |
+| A-1 | Alle Testfälle des Testfallkatalogs sind automatisiert | 266 von 266 (`02_testfallkatalog.md`); die CI-Pipeline bricht ab, sobald ein Fall ohne Test dazukommt | ☑ |
 | A-2 | Unit-, API- und Datenbanktests grün | `npm run test:unit` (Vitest, PostgreSQL 16) | ☑ lokal |
 | A-3 | E2E-Tests grün auf allen 7 Geräteprofilen (NFA-02/03) | `npm run test:e2e`: 1004 bestanden (Mac, 15.11.2026) | ☑ lokal |
 | A-4 | E2E-Tests grün gegen den Produktions-Build | `npm run build && E2E_PROD=1 npm run test:e2e`: 1018 bestanden (Mac, 15.11.2026) | ☑ lokal |

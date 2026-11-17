@@ -4,6 +4,7 @@
 #   pruefungen  Format, Lint, Typecheck, Katalog, Testfallkatalog vollständig, npm audit, Dokumentation bauen
 #   unit        Vitest: Unit-, API- und Datenbanktests gegen PostgreSQL 16
 #   e2e         Playwright gegen den Produktions-Build (E2E_PROD=1), je Browser-Engine ein Job
+#   szenario    Durchgängiges Szenario „Humani“ von der leeren Datenbank bis zum Bericht (mit Mailpit)
 #   container   Image bauen, Rauchtest (Migrationen, CSP, Nutzer ≠ root, ai-tpi-setup, Anmeldung) und
 #               Selbsttest der Betriebsskripte (docker-compose.prod.yml, Sicherung, Wiederherstellung)
 name: CI
@@ -134,6 +135,48 @@ jobs:
           path: |
             playwright-report/
             test-results/
+          retention-days: 14
+
+  szenario:
+    name: Szenario Humani (leere Datenbank bis Bericht, Mailpit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ai_tpi
+          POSTGRES_PASSWORD: ai_tpi
+          POSTGRES_DB: ai_tpi_szenario_e2e
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ai_tpi" --health-interval 5s --health-timeout 5s --health-retries 20
+      mailpit:
+        image: axllent/mailpit:latest
+        ports: ['1025:1025', '8025:8025']
+    env:
+      SZENARIO_DATABASE_URL: postgres://ai_tpi:ai_tpi@127.0.0.1:5432/ai_tpi_szenario_e2e
+      SZENARIO_SMTP_HOST: 127.0.0.1
+      SZENARIO_MAILPIT_URL: http://127.0.0.1:8025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Playwright-Browser
+        run: npx playwright install --with-deps chromium
+      - name: Szenario
+        run: npm run test:szenario
+      - name: Bericht hochladen
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-szenario
+          path: |
+            playwright-report-szenario/
+            test-results-szenario/
           retention-days: 14
 
   container:

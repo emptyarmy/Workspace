@@ -11,6 +11,10 @@ Diese Anleitung löscht **alle Daten** der lokalen Entwicklungsdatenbank: Nutzer
 Die Daten sind danach endgültig weg. Nur für die lokale Entwicklungsumgebung gedacht, niemals für eine Produktivdatenbank.
 :::
 
+:::tip[Automatisch geprüft]
+Der erste Schritt des [Szenarios „Humani“](/entwicklung/tests/#durchgängiges-szenario-humani) (`npm run test:szenario`) setzt eine eigene Szenario-Datenbank genau auf diese Weise zurück und prüft, dass die Ersteinrichtung danach wieder möglich ist.
+:::
+
 ## Kurzfassung
 
 ```bash

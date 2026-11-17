@@ -9,6 +9,8 @@ export default tseslint.config(
       '**/dist/**',
       '**/node_modules/**',
       'playwright-report/**',
+      'playwright-report-szenario/**',
+      'test-results-szenario/**',
       'test-results/**',
       'apps/server/drizzle/**',
       'apps/docs/.astro/**',

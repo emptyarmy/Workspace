@@ -22,3 +22,5 @@ docs/_quellen
 specs
 packages/catalog/sources
 backups
+playwright-report-szenario
+test-results-szenario

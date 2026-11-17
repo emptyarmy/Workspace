@@ -51,6 +51,7 @@ DEVICE = {"A": "alle Profile", "D": "Desktop", "M": "Mobil/Tablet"}
 def covered_ids() -> set[str]:
     found: set[str] = set()
     files = [f for f in glob.glob(str(ROOT / "tests/e2e/**/*.ts"), recursive=True) if "/geplant/" not in f]
+    files += glob.glob(str(ROOT / "tests/szenario/*.ts"))
     files += glob.glob(str(ROOT / "apps/*/test/*.ts")) + glob.glob(str(ROOT / "packages/*/test/*.ts"))
     for f in files:
         for m in REF.finditer(Path(f).read_text(encoding="utf-8")):

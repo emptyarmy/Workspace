@@ -23,6 +23,7 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:szenario": "playwright test -c playwright.szenario.config.ts",
     "test:planned": "python3 tools/tests/generate_planned.py",
     "db:generate": "npm run db:generate -w @ai-tpi/server",
     "db:migrate": "npm run db:migrate -w @ai-tpi/server",

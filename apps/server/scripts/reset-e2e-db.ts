@@ -15,6 +15,24 @@ if (!/_(e2e|test)$/.test(dbName)) {
   console.error(`Abbruch: „${dbName}“ ist keine Testdatenbank (Name muss auf _e2e oder _test enden).`);
   process.exit(1);
 }
+// Fehlt die Testdatenbank (z. B. die Szenario-Datenbank beim ersten Lauf), wird sie angelegt – der Name ist
+// oben auf _e2e/_test geprüft und besteht nur aus unkritischen Zeichen.
+if (/^[A-Za-z0-9_]+$/.test(dbName)) {
+  const adminUrl = new URL(url);
+  adminUrl.pathname = '/postgres';
+  const admin = createDb(adminUrl.toString());
+  try {
+    const exists = await admin.db.execute(sql`select 1 from pg_database where datname = ${dbName}`);
+    if (!exists.rows.length) {
+      await admin.db.execute(sql.raw(`create database "${dbName}"`));
+      console.log(`Testdatenbank ${dbName} angelegt.`);
+    }
+  } catch {
+    // Kein Zugriff auf „postgres“ oder Server nicht erreichbar: Die Meldung unten erklärt, was zu tun ist.
+  } finally {
+    await admin.close().catch(() => {});
+  }
+}
 const h = createDb(url);
 try {
   await h.db.execute(

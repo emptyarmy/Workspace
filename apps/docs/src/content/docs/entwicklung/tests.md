@@ -63,6 +63,37 @@ So läuft ein Testlauf ab:
 | `E2E_SERVER_PORT`, `E2E_WEB_PORT` | abweichende Testports |
 | `E2E_PROD=1` | gegen den Produktions-Build testen (siehe unten) |
 
+### Durchgängiges Szenario „Humani“
+
+```bash
+docker compose up -d db mailpit
+npm run test:szenario
+```
+
+Eine eigene Suite (`tests/szenario/humani.spec.ts`, Konfiguration `playwright.szenario.config.ts`) spielt einen kompletten Ablauf über die Oberfläche durch – mit echtem Mailversand an Mailpit statt Test-Postfach. Elf Testfälle (TC-SZ-001 … 011) bauen aufeinander auf und laufen nacheinander; schlägt einer fehl, werden die folgenden übersprungen.
+
+1. **Zurücksetzen** wie in [Anwendung zurücksetzen](/entwicklung/zuruecksetzen/): Schema löschen, `npm run db:migrate` – jeder Lauf beginnt beim selben Startpunkt. Mailpit wird ebenfalls geleert.
+2. Ersteinrichtung: **Anton Admin**, Firma **Humani**, `admin@humani.de`, Passwort `!2Mention2026`.
+3. Zehn Abteilungen anlegen; prüfen, dass der interne SMTP-Server („Standard der Installation“) eingestellt ist und zustellt.
+4. Fünf Benutzer anlegen:
+
+   | Name | Rolle | Abteilung | E-Mail |
+   |---|---|---|---|
+   | Anabell Assessor | Assessor | Projektmanagement | assessor@humani.de |
+   | Eric Einkauf | Befragter | Einkauf | befragter01@humani.de |
+   | Volker Vertrieb | Befragter | Vertrieb | befragter02@humani.de |
+   | Paola Personal | Leser | Personalabteilung | leser@humani.de |
+   | Ingrid IT Abteilung | Admin | IT Abteilung | admin02@humani.de |
+
+   `admin@humani.de` gehört bereits Anton Admin; der Test prüft, dass die Anwendung die doppelte Adresse für Ingrid ablehnt.
+5. In Mailpit je Benutzer die Einladung öffnen, **Passwort vergessen** wählen, den Einmal-Link aus der zweiten Mail öffnen und das Passwort `!2Mention2026` festlegen.
+6. Anabell legt ein Assessment über alle 19 Kernbereiche an und weist KB01–04 dem **Vertrieb**, KB03–06 dem **Einkauf** zu. Zugewiesen wird an Abteilungen; Volker antwortet für den Vertrieb, Eric für den Einkauf.
+7. Vertrieb beantwortet alles mit **Erfüllt**, Einkauf mit **Teilweise**; beide geben ab.
+8. Anabell führt zusammen – in KB03/04 sind die Abteilungen uneinig, dort ist eine Begründung Pflicht. Ingrid (Admin) sieht die Zusammenführung nur lesend: Zusammenführen dürfen nur Assessoren.
+9. Bericht: Kennzahlen, Reifegrad je Kernbereich, Konsenslücken, Begründungen im Anhang.
+
+Das Szenario nutzt eine eigene Datenbank (`ai_tpi_szenario_e2e`, wird beim ersten Lauf angelegt) und eigene Ports (Server 3200, Oberfläche 5190); `npm run dev` und die übrigen E2E-Tests bleiben unberührt. Abweichende Werte über `SZENARIO_DATABASE_URL`, `SZENARIO_SMTP_HOST`/`SZENARIO_SMTP_PORT`, `SZENARIO_MAILPIT_URL` (Standard `http://localhost:8025`). Bericht: `npx playwright show-report playwright-report-szenario`.
+
 ### Produktions-Build testen
 
 Die [CI-Pipeline](/entwicklung/ci-pipeline/) führt die E2E-Tests immer in diesem Modus aus.
@@ -95,7 +126,7 @@ Statt Vite startet Playwright dann nur den **gebündelten Server** (`apps/server
 | `i18n-rwd.spec.ts` | Sprachumschaltung, kein horizontales Scrollen, Touch-Größen |
 | `sicherheit.spec.ts` | Phase 8b: Meldung bei Rate-Limit (429), Sicherheits-Header der API, CSRF-Schutz |
 | `produktion.spec.ts` | Phase 8c, nur mit `E2E_PROD=1`: Auslieferung der gebauten Oberfläche (CSP, Caching, gzip, Deep-Links, 404, Pfad-Traversal) und Hauptseiten ohne CSP-Verstoß |
-| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 255 Fälle sind automatisiert |
+| `geplant/*.spec.ts` | **Platzhalter** (`test.fixme`) für noch nicht automatisierte Katalogfälle – seit 15.11.2026 leer, alle 266 Fälle sind automatisiert |
 
 ### Barrierefreiheit
 

@@ -25,7 +25,7 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 
 ### Tests und Dokumentation
 
-- 255 Testfälle automatisiert (Playwright auf 7 Geräteprofilen, Vitest), Positiv- und Negativtests
+- 266 Testfälle automatisiert (Playwright auf 7 Geräteprofilen, Vitest), Positiv- und Negativtests
 - Dokumentation (Astro/Starlight): Handbuch mit „Erste Schritte nach Rolle“, Betrieb, Entwicklung, Referenz, Projektdokumentation; Abnahme-Checkliste
 
 ### Bekannte Grenzen
