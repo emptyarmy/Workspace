@@ -1,0 +1,12 @@
+{
+  "$comment": "Begründete Ausnahmen für tools/ci/audit.mjs. Nur Meldungen ohne korrigierte Version, die das Produkt nachweislich nicht betreffen. Jede Ausnahme läuft ab und muss dann erneut geprüft werden. Dokumentiert in docs/05_test/03_security-review.md (R-8).",
+  "advisories": [
+    {
+      "id": "GHSA-fc5q-39xc-vjpf",
+      "package": "picomatch",
+      "added": "2026-11-17",
+      "until": "2026-12-31",
+      "reason": "ReDoS nur bei angreiferkontrollierten Glob-Mustern; keine korrigierte Version (≤ 4.0.7 betroffen, 4.0.7 ist die neueste). picomatch steckt nur in Entwicklungs- und Build-Werkzeugen (Vite, Vitest, ESLint, vue-tsc, Astro für den statischen Doku-Build) mit festen Mustern aus dem Projekt – nicht im Server zur Laufzeit (npm ls picomatch --omit=dev -w @ai-tpi/server: leer)."
+    }
+  ]
+}

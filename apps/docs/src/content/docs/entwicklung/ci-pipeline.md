@@ -20,7 +20,7 @@ flowchart LR
 
 | Job | Inhalt | lokal nachstellen |
 |---|---|---|
-| **Prüfungen** | Prettier, ESLint, Typecheck, Fragenkatalog, Testfallkatalog vollständig automatisiert (keine Platzhalter in `tests/e2e/geplant`), `npm audit` (ab „moderate“), Dokumentation bauen | `npm run format:check && npm run lint && npm run typecheck && npm run catalog:validate && npm run test:planned && npm audit --audit-level=moderate && npm run docs:build` |
+| **Prüfungen** | Prettier, ESLint, Typecheck, Fragenkatalog, Testfallkatalog vollständig automatisiert (keine Platzhalter in `tests/e2e/geplant`), `npm audit` ab „moderate“ mit begründeten Ausnahmen (`npm run audit`), Dokumentation bauen | `npm run format:check && npm run lint && npm run typecheck && npm run catalog:validate && npm run test:planned && npm run audit && npm run docs:build` |
 | **Unit + DB** | Vitest: Unit-, API- und Datenbanktests gegen PostgreSQL 16 (Service-Container) | `TEST_DATABASE_URL=… npm run test:unit` |
 | **E2E** (3 Jobs) | Playwright gegen den **Produktions-Build** (`E2E_PROD=1`), aufgeteilt nach Browser-Engine: Chromium (Desktop Chrome, kleiner Laptop, Galaxy S24), Firefox (Desktop), WebKit (Desktop Safari, iPad, iPhone) | `npm run build && E2E_PROD=1 npm run test:e2e` |
 | **Szenario** | Durchgängiges Szenario „Humani“ (TC-SZ-001 … 011) mit PostgreSQL und Mailpit als Service-Container | `npm run test:szenario` |
@@ -44,7 +44,8 @@ Die E2E-Jobs laufen mit `CI=true`: zwei Worker, bis zu zwei Wiederholungen bei F
 |---|---|---|
 | Prüfungen → Format | Datei nicht mit Prettier formatiert | `npm run format` |
 | Prüfungen → Testfallkatalog | neuer Testfall im Katalog ohne Test mit dieser ID im Titel | Test schreiben (ID im Titel, z. B. `TC-ADM-040 …`) |
-| Prüfungen → npm audit | neue Sicherheitslücke in einer Abhängigkeit | `npm audit`, Abhängigkeit aktualisieren oder `overrides` in `package.json` |
+| Prüfungen → npm audit | neue Sicherheitslücke in einer Abhängigkeit | `npm audit` zeigt die Pakete. Gibt es eine korrigierte Version: Abhängigkeit aktualisieren oder `overrides` in `package.json`. Gibt es keine und betrifft die Lücke das Produkt nachweislich nicht: Ausnahme mit Begründung und Ablaufdatum in `tools/ci/audit-allowlist.json` eintragen und im Security-Review vermerken. **Nicht** `npm audit fix --force` – das stuft oft ganze Werkzeuge auf alte Hauptversionen zurück |
+| Prüfungen → npm audit: *Ausnahme abgelaufen* | Das Ablaufdatum einer Ausnahme ist überschritten | Meldung erneut prüfen: Gibt es inzwischen eine Korrektur, aktualisieren und die Ausnahme löschen; sonst Datum mit Begründung verlängern |
 | E2E | Fehler nur im Produktions-Build (CSP, Auslieferung) | lokal `npm run build && E2E_PROD=1 npm run test:e2e`; Meldungen `CSP-Verstoß: …` nennen Regel, Datei und Zeile |
 | E2E | Fehler nur in einer Engine | Artefakt `playwright-report-<engine>` herunterladen, `npx playwright show-report <ordner>` bzw. `show-trace` |
 | Container | neue Laufzeitabhängigkeit fehlt im Image | Abhängigkeit in `apps/server/package.json` (nicht nur im Arbeitsbereich) eintragen |

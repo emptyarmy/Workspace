@@ -19,6 +19,7 @@ Alle Befehle im **Projektordner** ausführen.
 | `npm run test` | `test:unit` und danach `test:e2e` |
 | `npm run test:unit` | Vitest (Unit, API; Datenbanktests mit `TEST_DATABASE_URL`) |
 | `npm run format:check` | Formatierung prüfen, ohne zu ändern (CI) |
+| `npm run audit` | `npm audit` ab „moderate“ mit begründeten Ausnahmen aus `tools/ci/audit-allowlist.json` (CI); schlägt auch bei abgelaufenen Ausnahmen fehl |
 | `npm run test:e2e` | Playwright auf allen Geräteprofilen |
 | `npm run test:szenario` | Durchgängiges Szenario „Humani“ von der leeren Datenbank bis zum Bericht, mit Mailpit (`docker compose up -d db mailpit`) |
 | `E2E_PROD=1 npm run test:e2e` | Playwright gegen den Produktions-Build (vorher `npm run build`): prüft zusätzlich Auslieferung und Content-Security-Policy (TC-OPS-001/002) |

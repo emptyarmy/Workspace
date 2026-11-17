@@ -16,7 +16,7 @@ Status: ☑ erfüllt · ☐ offen · ◐ teilweise
 | A-4 | E2E-Tests grün gegen den Produktions-Build | `npm run build && E2E_PROD=1 npm run test:e2e`: 1018 bestanden (Mac, 15.11.2026) | ☑ lokal |
 | A-5 | Pipeline grün auf GitHub (Prüfungen, Unit/DB, E2E je Engine, Container) | GitHub → Actions → „CI“, letzter Durchgang auf `main` | ☑ grün (16.11.2026, Commit `659bae3`, Rückmeldung des Auftraggebers) |
 | A-6 | Container: Rauchtest und Selbsttest der Betriebsskripte (Start mit `docker-compose.prod.yml`, Ersteinrichtung, Sicherung, Wiederherstellung) | Job „Container“ der Pipeline; lokal `tools/docker/smoke-test.sh`, `tools/ops/selftest.sh` | ☑ mit A-5 |
-| A-7 | Keine bekannten Sicherheitslücken in Abhängigkeiten | `npm audit --audit-level=moderate`: 0 | ☑ |
+| A-7 | Keine bekannten Sicherheitslücken in Abhängigkeiten, außer begründeten Ausnahmen ohne verfügbare Korrektur | `npm run audit`: 0 offen; 1 Ausnahme (picomatch, nur Werkzeuge, nicht zur Laufzeit; R-8 im Security-Review, bis 31.12.2026) | ◐ |
 | A-8 | Security-Review ohne offene kritische oder hohe Befunde | `03_security-review.md`: F-01 … F-11 behoben | ☑ |
 | A-9 | Barrierefreiheit geprüft (NFA-10) | `03_security-review.md`, Abschnitt 4: axe-core (WCAG 2.1 A/AA) für alle Seiten und Dialoge in `barrierefreiheit.spec.ts` | ☑ automatisiert (manuell: B-13) |
 | A-10 | Mandantentrennung | TC-TEN-*, `tests/e2e/rechte-und-mandanten.spec.ts`, API-Tests | ☑ |

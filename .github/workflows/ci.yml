@@ -53,8 +53,8 @@ jobs:
             ls tests/e2e/geplant
             exit 1
           fi
-      - name: Sicherheitslücken in Abhängigkeiten (npm audit)
-        run: npm audit --audit-level=moderate
+      - name: Sicherheitslücken in Abhängigkeiten (npm audit mit begründeten Ausnahmen)
+        run: npm run audit
       - name: Dokumentation bauen (Astro/Starlight)
         run: npm run docs:build
 

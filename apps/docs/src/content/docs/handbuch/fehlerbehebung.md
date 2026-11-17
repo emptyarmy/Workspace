@@ -114,6 +114,8 @@ Wird der Schlüssel später geändert, müssen gespeicherte SMTP-Passwörter und
 | Ports 3100 oder 5180 belegt | Playwright nutzt eigene Ports; abweichend über `E2E_SERVER_PORT` und `E2E_WEB_PORT` setzen. |
 | `npm run test:szenario`: *Mailpit unter http://localhost:8025 nicht erreichbar* | `docker compose up -d mailpit`. Läuft Mailpit anderswo: `SZENARIO_MAILPIT_URL`, `SZENARIO_SMTP_HOST`, `SZENARIO_SMTP_PORT` setzen. |
 | `npm run test:szenario`: ab einem Fall *did not run* | Gewollt: Die Fälle bauen aufeinander auf. Den ersten fehlgeschlagenen Fall beheben; der nächste Lauf beginnt wieder beim Zurücksetzen (TC-SZ-001). |
+| `npm install` meldet *21 high severity vulnerabilities* (picomatch) | Bekannt und bewertet: Für die Lücke in picomatch gibt es noch keine Korrektur; sie betrifft nur Entwicklungswerkzeuge, nicht den Server. `npm run audit` zeigt sie als begründete Ausnahme. **Nicht** `npm audit fix --force` ausführen – das stuft Vite, Astro und Starlight auf alte Versionen zurück. |
+| `npm warn install-scripts … not yet covered by allowScripts` (esbuild, fsevents) | Hinweis neuerer npm-Versionen, dass Installationsskripte noch nicht freigegeben sind. Die Anwendung läuft trotzdem (die Tests sind grün). Wer die Meldung loswerden will: `npm install-scripts approve esbuild fsevents`. |
 | Ports 3200 oder 5190 belegt (Szenario) | `SZENARIO_SERVER_PORT` und `SZENARIO_WEB_PORT` setzen. |
 
 ## Hinweise ohne Handlungsbedarf

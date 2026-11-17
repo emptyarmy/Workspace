@@ -54,7 +54,8 @@
 | R-4 | Kontosperre nach 5 Fehlversuchen kann gezielt ausgelöst werden (Aussperren eines bekannten Kontos für 15 min) | akzeptiert (übliche Abwägung); Rate-Limit je Adresse begrenzt das Ausmaß |
 | R-5 | Kein Schlüsselwechsel für `SECRET_ENCRYPTION_KEY` vorgesehen; Verlust des Schlüssels macht gespeicherte SMTP-Passwörter und KI-Schlüssel unlesbar | Schlüssel sicher und getrennt von den Backups aufbewahren; bei Verdacht Schlüssel tauschen und Geheimnisse im Admin-Bereich neu eingeben (Release 2: Werkzeug zur Umschlüsselung) |
 | R-6 | Ersteinrichtung bleibt aktivierbar, bis der erste Nutzer existiert | nach der Einrichtung `SETUP_ENABLED=false` setzen |
-| R-7 | Abhängigkeiten altern | `npm audit` in jeder CI-Ausführung (8d); Updates mindestens monatlich |
+| R-7 | Abhängigkeiten altern | `npm audit` in jeder CI-Ausführung (8d, `npm run audit`); Updates mindestens monatlich |
+| R-8 | Neue Meldung ohne korrigierte Version: **GHSA-fc5q-39xc-vjpf** (picomatch ≤ 4.0.7, ReDoS bei angreiferkontrollierten Glob-Mustern, „high“; gemeldet am 17.11.2026). Betrifft nur Entwicklungs- und Build-Werkzeuge (Vite, Vitest, ESLint, vue-tsc, Astro für den statischen Doku-Build) mit festen Mustern aus dem Projekt; der Server zur Laufzeit und das Container-Image enthalten picomatch nicht. `npm audit fix --force` würde auf alte Hauptversionen (Vite 6, Astro 5, Starlight 0.33) zurückstufen und ist keine Lösung | als begründete Ausnahme in `tools/ci/audit-allowlist.json`, gültig bis 31.12.2026; die CI schlägt bei jeder anderen Meldung und nach Ablauf fehl. Sobald picomatch eine korrigierte Version veröffentlicht: `npm update picomatch` bzw. `overrides`, Ausnahme entfernen |
 
 ## 4. Barrierefreiheit (A11y)
 

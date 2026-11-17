@@ -21,6 +21,7 @@ Erste vollständige Version. Datenbank: Erstinstallation (Migrationen 0000 … 0
 - Test-Mail: Grund des Fehlschlags in der Meldung (nicht erreichbar, Zeitüberschreitung, Anmeldung abgelehnt, TLS, Nachricht abgelehnt)
 - Fragebogen: Abgabe erst mit vollständigen Angaben, Zwischenstand sichtbar, „Später fortsetzen“
 - Bericht: kein seitliches Scrollen auf schmalen Bildschirmen mit breiter Schrift
+- CI: `npm run audit` mit begründeten Ausnahmen; picomatch-Meldung GHSA-fc5q-39xc-vjpf (keine Korrektur verfügbar, nur Werkzeuge) bis 31.12.2026 ausgenommen
 
 ### Betrieb und Sicherheit
 
